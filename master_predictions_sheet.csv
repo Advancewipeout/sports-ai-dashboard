@@ -1,21 +1,5 @@
-Sport,Away Team,Home Team,Bookmaker,Away American Odds,Home American Odds,AI Away Prob %,AI Home Prob %,Calculated Edge %,Live Stadium Weather,AI Action Directive,Recommended Selection,Suggested Allocation ($),Public Consensus Bias,Public Backing %,Market Alignment Signal
-NFL,BUF Bills,KC Chiefs,DraftKings,120,-140,37.8,62.2,3.9,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,KC Chiefs (-140),46.45,NEUTRAL,50%,✅ ALIGNED
-NFL,LAR Rams,SF 49ers,DraftKings,155,-180,33.9,66.1,1.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,SF 49ers (-180),25.55,AWAY HYPED,75%,✅ ALIGNED
-NFL,DAL Cowboys,PHI Eagles,DraftKings,-110,-110,49.0,51.0,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0,HOME HYPED,69%,⚠️ VEGAS TRAP LINE
-NFL,NE Patriots,MIA Dolphins,DraftKings,170,-200,38.7,61.3,1.7,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,NE Patriots (+170),13.32,HOME HYPED,70%,✅ ALIGNED
-NFL,CIN Bengals,BAL Ravens,DraftKings,110,-130,39.7,60.3,3.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,BAL Ravens (-130),43.16,NEUTRAL,50%,✅ ALIGNED
-NBA,MIA Heat,BOS Celtics,DraftKings,180,-220,37.2,62.8,1.5,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,MIA Heat (+180),11.46,HOME HYPED,57%,✅ ALIGNED
-NBA,PHX Suns,DAL Mavericks,DraftKings,-105,-115,47.9,52.1,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0,HOME HYPED,73%,⚠️ VEGAS TRAP LINE
-NBA,LA Lakers,GS Warriors,DraftKings,110,-130,39.7,60.3,3.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,GS Warriors (-130),43.16,NEUTRAL,50%,✅ ALIGNED
-NBA,NY Knicks,MIL Bucks,DraftKings,140,-160,39.4,60.6,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0,NEUTRAL,50%,✅ ALIGNED
-NBA,MIN Timberwolves,DEN Nuggets,DraftKings,125,-145,38.9,61.1,1.9,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,DEN Nuggets (-145),23.62,HOME HYPED,64%,✅ ALIGNED
-MLB,BOS Red Sox,NY Yankees,DraftKings,105,-125,40.8,59.2,3.7,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,NY Yankees (-125),41.53,NEUTRAL,50%,✅ ALIGNED
-MLB,SF Giants,LA Dodgers,DraftKings,160,-190,40.0,60.0,1.5,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,SF Giants (+160),12.42,HOME HYPED,74%,✅ ALIGNED
-MLB,TEX Rangers,HOU Astros,DraftKings,120,-140,36.8,63.2,4.9,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,HOU Astros (-140),58.45,NEUTRAL,50%,✅ ALIGNED
-MLB,STL Cardinals,CHI Cubs,DraftKings,-110,-110,44.0,56.0,3.6,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,CHI Cubs (-110),38.0,AWAY HYPED,68%,✅ ALIGNED
-MLB,NY Mets,ATL Braves,DraftKings,115,-135,38.7,61.3,3.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,ATL Braves (-135),44.8,HOME HYPED,55%,✅ ALIGNED
-NHL,TOR Maple Leafs,EDM Oilers,DraftKings,-130,110,47.3,52.7,5.1,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,EDM Oilers (+110),48.74,AWAY HYPED,69%,✅ ALIGNED
-NHL,FLA Panthers,TBL Lightning,DraftKings,-145,125,56.1,43.9,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0,AWAY HYPED,59%,✅ ALIGNED
-NHL,DET Red Wings,CHI Blackhawks,DraftKings,-160,140,53.6,46.4,4.7,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,CHI Blackhawks (+140),40.34,HOME HYPED,78%,✅ ALIGNED
-NHL,NJ Devils,NY Rangers,DraftKings,-105,-115,51.9,48.1,0.7,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,NJ Devils (-105),7.14,HOME HYPED,53%,✅ ALIGNED
-NHL,COL Avalanche,VGK Golden Knights,DraftKings,-110,-110,53.0,47.0,0.6,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,COL Avalanche (-110),6.5,HOME HYPED,57%,✅ ALIGNED
+Sport,Matchup,Live Game Clock,Current Score Ticker,Live Bookmaker Line,Calculated Instant Edge,AI In-Play Directive,Target Execution Team
+NBA_LIVE,GS Warriors @ LA Lakers,Q4 - 09:30,GS Warriors 162 - 146 LA Lakers,DraftKings Live (+82),+0.4%,🔥 LIVE BUY,GS Warriors
+NBA_LIVE,MIA Heat @ BOS Celtics,Q4 - 02:45,MIA Heat 173 - 197 BOS Celtics,DraftKings Live (-538),+1.5%,🔥 LIVE BUY,MIA Heat
+NBA_LIVE,PHX Suns @ DAL Mavericks,Q3 - 11:45,PHX Suns 129 - 109 DAL Mavericks,DraftKings Live (+355),+4.8%,🔥 LIVE BUY,DAL Mavericks
+NBA_LIVE,NY Knicks @ MIL Bucks,Q2 - 07:15,NY Knicks 84 - 99 MIL Bucks,DraftKings Live (-310),0.0%,❌ PASS LINE,HOLD CASH
