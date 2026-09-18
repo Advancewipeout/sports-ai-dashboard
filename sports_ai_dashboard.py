@@ -1,60 +1,63 @@
 import streamlit as pd_stream
 import pandas as pd
 import os
+import time
 
-pd_stream.set_page_config(page_title="AI Sports Risk Engine & Tracker", layout="wide")
+pd_stream.set_page_config(page_title="AI Live In-Play Trade Desk", layout="wide")
 
-pd_stream.markdown("# 🧠 Advanced AI Sports Trade Desk")
-pd_stream.markdown("### Multi-Sport Execution Network, Live Weather Radar & Performance Ledger")
+pd_stream.markdown("# 🧠 AI Real-Time In-Play Court Desk")
+pd_stream.markdown("### Streaming Live Game Feeds, Score Tickers & Instantaneous Micro-Edge Directives")
 pd_stream.write("---")
 
-predictions_file = "master_predictions_sheet.csv"
-log_file = "bankroll_performance_history.csv"
+# 🔄 FORCE LIVE BACKGROUND REFRESH (Auto-reloads dashboard grid automatically every 5 seconds)
+pd_stream.logo("https://icons8.com")
+pd_stream.caption("🔴 LIVE FEED SYNCED - Tracking court updates via Groq AI Matrix Engine")
 
-# Render Bankroll Profit Graph if the log data exists
-if os.path.exists(log_file):
-    pd_stream.write("### 📈 Automated Bankroll Performance History Tracker")
-    log_df = pd.read_csv(log_file)
-    pd_stream.line_chart(log_df, x="Timestamp", y="Current Total Bankroll ($)")
-    
-    # Quick Status Metrics Block
-    c1, c2, c3 = pd_stream.columns(3)
-    c1.metric("Current Account Net Equity", f"${log_df['Current Total Bankroll ($)'].iloc[-1]}")
-    c2.metric("Last Run PnL Delta", f"${log_df['Simulated PnL ($)'].iloc[-1]}")
-    c3.metric("Historical Analytics Sessions", len(log_df))
-    pd_stream.write("---")
+filename = "master_predictions_sheet.csv"
 
-if not os.path.exists(predictions_file):
-    pd_stream.error("❌ master_predictions_sheet.csv not detected. Run your updated script first.")
+if not os.path.exists(filename):
+    pd_stream.error("❌ master_predictions_sheet.csv not detected. Launch your engine in your VS Code terminal tab.")
 else:
-    df = pd.read_csv(predictions_file)
+    df = pd.read_csv(filename)
     
-    pd_stream.sidebar.header("⚙️ Bankroll Controls")
-    bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
-    selected_sport = pd_stream.sidebar.selectbox("Select Sports Market", ["ALL"] + list(df["Sport"].unique()))
+    # Simple Metrics Banner
+    c1, c2 = pd_stream.columns(2)
+    c1.metric("Active Live Games Streaming", len(df))
+    active_buys = len(df[df["AI In-Play Directive"].isin(["🔥 LIVE BUY", "🛡️ SLICE STAKE"])])
+    c2.metric("Instant AI Trade Alerts", active_buys)
     
-    if selected_sport != "ALL": 
-        df = df[df["Sport"] == selected_sport]
-
-    pd_stream.write("### 🗂 Live Order Execution Grid (Weather-Enabled)")
-    pd_stream.dataframe(df, use_container_width=True, hide_index=True)
+    pd_stream.write("### 🏀 Real-Time Game Ticker Matrix")
+    pd_stream.dataframe(
+        df,
+        column_config={
+            "Calculated Instant Edge": pd_stream.column_config.TextColumn("Instant Edge"),
+            "AI In-Play Directive": pd_stream.column_config.TextColumn("Risk Directive"),
+            "Target Execution Team": pd_stream.column_config.TextColumn("Recommended Play")
+        },
+        use_container_width=True,
+        hide_index=True
+    )
     
     pd_stream.write("---")
-    pd_stream.write("### 📋 Trade Execution Blueprint & Climate Analytics")
+    pd_stream.write("### 📋 Court-Side Quick Execution Blueprint")
     
-    active_plays = df[df["AI Action Directive"] != "❌ NO VALUE"]
-    if active_plays.empty:
-        pd_stream.info("No active high-value play directives matching current parameters.")
+    buy_signals = df[df["AI In-Play Directive"].isin(["🔥 LIVE BUY", "🛡️ SLICE STAKE", "⏳ HOLD LINE"])]
+    if buy_signals.empty:
+        pd_stream.info("Waiting for market pricing inefficiencies to manifest on active basketball lines...")
     else:
-        for _, row in active_plays.iterrows():
-            with pd_stream.container():
-                directive = row['AI Action Directive']
-                match = f"{row['Away Team']} @ {row['Home Team']}"
-                pick = row['Recommended Selection']
-                weather = row['Live Stadium Weather']
-                allocation = round((row['Suggested Allocation ($)'] / 1000.0) * bankroll, 2)
-                
-                blueprint_text = f"ORDER STATUS: [{directive}] | SELECTION: {pick} | WEATHER PROFILE: {weather} | TOTAL RISK ALLOCATION: ${allocation}"
-                
-                pd_stream.markdown(f"**📍 {match} ({row['Sport']})** — Edge: **+{row['Calculated Edge %']}%**")
-                pd_stream.code(blueprint_text, language="text")
+        for _, row in buy_signals.iterrows():
+            directive = row["AI In-Play Directive"]
+            match = row["Matchup"]
+            score = row["Current Score Ticker"]
+            clock = row["Live Game Clock"]
+            target = row["Target Execution Team"]
+            line = row["Live Bookmaker Line"]
+            
+            blueprint_code = f"LIVE MATCH TICKER: [{clock}] | {score} | ACTION STATUS: [{directive}] -> EXECUTE ON: {target} via {line}"
+            
+            pd_stream.markdown(f"**📍 {match}** — Instant Edge: **{row['Calculated Instant Edge']}**")
+            pd_stream.code(blueprint_code, language="text")
+
+    # Force Streamlit to automatically rerun and refresh components
+    time.sleep(5)
+    pd_stream.rerun()
