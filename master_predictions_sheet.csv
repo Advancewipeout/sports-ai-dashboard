@@ -1,21 +1,21 @@
-Sport,Away Team,Home Team,Bookmaker,Away American Odds,Home American Odds,AI Away Prob %,AI Home Prob %,Calculated Edge %,AI Action Directive,Recommended Selection,Suggested Allocation ($)
-NFL,BUF Bills,KC Chiefs,DraftKings,120,-140,42.8,57.2,0.0,❌ NO VALUE,PASS,0.0
-NFL,LAR Rams,SF 49ers,DraftKings,155,-180,36.9,63.1,0.0,❌ NO VALUE,PASS,0.0
-NFL,DAL Cowboys,PHI Eagles,DraftKings,-110,-110,43.0,57.0,4.6,🔥 FULL BUY,PHI Eagles (-110),48.5
-NFL,NE Patriots,MIA Dolphins,DraftKings,170,-200,28.7,71.3,4.6,🔥 FULL BUY,MIA Dolphins (-200),69.29
-NFL,CIN Bengals,BAL Ravens,DraftKings,110,-130,41.7,58.3,1.8,🔥 FULL BUY,BAL Ravens (-130),20.16
-NBA,MIA Heat,BOS Celtics,DraftKings,180,-220,33.2,66.8,0.0,❌ NO VALUE,PASS,0.0
-NBA,PHX Suns,DAL Mavericks,DraftKings,-105,-115,42.9,57.1,3.6,🔥 FULL BUY,DAL Mavericks (-115),38.65
-NBA,LA Lakers,GS Warriors,DraftKings,110,-130,44.7,55.3,0.0,❌ NO VALUE,PASS,0.0
-NBA,NY Knicks,MIL Bucks,DraftKings,140,-160,39.4,60.6,0.0,❌ NO VALUE,PASS,0.0
-NBA,MIN Timberwolves,DEN Nuggets,DraftKings,125,-145,36.9,63.1,3.9,🔥 FULL BUY,DEN Nuggets (-145),48.12
-MLB,BOS Red Sox,NY Yankees,DraftKings,105,-125,45.8,54.2,0.0,❌ NO VALUE,PASS,0.0
-MLB,SF Giants,LA Dodgers,DraftKings,160,-190,30.0,70.0,4.5,🔥 FULL BUY,LA Dodgers (-190),65.15
-MLB,TEX Rangers,HOU Astros,DraftKings,120,-140,39.8,60.2,1.9,🔥 FULL BUY,HOU Astros (-140),22.45
-MLB,STL Cardinals,CHI Cubs,DraftKings,-110,-110,43.0,57.0,4.6,🔥 FULL BUY,CHI Cubs (-110),48.5
-MLB,NY Mets,ATL Braves,DraftKings,115,-135,40.7,59.3,1.8,🔥 FULL BUY,ATL Braves (-135),21.3
-NHL,TOR Maple Leafs,EDM Oilers,DraftKings,-130,110,57.3,42.7,0.8,🔥 FULL BUY,TOR Maple Leafs (-130),8.66
-NHL,FLA Panthers,TBL Lightning,DraftKings,-145,125,50.1,49.9,5.4,🔥 FULL BUY,TBL Lightning (+125),49.0
-NHL,DET Red Wings,CHI Blackhawks,DraftKings,-160,140,53.6,46.4,4.7,🔥 FULL BUY,CHI Blackhawks (+140),40.34
-NHL,NJ Devils,NY Rangers,DraftKings,-105,-115,42.9,57.1,3.6,🔥 FULL BUY,NY Rangers (-115),38.65
-NHL,COL Avalanche,VGK Golden Knights,DraftKings,-110,-110,44.0,56.0,3.6,🔥 FULL BUY,VGK Golden Knights (-110),38.0
+Sport,Away Team,Home Team,Bookmaker,Away American Odds,Home American Odds,AI Away Prob %,AI Home Prob %,Calculated Edge %,AI Action Directive,Recommended Selection,Suggested Allocation ($),Public Consensus Bias,Public Backing %,Market Alignment Signal
+NFL,BUF Bills,KC Chiefs,DraftKings,120,-140,39.8,60.2,1.9,🔥 FULL BUY,KC Chiefs (-140),22.45,AWAY HYPED,52%,✅ ALIGNED
+NFL,LAR Rams,SF 49ers,DraftKings,155,-180,31.9,68.1,3.8,🔥 FULL BUY,SF 49ers (-180),53.55,NEUTRAL,50%,✅ ALIGNED
+NFL,DAL Cowboys,PHI Eagles,DraftKings,-110,-110,53.0,47.0,0.6,🔥 FULL BUY,DAL Cowboys (-110),6.5,AWAY HYPED,60%,✅ ALIGNED
+NFL,NE Patriots,MIA Dolphins,DraftKings,170,-200,34.7,65.3,0.0,❌ NO VALUE,PASS,0.0,AWAY HYPED,73%,⚠️ VEGAS TRAP LINE
+NFL,CIN Bengals,BAL Ravens,DraftKings,110,-130,38.7,61.3,4.8,🔥 FULL BUY,BAL Ravens (-130),54.66,HOME HYPED,73%,✅ ALIGNED
+NBA,MIA Heat,BOS Celtics,DraftKings,180,-220,27.2,72.8,4.1,🔥 FULL BUY,BOS Celtics (-220),64.99,NEUTRAL,50%,✅ ALIGNED
+NBA,PHX Suns,DAL Mavericks,DraftKings,-105,-115,41.9,58.1,4.6,🔥 FULL BUY,DAL Mavericks (-115),49.4,AWAY HYPED,73%,✅ ALIGNED
+NBA,LA Lakers,GS Warriors,DraftKings,110,-130,41.7,58.3,1.8,🔥 FULL BUY,GS Warriors (-130),20.16,NEUTRAL,50%,✅ ALIGNED
+NBA,NY Knicks,MIL Bucks,DraftKings,140,-160,43.4,56.6,1.7,🔥 FULL BUY,NY Knicks (+140),14.62,HOME HYPED,54%,✅ ALIGNED
+NBA,MIN Timberwolves,DEN Nuggets,DraftKings,125,-145,45.9,54.1,1.4,🔥 FULL BUY,MIN Timberwolves (+125),13.0,HOME HYPED,63%,✅ ALIGNED
+MLB,BOS Red Sox,NY Yankees,DraftKings,105,-125,42.8,57.2,1.7,🔥 FULL BUY,NY Yankees (-125),19.03,HOME HYPED,58%,✅ ALIGNED
+MLB,SF Giants,LA Dodgers,DraftKings,160,-190,33.0,67.0,1.5,🔥 FULL BUY,LA Dodgers (-190),21.65,HOME HYPED,56%,✅ ALIGNED
+MLB,TEX Rangers,HOU Astros,DraftKings,120,-140,39.8,60.2,1.9,🔥 FULL BUY,HOU Astros (-140),22.45,HOME HYPED,61%,✅ ALIGNED
+MLB,STL Cardinals,CHI Cubs,DraftKings,-110,-110,44.0,56.0,3.6,🔥 FULL BUY,CHI Cubs (-110),38.0,HOME HYPED,65%,✅ ALIGNED
+MLB,NY Mets,ATL Braves,DraftKings,115,-135,43.7,56.3,0.0,❌ NO VALUE,PASS,0.0,AWAY HYPED,60%,✅ ALIGNED
+NHL,TOR Maple Leafs,EDM Oilers,DraftKings,-130,110,48.3,51.7,4.1,🔥 FULL BUY,EDM Oilers (+110),39.2,NEUTRAL,50%,✅ ALIGNED
+NHL,FLA Panthers,TBL Lightning,DraftKings,-145,125,60.1,39.9,0.9,🔥 FULL BUY,FLA Panthers (-145),11.37,HOME HYPED,66%,✅ ALIGNED
+NHL,DET Red Wings,CHI Blackhawks,DraftKings,-160,140,53.6,46.4,4.7,🔥 FULL BUY,CHI Blackhawks (+140),40.34,AWAY HYPED,63%,✅ ALIGNED
+NHL,NJ Devils,NY Rangers,DraftKings,-105,-115,42.9,57.1,3.6,🔥 FULL BUY,NY Rangers (-115),38.65,HOME HYPED,54%,✅ ALIGNED
+NHL,COL Avalanche,VGK Golden Knights,DraftKings,-110,-110,46.0,54.0,1.6,🔥 FULL BUY,VGK Golden Knights (-110),17.0,NEUTRAL,50%,✅ ALIGNED
