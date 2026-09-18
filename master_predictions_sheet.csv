@@ -1,0 +1,12 @@
+Sport,Away Team,Home Team,Bookmaker,Away American Odds,Home American Odds,AI Away Prob %,AI Home Prob %,Market Home Implied %,Market Away Implied %,Calculated Edge %,Recommended Bet,Bet Allocation ($)
+NBA,MIA Heat,BOS Celtics,DraftKings,150,-180,39.3,60.7,64.3,40.0,-0.7,❌ NO VALUE,0.0
+NBA,PHX Suns,DAL Mavericks,DraftKings,100,-120,46.9,53.1,54.5,50.0,-1.5,❌ NO VALUE,0.0
+NFL,LAR Rams,SF 49ers,FanDuel,145,-175,36.3,63.7,63.6,40.8,0.1,🟢 HOME: SF 49ers,1.2
+NFL,NE Patriots,NY Jets,DraftKings,175,-210,32.5,67.5,67.7,36.4,-0.3,❌ NO VALUE,0.0
+NFL,CIN Bengals,KC Chiefs,BetMGM,120,-140,44.9,55.1,58.3,45.5,-0.6,❌ NO VALUE,0.0
+MLB,TOR Blue Jays,NY Yankees,DraftKings,110,-130,43.6,56.4,56.5,47.6,-0.1,❌ NO VALUE,0.0
+MLB,SD Padres,LA Dodgers,DraftKings,130,-150,42.1,57.9,60.0,43.5,-1.4,❌ NO VALUE,0.0
+MLB,STL Cardinals,CHI Cubs,Caesars,-110,-110,48.1,51.9,52.4,52.4,-0.5,❌ NO VALUE,0.0
+NHL,TOR Maple Leafs,EDM Oilers,DraftKings,-125,105,53.5,46.5,48.8,55.6,-2.0,❌ NO VALUE,0.0
+NHL,FLA Panthers,TBL Lightning,DraftKings,-140,120,58.7,41.3,45.5,58.3,0.4,🔵 AWAY: FLA Panthers,4.45
+NHL,DET Red Wings,CHI Blackhawks,DraftKings,-170,150,61.8,38.2,40.0,63.0,-1.2,❌ NO VALUE,0.0
