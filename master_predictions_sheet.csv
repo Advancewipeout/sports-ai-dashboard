@@ -1,12 +1,21 @@
-Sport,Away Team,Home Team,Bookmaker,Away American Odds,Home American Odds,AI Away Prob %,AI Home Prob %,Market Home Implied %,Market Away Implied %,Calculated Edge %,Recommended Bet,Bet Allocation ($)
-NBA,MIA Heat,BOS Celtics,DraftKings,150,-180,38.7,61.3,64.3,40.0,-1.3,❌ NO VALUE,0.0
-NBA,PHX Suns,DAL Mavericks,DraftKings,100,-120,48.1,51.9,54.5,50.0,-1.9,❌ NO VALUE,0.0
-NFL,LAR Rams,SF 49ers,FanDuel,145,-175,40.8,59.2,63.6,40.8,-0.0,❌ NO VALUE,0.0
-NFL,NE Patriots,NY Jets,DraftKings,175,-210,32.4,67.6,67.7,36.4,-0.2,❌ NO VALUE,0.0
-NFL,CIN Bengals,KC Chiefs,BetMGM,120,-140,44.3,55.7,58.3,45.5,-1.2,❌ NO VALUE,0.0
-MLB,TOR Blue Jays,NY Yankees,DraftKings,110,-130,47.6,52.4,56.5,47.6,0.0,🔵 AWAY: TOR Blue Jays,0.06
-MLB,SD Padres,LA Dodgers,DraftKings,130,-150,39.8,60.2,60.0,43.5,0.2,🟢 HOME: LA Dodgers,2.29
-MLB,STL Cardinals,CHI Cubs,Caesars,-110,-110,48.8,51.2,52.4,52.4,-1.2,❌ NO VALUE,0.0
-NHL,TOR Maple Leafs,EDM Oilers,DraftKings,-125,105,54.9,45.1,48.8,55.6,-0.6,❌ NO VALUE,0.0
-NHL,FLA Panthers,TBL Lightning,DraftKings,-140,120,56.9,43.1,45.5,58.3,-1.4,❌ NO VALUE,0.0
-NHL,DET Red Wings,CHI Blackhawks,DraftKings,-170,150,63.9,36.1,40.0,63.0,0.9,🔵 AWAY: DET Red Wings,11.99
+Sport,Away Team,Home Team,Bookmaker,Away American Odds,Home American Odds,AI Away Prob %,AI Home Prob %,Calculated Edge %,AI Action Directive,Recommended Selection,Suggested Allocation ($)
+NFL,BUF Bills,KC Chiefs,DraftKings,120,-140,42.8,57.2,0.0,❌ NO VALUE,PASS,0.0
+NFL,LAR Rams,SF 49ers,DraftKings,155,-180,36.9,63.1,0.0,❌ NO VALUE,PASS,0.0
+NFL,DAL Cowboys,PHI Eagles,DraftKings,-110,-110,43.0,57.0,4.6,🔥 FULL BUY,PHI Eagles (-110),48.5
+NFL,NE Patriots,MIA Dolphins,DraftKings,170,-200,28.7,71.3,4.6,🔥 FULL BUY,MIA Dolphins (-200),69.29
+NFL,CIN Bengals,BAL Ravens,DraftKings,110,-130,41.7,58.3,1.8,🔥 FULL BUY,BAL Ravens (-130),20.16
+NBA,MIA Heat,BOS Celtics,DraftKings,180,-220,33.2,66.8,0.0,❌ NO VALUE,PASS,0.0
+NBA,PHX Suns,DAL Mavericks,DraftKings,-105,-115,42.9,57.1,3.6,🔥 FULL BUY,DAL Mavericks (-115),38.65
+NBA,LA Lakers,GS Warriors,DraftKings,110,-130,44.7,55.3,0.0,❌ NO VALUE,PASS,0.0
+NBA,NY Knicks,MIL Bucks,DraftKings,140,-160,39.4,60.6,0.0,❌ NO VALUE,PASS,0.0
+NBA,MIN Timberwolves,DEN Nuggets,DraftKings,125,-145,36.9,63.1,3.9,🔥 FULL BUY,DEN Nuggets (-145),48.12
+MLB,BOS Red Sox,NY Yankees,DraftKings,105,-125,45.8,54.2,0.0,❌ NO VALUE,PASS,0.0
+MLB,SF Giants,LA Dodgers,DraftKings,160,-190,30.0,70.0,4.5,🔥 FULL BUY,LA Dodgers (-190),65.15
+MLB,TEX Rangers,HOU Astros,DraftKings,120,-140,39.8,60.2,1.9,🔥 FULL BUY,HOU Astros (-140),22.45
+MLB,STL Cardinals,CHI Cubs,DraftKings,-110,-110,43.0,57.0,4.6,🔥 FULL BUY,CHI Cubs (-110),48.5
+MLB,NY Mets,ATL Braves,DraftKings,115,-135,40.7,59.3,1.8,🔥 FULL BUY,ATL Braves (-135),21.3
+NHL,TOR Maple Leafs,EDM Oilers,DraftKings,-130,110,57.3,42.7,0.8,🔥 FULL BUY,TOR Maple Leafs (-130),8.66
+NHL,FLA Panthers,TBL Lightning,DraftKings,-145,125,50.1,49.9,5.4,🔥 FULL BUY,TBL Lightning (+125),49.0
+NHL,DET Red Wings,CHI Blackhawks,DraftKings,-160,140,53.6,46.4,4.7,🔥 FULL BUY,CHI Blackhawks (+140),40.34
+NHL,NJ Devils,NY Rangers,DraftKings,-105,-115,42.9,57.1,3.6,🔥 FULL BUY,NY Rangers (-115),38.65
+NHL,COL Avalanche,VGK Golden Knights,DraftKings,-110,-110,44.0,56.0,3.6,🔥 FULL BUY,VGK Golden Knights (-110),38.0
