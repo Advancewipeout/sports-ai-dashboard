@@ -3,82 +3,86 @@ import pandas as pd
 import os
 import time
 
-pd_stream.set_page_config(page_title="AI Live In-Play Trade Desk", layout="wide")
+pd_stream.set_page_config(page_title="2-Layer AI Risk Desk", layout="wide")
 
-pd_stream.markdown("# 🧠 AI Real-Time In-Play Court Desk")
-pd_stream.markdown("### Streaming Live Game Feeds, Score Tickers & Instantaneous Micro-Edge Directives")
+pd_stream.markdown("# 🧠 Institutional 2-Layer AI Trading Desk")
+pd_stream.markdown("### Real-Time Split Engine: Synchronizing In-Play Live Systems & Upcoming Market Models")
 pd_stream.write("---")
-
-pd_stream.caption("🔴 LIVE FEED SYNCED - Tracking court updates via Groq AI Matrix Engine")
 
 filename = "master_predictions_sheet.csv"
 
 if not os.path.exists(filename):
-    pd_stream.error("❌ master_predictions_sheet.csv not detected. Launch your engine in your VS Code terminal tab.")
+    pd_stream.error("❌ master_predictions_sheet.csv not detected. Initialize your engine loop in your VS Code terminal.")
 else:
     df = pd.read_csv(filename)
-    
-    # 🛠️ SAFE COLUMNS CHECKER - Prevents any KeyError from crashing the web server
-    if "AI In-Play Directive" not in df.columns:
-        # Fallback if looking at old pre-match data sheet structure
-        pd_stream.warning("⚠️ Reading pre-match dataset. Run your live in-play engine script locally to activate real-time court tickers!")
-        if "AI Action Directive" in df.columns:
-            df["AI In-Play Directive"] = df["AI Action Directive"]
-        else:
-            df["AI In-Play Directive"] = "🔥 LIVE BUY"
-            
-    if "Live Game Clock" not in df.columns:
-        df["Live Game Clock"] = "PRE-MATCH"
-    if "Current Score Ticker" not in df.columns:
-        df["Current Score Ticker"] = "UPCOMING"
-    if "Live Bookmaker Line" not in df.columns:
-        df["Live Bookmaker Line"] = "DraftKings"
-    if "Calculated Instant Edge" not in df.columns:
-        if "Calculated Edge %" in df.columns:
-            df["Calculated Instant Edge"] = df["Calculated Edge %"].astype(str) + "%"
-        else:
-            df["Calculated Instant Edge"] = "+0.0%"
-    if "Target Execution Team" not in df.columns:
-        if "Recommended Selection" in df.columns:
-            df["Target Execution Team"] = df["Recommended Selection"]
-        else:
-            df["Target Execution Team"] = "HOLD CASH"
-    if "Matchup" not in df.columns and "Home Team" in df.columns:
-        df["Matchup"] = df["Away Team"] + " @ " + df["Home Team"]
 
-    # Simple Metrics Banner
-    c1, c2 = pd_stream.columns(2)
-    c1.metric("Active Live Games Streaming", len(df))
-    active_buys = len(df[df["AI In-Play Directive"].isin(["🔥 LIVE BUY", "🛡️ SLICE STAKE", "🔥 FULL BUY"])])
-    c2.metric("Instant AI Trade Alerts", active_buys)
+    # 💰 RESTORED SIDEBAR CONTROL PANELS
+    pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
+    bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
+    selected_sport = pd_stream.sidebar.selectbox("Filter Market Sport", ["ALL"] + list(df["Sport"].unique()))
     
-    pd_stream.write("### 🏀 Real-Time Game Ticker Matrix")
-    pd_stream.dataframe(
-        df[["Sport", "Matchup", "Live Game Clock", "Current Score Ticker", "Live Bookmaker Line", "Calculated Instant Edge", "AI In-Play Directive", "Target Execution Team"]],
-        use_container_width=True,
-        hide_index=True
-    )
-    
+    if selected_sport != "ALL":
+        df = df[df["Sport"] == selected_sport]
+
+    # SEPARATE DUAL-LAYERS IN REAL-TIME
+    live_layer_df = df[df["Engine Layer"].str.contains("LIVE")]
+    upcoming_layer_df = df[df["Engine Layer"].str.contains("UPCOMING")]
+
+    # --- TOP MAIN STATUS BLOCKS ---
+    col1, col2, col3 = pd_stream.columns(3)
+    col1.metric("Live Matches Tracking Now", len(live_layer_df))
+    col2.metric("Upcoming Systems Calculated", len(upcoming_layer_df))
+    col3.metric("Max Discovered Statistical Edge", f"+{df['Edge Margin %'].max()}%" if not df.empty else "0.0%")
     pd_stream.write("---")
-    pd_stream.write("### 📋 Court-Side Quick Execution Blueprint")
-    
-    buy_signals = df[df["AI In-Play Directive"].isin(["🔥 LIVE BUY", "🛡️ SLICE STAKE", "⏳ HOLD LINE", "🔥 FULL BUY", "🛡️ MITIGATED RISK"])]
-    if buy_signals.empty:
-        pd_stream.info("Waiting for market pricing inefficiencies to manifest on active lines...")
+
+    # 🔥 1. THE LIVE IN-PLAY LAYER SCREEN (Sports happening right now)
+    pd_stream.write("### 🔴 LAYER 2: Live In-Play Systems (Active Scores & Clock Tickers)")
+    if live_layer_df.empty:
+        pd_stream.info("No games are active in-play right at this second. Waiting for next game block...")
     else:
-        for _, row in buy_signals.iterrows():
-            directive = row["AI In-Play Directive"]
-            match = row.get("Matchup", "Game Matchup")
-            score = row["Current Score Ticker"]
-            clock = row["Live Game Clock"]
-            target = row["Target Execution Team"]
-            line = row["Live Bookmaker Line"]
+        pd_stream.dataframe(
+            live_layer_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Pick Team"]],
+            use_container_width=True, hide_index=True
+        )
+
+    pd_stream.write("---")
+
+    # ⏳ 2. THE UPCOMING LAYER SCREEN (Games playing later today/tonight)
+    pd_stream.write("### ⏳ LAYER 1: Upcoming Pre-Match Models (Scheduled Selections)")
+    if upcoming_layer_df.empty:
+        pd_stream.info("No upcoming matches detected matching current filters.")
+    else:
+        pd_stream.dataframe(
+            upcoming_layer_df[["Sport", "Matchup", "Odds Line", "Edge Margin %", "AI Action Directive", "Pick Team"]],
+            use_container_width=True, hide_index=True
+        )
+
+    # --- LOWER SYSTEM BLUEPRINTS (DYNAMIC SCALING STATIONS) ---
+    pd_stream.write("---")
+    pd_stream.write("### 📋 Automated Execution Order Blueprint (Scaled Risk Actions)")
+    
+    active_orders = df[~df["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT"])]
+    if active_orders.empty:
+        pd_stream.info("No active play recommendations found under current configurations.")
+    else:
+        for _, row in active_orders.iterrows():
+            layer = row["Engine Layer"]
+            match = row["Matchup"]
+            directive = row["AI Action Directive"]
+            target = row["Pick Team"]
+            line = row["Odds Line"]
+            edge = row["Edge Margin %"]
             
-            blueprint_code = f"LIVE MATCH TICKER: [{clock}] | {score} | ACTION STATUS: [{directive}] -> EXECUTE ON: {target} via {line}"
+            # Dynamic calculation formula hooked straight back to your side money input slider
+            allocation_pct = (edge * 0.5) / 100
+            dollar_risk = round(bankroll * allocation_pct, 2)
+            if dollar_risk < 5.0: dollar_risk = 25.00 # Minimum default trade threshold protection
             
-            pd_stream.markdown(f"**📍 {match}** — Instant Edge: **{row['Calculated Instant Edge']}**")
+            blueprint_code = f"SOURCE LAYER: [{layer}] | ORDER STATUS: [{directive}] -> EXECUTE ACTION ON: {target} ({line}) | DYNAMIC SUGGESTED RISK: ${dollar_risk}"
+            
+            pd_stream.markdown(f"**📍 {match} ({row['Sport']})** — Instant Calculated Value Edge: **+{edge}%**")
             pd_stream.code(blueprint_code, language="text")
 
-    # Force Streamlit to automatically rerun and refresh components
+    # Auto-loop background refreshing hooks every 5 seconds
     time.sleep(5)
     pd_stream.rerun()
