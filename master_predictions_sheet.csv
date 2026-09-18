@@ -1,21 +1,21 @@
-Sport,Away Team,Home Team,Bookmaker,Away American Odds,Home American Odds,AI Away Prob %,AI Home Prob %,Calculated Edge %,Live Stadium Weather,AI Action Directive,Recommended Selection,Suggested Allocation ($)
-NFL,BUF Bills,KC Chiefs,DraftKings,120,-140,46.8,53.2,1.3,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,BUF Bills (+120),12.29
-NFL,LAR Rams,SF 49ers,DraftKings,155,-180,30.9,69.1,4.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,SF 49ers (-180),67.55
-NFL,DAL Cowboys,PHI Eagles,DraftKings,-110,-110,53.0,47.0,0.6,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,DAL Cowboys (-110),6.5
-NFL,NE Patriots,MIA Dolphins,DraftKings,170,-200,34.7,65.3,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0
-NFL,CIN Bengals,BAL Ravens,DraftKings,110,-130,48.7,51.3,1.1,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,CIN Bengals (+110),10.56
-NBA,MIA Heat,BOS Celtics,DraftKings,180,-220,33.2,66.8,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0
-NBA,PHX Suns,DAL Mavericks,DraftKings,-105,-115,42.9,57.1,3.6,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,DAL Mavericks (-115),38.65
-NBA,LA Lakers,GS Warriors,DraftKings,110,-130,44.7,55.3,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0
-NBA,NY Knicks,MIL Bucks,DraftKings,140,-160,43.4,56.6,1.7,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,NY Knicks (+140),14.62
-NBA,MIN Timberwolves,DEN Nuggets,DraftKings,125,-145,41.9,58.1,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0
-MLB,BOS Red Sox,NY Yankees,DraftKings,105,-125,49.8,50.2,1.0,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,BOS Red Sox (+105),9.5
-MLB,SF Giants,LA Dodgers,DraftKings,160,-190,33.0,67.0,1.5,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,LA Dodgers (-190),21.65
-MLB,TEX Rangers,HOU Astros,DraftKings,120,-140,46.8,53.2,1.3,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,TEX Rangers (+120),12.29
-MLB,STL Cardinals,CHI Cubs,DraftKings,-110,-110,43.0,57.0,4.6,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,CHI Cubs (-110),48.5
-MLB,NY Mets,ATL Braves,DraftKings,115,-135,38.7,61.3,3.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,ATL Braves (-135),44.8
-NHL,TOR Maple Leafs,EDM Oilers,DraftKings,-130,110,57.3,42.7,0.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,TOR Maple Leafs (-130),8.66
-NHL,FLA Panthers,TBL Lightning,DraftKings,-145,125,50.1,49.9,5.4,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,TBL Lightning (+125),49.0
-NHL,DET Red Wings,CHI Blackhawks,DraftKings,-160,140,58.6,41.4,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0
-NHL,NJ Devils,NY Rangers,DraftKings,-105,-115,41.9,58.1,4.6,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,NY Rangers (-115),49.4
-NHL,COL Avalanche,VGK Golden Knights,DraftKings,-110,-110,43.0,57.0,4.6,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,VGK Golden Knights (-110),48.5
+Sport,Away Team,Home Team,Bookmaker,Away American Odds,Home American Odds,AI Away Prob %,AI Home Prob %,Calculated Edge %,Live Stadium Weather,AI Action Directive,Recommended Selection,Suggested Allocation ($),Public Consensus Bias,Public Backing %,Market Alignment Signal
+NFL,BUF Bills,KC Chiefs,DraftKings,120,-140,37.8,62.2,3.9,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,KC Chiefs (-140),46.45,NEUTRAL,50%,✅ ALIGNED
+NFL,LAR Rams,SF 49ers,DraftKings,155,-180,33.9,66.1,1.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,SF 49ers (-180),25.55,AWAY HYPED,75%,✅ ALIGNED
+NFL,DAL Cowboys,PHI Eagles,DraftKings,-110,-110,49.0,51.0,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0,HOME HYPED,69%,⚠️ VEGAS TRAP LINE
+NFL,NE Patriots,MIA Dolphins,DraftKings,170,-200,38.7,61.3,1.7,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,NE Patriots (+170),13.32,HOME HYPED,70%,✅ ALIGNED
+NFL,CIN Bengals,BAL Ravens,DraftKings,110,-130,39.7,60.3,3.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,BAL Ravens (-130),43.16,NEUTRAL,50%,✅ ALIGNED
+NBA,MIA Heat,BOS Celtics,DraftKings,180,-220,37.2,62.8,1.5,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,MIA Heat (+180),11.46,HOME HYPED,57%,✅ ALIGNED
+NBA,PHX Suns,DAL Mavericks,DraftKings,-105,-115,47.9,52.1,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0,HOME HYPED,73%,⚠️ VEGAS TRAP LINE
+NBA,LA Lakers,GS Warriors,DraftKings,110,-130,39.7,60.3,3.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,GS Warriors (-130),43.16,NEUTRAL,50%,✅ ALIGNED
+NBA,NY Knicks,MIL Bucks,DraftKings,140,-160,39.4,60.6,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0,NEUTRAL,50%,✅ ALIGNED
+NBA,MIN Timberwolves,DEN Nuggets,DraftKings,125,-145,38.9,61.1,1.9,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,DEN Nuggets (-145),23.62,HOME HYPED,64%,✅ ALIGNED
+MLB,BOS Red Sox,NY Yankees,DraftKings,105,-125,40.8,59.2,3.7,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,NY Yankees (-125),41.53,NEUTRAL,50%,✅ ALIGNED
+MLB,SF Giants,LA Dodgers,DraftKings,160,-190,40.0,60.0,1.5,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,SF Giants (+160),12.42,HOME HYPED,74%,✅ ALIGNED
+MLB,TEX Rangers,HOU Astros,DraftKings,120,-140,36.8,63.2,4.9,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,HOU Astros (-140),58.45,NEUTRAL,50%,✅ ALIGNED
+MLB,STL Cardinals,CHI Cubs,DraftKings,-110,-110,44.0,56.0,3.6,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,CHI Cubs (-110),38.0,AWAY HYPED,68%,✅ ALIGNED
+MLB,NY Mets,ATL Braves,DraftKings,115,-135,38.7,61.3,3.8,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,ATL Braves (-135),44.8,HOME HYPED,55%,✅ ALIGNED
+NHL,TOR Maple Leafs,EDM Oilers,DraftKings,-130,110,47.3,52.7,5.1,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,EDM Oilers (+110),48.74,AWAY HYPED,69%,✅ ALIGNED
+NHL,FLA Panthers,TBL Lightning,DraftKings,-145,125,56.1,43.9,0.0,Indoor Stadium / Controlled Environment (72°F),❌ NO VALUE,PASS,0.0,AWAY HYPED,59%,✅ ALIGNED
+NHL,DET Red Wings,CHI Blackhawks,DraftKings,-160,140,53.6,46.4,4.7,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,CHI Blackhawks (+140),40.34,HOME HYPED,78%,✅ ALIGNED
+NHL,NJ Devils,NY Rangers,DraftKings,-105,-115,51.9,48.1,0.7,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,NJ Devils (-105),7.14,HOME HYPED,53%,✅ ALIGNED
+NHL,COL Avalanche,VGK Golden Knights,DraftKings,-110,-110,53.0,47.0,0.6,Indoor Stadium / Controlled Environment (72°F),🔥 FULL BUY,COL Avalanche (-110),6.5,HOME HYPED,57%,✅ ALIGNED
