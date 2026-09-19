@@ -22,8 +22,10 @@ def check_and_grade_final_scores(game_row):
     if not os.path.exists(LEDGER_FILE):
         ledger_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
     else:
-        try: ledger_df = pd.read_csv(LEDGER_FILE)
-        except Exception: ledger_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
+        try:
+            ledger_df = pd.read_csv(LEDGER_FILE)
+        except Exception:
+            ledger_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
         
     match_title = game_row["Matchup"]
     if not ledger_df.empty and match_title in ledger_df["Matchup"].values: 
@@ -82,6 +84,7 @@ def manage_layered_data_stream():
 
     while True:
         master_compiled_rows = []
+        print(f"\n🔄 Sweeping Real Live Networks: {time.strftime('%H:%M:%S')}")
         
         # PROCESS ALL ACTIVE LIVE IN-PLAY TILES WITH AUTOMATIC WHISTLE REMOVALS
         for idx, g in enumerate(active_live_pool):
@@ -109,7 +112,6 @@ def manage_layered_data_stream():
             base_edge = round(random.uniform(1.5, 8.4), 1)
             pick_team = g["home"] if base_edge > 3.5 else g["away"]
             
-            # --- 🛠️ THE INSTANT WHISTLE-CLEAR FILTRATION AND BENCH ROTATION GATEWAY ---
             if "FINAL" in str(g["clock"]).upper():
                 completed_game_card = {
                     "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
@@ -146,4 +148,7 @@ def manage_layered_data_stream():
             })
 
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
-        print(f"🔄 Sweeping Multi-Sport Processing Core: {time.strftime('%H:%M:%S')}")
+        time.sleep(15)
+
+if __name__ == "__main__":
+    manage_layered_data_stream()
