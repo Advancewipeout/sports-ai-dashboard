@@ -29,4 +29,3 @@ echo ✅ SUCCESS: Cloud updates sent!
 echo Your live site at smittysports-ai-dashboard.streamlit.app 
 echo will refresh automatically in about 15 seconds.
 echo ===================================================
-pause
