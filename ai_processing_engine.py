@@ -24,7 +24,7 @@ def fetch_breaking_sports_news(sport_label):
     }
     url = rss_urls.get(sport_label.upper(), "https://yahoo.com")
     try:
-        response = requests.get(url, timeout=2) # Shorter timeout prevents long freezes
+        response = requests.get(url, timeout=2)
         if response.status_code == 200:
             root = ET.fromstring(response.content)
             for item in root.findall(".//item")[:4]:
@@ -55,7 +55,6 @@ def query_groq_news_intelligence(home, away, sport, game_state, odds_str, edge, 
     )
 
     try:
-        # Added a strict 2-second timeout protection limit to stop internet lag instantly
         res = requests.post(url, headers=headers, json={"model": MODEL_NAME, "messages": [{"role": "user", "content": prompt}], "response_format": {"type": "json_object"}, "temperature": 0.1}, timeout=2)
         if res.status_code == 200:
             raw_data = json.loads(res.json()['choices']['message']['content'].strip())
@@ -63,7 +62,6 @@ def query_groq_news_intelligence(home, away, sport, game_state, odds_str, edge, 
     except Exception:
         pass
         
-    # 🛡️ THE AUTOMATIC BACKUP ENGINE BYPASS: Fires instantly if the internet connection lags!
     default_directive = "🔥 LIVE BUY" if context_type == "LIVE" else "🔥 FULL BUY"
     if "WARNING" in news_wire or "BREAKING" in news_wire or "⚠️" in news_wire:
         return "🛡️ NEWS WARNING: SLICE", 0.5
@@ -128,7 +126,7 @@ def manage_layered_data_stream():
         
         for g in live_inplay_games:
             if random.random() > 0.5: 
-                if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([2, 3])
+                if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([2, 3, 6])
                 else: g["h_score"] += 1
                 g["min"] -= 1
                 if g["min"] <= 0: g["clock"] = "FINAL"
@@ -174,3 +172,9 @@ def manage_layered_data_stream():
 
         # AUTOMATED AUTO-PUSH PIPELINE
         git_env_patch = 'set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && '
+        os.system(git_env_patch + "git add master_predictions_sheet.csv settled_bets_ledger.csv && git commit -m 'Auto-updates' --quiet && git push origin main --quiet")
+        print("✅ Cloud synchronization complete! Next sweep in 15 seconds...")
+        time.sleep(15)
+
+if __name__ == "__main__":
+    manage_layered_data_stream()
