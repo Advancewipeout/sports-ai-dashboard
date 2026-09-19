@@ -5,7 +5,6 @@ import random
 import requests
 import pandas as pd
 
-# Live System Infrastructure Configurations
 GROQ_API_KEY = "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"
 MODEL_NAME = "llama3-8b-8192"
 OUTPUT_FILE = "master_predictions_sheet.csv"
@@ -15,10 +14,9 @@ def query_groq_news_intelligence(home, away, sport, game_state, odds_str, edge):
     return "🔥 LIVE BUY", 1.0
 
 def pull_true_unfiltered_global_ticker():
-    """Extracts true real-world data by correctly parsing lists using exact index placements."""
     aggregated_games = []
     
-    # ⚾ 1. PULL ACTUAL LIVE MLB BASEBALL (Matches your TonyBet screen games!)
+    # ⚾ 1. PULL ACTUAL LIVE MLB BASEBALL (Tied directly to your TonyBet games!)
     try:
         res = requests.get("https://mlb.com", timeout=4)
         if res.status_code == 200:
@@ -49,7 +47,7 @@ def pull_true_unfiltered_global_ticker():
                         })
     except Exception: pass
 
-    # ⚽ 2. PULL REAL-TIME GLOBAL SOCCER LEAGUES (Parsed with List-Index Protections)
+    # ⚽ 2. PULL REAL-TIME GLOBAL SOCCER LEAGUES (Parsed safely with List-Index Protections)
     try:
         res = requests.get("https://espn.com", timeout=4)
         if res.status_code == 200:
@@ -79,7 +77,7 @@ def pull_true_unfiltered_global_ticker():
                         })
     except Exception: pass
 
-    # 🏈 3. PULL COMPLETE UPCOMING FOOTBALL SLATES
+    # 🏈 3. PULL COMPLETE MARQUEE FOOTBALL SLATES (Upcoming NFL Slates)
     try:
         res = requests.get("https://espn.com", timeout=4)
         if res.status_code == 200:
@@ -108,8 +106,7 @@ def pull_true_unfiltered_global_ticker():
     return aggregated_games
 
 def manage_layered_data_stream():
-    print("🧠 ALL SPORTS SYSTEM ENGINE: Running Omni-Market TonyBet Matrix...")
-    push_timer_checkpoint = time.time()
+    print("🧠 ALL SPORTS SYSTEM ENGINE: Running Complete TonyBet Real-Time Matrix...")
     
     while True:
         master_compiled_rows = []
@@ -128,12 +125,6 @@ def manage_layered_data_stream():
             })
 
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
-        
-        if time.time() - push_timer_checkpoint >= 15:
-            os.system('cmd /c "set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && git add master_predictions_sheet.csv settled_bets_ledger.csv && git commit -m \"Live network data sync\" --quiet && git push origin main --quiet"')
-            print(f"🔄 CLOUD BROADCAST SENT: Synchronized raw network feeds to web dashboard: {time.strftime('%H:%M:%S')}")
-            push_timer_checkpoint = time.time()
-            
         time.sleep(1)
 
 if __name__ == "__main__":
