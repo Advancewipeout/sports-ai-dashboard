@@ -81,6 +81,7 @@ def manage_layered_data_stream():
 
     while True:
         master_compiled_rows = []
+        print(f"\n🔄 Sweeping Real Live Networks: {time.strftime('%H:%M:%S')}")
         
         # PROCESS INDEPENDENT MATCH CLOCK RECOGNITION MOTORS
         for idx, g in enumerate(active_live_pool):
@@ -145,4 +146,3 @@ def manage_layered_data_stream():
                 "Breaking News Signal": "Normal parameters.", "Allocation Modifier": 1.0
             })
 
-        pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
