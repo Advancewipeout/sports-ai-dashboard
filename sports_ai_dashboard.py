@@ -16,7 +16,7 @@ ledger_file = "settled_bets_ledger.csv"
 pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
 bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
 
-# Safe file checking to prevent EmptyDataError crashes entirely
+# Check for file existence safely before loading sidebar
 df_init = pd.DataFrame()
 if os.path.exists(filename):
     try:
@@ -42,7 +42,7 @@ if pd_stream.sidebar.button("🧹 Wipe Graded Bet Ledger History"):
         pd_stream.sidebar.success("Ledger wiped clean!")
         pd_stream.rerun()
 
-# 🔄 THE NATIVE STREAMLIT LIVE SYNC TRIGGER (Rapid 1-second hands-free motion!)
+# 🔄 THE HIGH-SPEED LIVE FRAGMENT SYNC TRIGGER (Rapid 1-second hands-free motion!)
 @pd_stream.fragment(run_every=1)
 def render_live_sports_matrix():
     if not os.path.exists(filename) or os.path.getsize(filename) == 0:
@@ -64,8 +64,15 @@ def render_live_sports_matrix():
     if "Edge Margin %" in df.columns:
         df = df[df["Edge Margin %"] >= strictness_trigger]
     
-    live_layer_df = df[df["Engine Layer"].str.contains("LIVE")] if "Engine Layer" in df.columns else pd.DataFrame()
-    upcoming_layer_df = df[df["Engine Layer"].str.contains("UPCOMING")] if "Engine Layer" in df.columns else pd.DataFrame()
+    # Robust flexible layer extraction to completely bypass variable naming conflicts
+    layer_col = "Engine Layer" if "Engine Layer" in df.columns else (df.columns[0] if not df.empty else "")
+    
+    if layer_col and layer_col in df.columns:
+        live_layer_df = df[df[layer_col].astype(str).str.contains("LIVE|LAYER 2", case=False, na=False)]
+        upcoming_layer_df = df[df[layer_col].astype(str).str.contains("UPCOMING|LAYER 1", case=False, na=False)]
+    else:
+        live_layer_df = pd.DataFrame()
+        upcoming_layer_df = pd.DataFrame()
 
     # --- TOP MAIN STATUS BLOCKS ---
     col1, col2, col3 = pd_stream.columns(3)
@@ -104,7 +111,7 @@ def render_live_sports_matrix():
         pd_stream.info("Awaiting high-value selections matching your edge cutoff rules...")
     else:
         for _, row in active_orders.iterrows():
-            layer_label = row.get("Engine Layer", "LAYER 2")
+            layer_label = row.get(layer_col, "LAYER 2") if layer_col else "LAYER 2"
             matchup_title = row.get("Matchup", "Match")
             action_status = row.get("AI Action Directive", "🔥 LIVE BUY")
             target_selection = row.get("Pick Team", "Target")
