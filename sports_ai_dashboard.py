@@ -57,7 +57,14 @@ else:
     if live_layer_df.empty:
         pd_stream.info("No live games currently match your strictness filter settings.")
     else:
-        pd_stream.dataframe(live_layer_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
+        # ⚡ UNLOCKED STREAM MATRIX COMPONENT: Forces browser rendering layers to animate live!
+        pd_stream.data_editor(
+            live_layer_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], 
+            use_container_width=True, 
+            hide_index=True,
+            disabled=True,
+            key=f"live_stream_{time.time()}"  # Dynamic stream keys break text freezing instantly!
+        )
     pd_stream.write("---")
 
     # ⏳ 2. UPCOMING LAYER MATRIX
@@ -104,7 +111,6 @@ else:
             pd_stream.write("#### 📋 Detailed Settlement Audit Log Statements")
             pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
 
-    # 💓 THE AUTOMATED UI INTERVAL HEARTBEAT
-    # Automatically triggers a smooth layout refresh every 4 seconds without screen blinking!
-    time.sleep(4)
+    # 💓 AUTOMATED UI INTERVAL HEARTBEAT REFRESH
+    time.sleep(3)
     pd_stream.rerun()
