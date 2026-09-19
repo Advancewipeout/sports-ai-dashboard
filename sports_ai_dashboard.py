@@ -1,7 +1,6 @@
 import streamlit as pd_stream
 import pandas as pd
 import os
-import time
 
 pd_stream.set_page_config(page_title="Smitty's AI News Risk Desk", layout="wide")
 
@@ -16,14 +15,10 @@ ledger_file = "settled_bets_ledger.csv"
 pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
 bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
 
-# Check for file existence safely before loading sidebar
 df_init = pd.DataFrame()
-if os.path.exists(filename):
-    try:
-        if os.path.getsize(filename) > 0:
-            df_init = pd.read_csv(filename)
-    except Exception:
-        pass
+if os.path.exists(filename) and os.path.getsize(filename) > 0:
+    try: df_init = pd.read_csv(filename)
+    except Exception: pass
 
 sport_options = ["ALL"]
 if not df_init.empty and "Sport" in df_init.columns:
@@ -42,18 +37,15 @@ if pd_stream.sidebar.button("🧹 Wipe Graded Bet Ledger History"):
         pd_stream.sidebar.success("Ledger wiped clean!")
         pd_stream.rerun()
 
-# 🔄 THE HIGH-SPEED LIVE FRAGMENT SYNC TRIGGER (Rapid 1-second hands-free motion!)
+# 🔄 THE NATIVE STREAMLIT LIVE SYNC TRIGGER (Rapid 1-second fragments!)
 @pd_stream.fragment(run_every=1)
 def render_live_sports_matrix():
     if not os.path.exists(filename) or os.path.getsize(filename) == 0:
         pd_stream.info("⏳ Awaiting data stream sync... Your engine terminal loop is writing the live spreadsheet rows now.")
         return
 
-    try:
-        df = pd.read_csv(filename)
-    except Exception:
-        pd_stream.info("⏳ Refreshing pipeline matrices... Hold tight.")
-        return
+    try: df = pd.read_csv(filename)
+    except Exception: return
 
     blueprint_df = df.copy()
     
@@ -64,15 +56,8 @@ def render_live_sports_matrix():
     if "Edge Margin %" in df.columns:
         df = df[df["Edge Margin %"] >= strictness_trigger]
     
-    # Robust flexible layer extraction to completely bypass variable naming conflicts
-    layer_col = "Engine Layer" if "Engine Layer" in df.columns else (df.columns[0] if not df.empty else "")
-    
-    if layer_col and layer_col in df.columns:
-        live_layer_df = df[df[layer_col].astype(str).str.contains("LIVE|LAYER 2", case=False, na=False)]
-        upcoming_layer_df = df[df[layer_col].astype(str).str.contains("UPCOMING|LAYER 1", case=False, na=False)]
-    else:
-        live_layer_df = pd.DataFrame()
-        upcoming_layer_df = pd.DataFrame()
+    live_layer_df = df[df["Engine Layer"].str.contains("LIVE|LAYER 2", case=False, na=False)] if "Engine Layer" in df.columns else pd.DataFrame()
+    upcoming_layer_df = df[df["Engine Layer"].str.contains("UPCOMING|LAYER 1", case=False, na=False)] if "Engine Layer" in df.columns else pd.DataFrame()
 
     # --- TOP MAIN STATUS BLOCKS ---
     col1, col2, col3 = pd_stream.columns(3)
@@ -86,8 +71,7 @@ def render_live_sports_matrix():
     if live_layer_df.empty:
         pd_stream.info("No live games currently match your strictness filter settings.")
     else:
-        display_cols = [c for c in ["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"] if c in live_layer_df.columns]
-        pd_stream.dataframe(live_layer_df[display_cols], use_container_width=True, hide_index=True)
+        pd_stream.dataframe(live_layer_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
     pd_stream.write("---")
 
     # ⏳ 2. UPCOMING LAYER MATRIX
@@ -95,8 +79,7 @@ def render_live_sports_matrix():
     if upcoming_layer_df.empty:
         pd_stream.info("No upcoming games currently match your strictness filter settings.")
     else:
-        display_cols = [c for c in ["Sport", "Matchup", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"] if c in upcoming_layer_df.columns]
-        pd_stream.dataframe(upcoming_layer_df[display_cols], use_container_width=True, hide_index=True)
+        pd_stream.dataframe(upcoming_layer_df[["Sport", "Matchup", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
 
     # --- 📋 LOWER BLUEPRINTS ---
     pd_stream.write("---")
@@ -111,7 +94,7 @@ def render_live_sports_matrix():
         pd_stream.info("Awaiting high-value selections matching your edge cutoff rules...")
     else:
         for _, row in active_orders.iterrows():
-            layer_label = row.get(layer_col, "LAYER 2") if layer_col else "LAYER 2"
+            layer_label = row.get("Engine Layer", "LAYER 2")
             matchup_title = row.get("Matchup", "Match")
             action_status = row.get("AI Action Directive", "🔥 LIVE BUY")
             target_selection = row.get("Pick Team", "Target")
@@ -136,6 +119,5 @@ def render_live_sports_matrix():
             pd_stream.line_chart(ledger_df["Running Bankroll"], use_container_width=True)
             pd_stream.write("#### 📋 Detailed Settlement Audit Log Statements")
             pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
-
-# Ignite the live unblocked fragment channel
+            
 render_live_sports_matrix()
