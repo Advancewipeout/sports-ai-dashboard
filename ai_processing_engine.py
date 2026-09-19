@@ -154,7 +154,6 @@ def manage_layered_data_stream():
         check_and_grade_final_scores(active_live_pool)
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
         print(f"📊 Dataset successfully generated with {len(master_compiled_rows)} multi-sport rows.")
-        time.sheet = True
+        
         
         # Windows environment path sync logic block
-        
