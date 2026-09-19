@@ -5,6 +5,7 @@ import random
 import requests
 import pandas as pd
 
+# Live System Infrastructure Configurations
 GROQ_API_KEY = "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"
 MODEL_NAME = "llama3-8b-8192"
 OUTPUT_FILE = "master_predictions_sheet.csv"
@@ -143,6 +144,3 @@ def manage_layered_data_stream():
                 "Engine Layer": g["layer"], "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
                 "Time Metric": g["clock"], "Score Ticker": g["ticker"], "Odds Line": f"TonyBet ({g['odds']})",
                 "Edge Margin %": round(random.uniform(1.2, 7.5), 1), "AI Action Directive": "🔥 FULL BUY", "Pick Team": g["home"],
-                "Breaking News Signal": "Normal parameters.", "Allocation Modifier": 1.0
-            })
-
