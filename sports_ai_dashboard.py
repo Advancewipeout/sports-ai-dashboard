@@ -3,13 +3,14 @@ import pandas as pd
 import os
 import time
 
-pd_stream.set_page_config(page_title="2-Layer AI Risk Desk & Tracker", layout="wide")
+pd_stream.set_page_config(page_title="Smitty's AI Risk Desk & Tracker", layout="wide")
 
 pd_stream.markdown("# 🧠 Smitty's 2-Layer AI Trading Desk")
 pd_stream.markdown("### Real-Time Split Engine: Synchronizing In-Play Live Systems & Upcoming Market Models")
 pd_stream.write("---")
 
 filename = "master_predictions_sheet.csv"
+ledger_file = "settled_bets_ledger.csv"
 
 if not os.path.exists(filename):
     pd_stream.error("❌ master_predictions_sheet.csv not detected. Initialize your engine loop in your VS Code terminal.")
@@ -89,6 +90,15 @@ else:
             
             pd_stream.markdown(f"**📍 {matchup_title} ({row['Sport']})** — Active Statistical Advantage: **+{edge_pct_value}%**")
             pd_stream.code(blueprint_string, language="text")
+
+    # --- 🏆 NEW ACTIVE SYSTEM LEDGER COMPONENT (Displays graded wins/losses dynamically) ---
+    pd_stream.write("---")
+    pd_stream.write("### 🏆 Historical Performance Settlement Archive (Graded Bet Ledger)")
+    if not os.path.exists(ledger_file):
+        pd_stream.info("Waiting for first live match clock cycle to reach a FINAL outcome state to populate historical ledger items.")
+    else:
+        ledger_df = pd.read_csv(ledger_file)
+        pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
 
     # Dynamic page background reload synchronization tick (5 seconds)
     time.sleep(5)
