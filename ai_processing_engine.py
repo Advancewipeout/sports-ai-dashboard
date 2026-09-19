@@ -124,9 +124,10 @@ def manage_layered_data_stream():
         master_compiled_rows = []
         print(f"\n🔄 Sweeping Multi-Sport Processing Core: {time.strftime('%H:%M:%S')}")
         
+                # PROCESS ALL LIVE IN-PLAY SPORTS WITH WHISTLE LOCK SAFETY PROTECTION
         for g in live_inplay_games:
             if random.random() > 0.5: 
-                if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([2, 3, 6])
+                if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([0, 2, 3])
                 else: g["h_score"] += 1
                 g["min"] -= 1
                 if g["min"] <= 0: g["clock"] = "FINAL"
@@ -137,11 +138,25 @@ def manage_layered_data_stream():
             odds_str = f"+{live_odds}" if live_odds > 0 else str(live_odds)
             
             news_wire_data = fetch_breaking_sports_news(g["sport"])
-            base_edge = round(random.uniform(1.5, 7.2), 1)
             
-            ai_directive, allocation_modifier = query_groq_news_intelligence(g["home"], g["away"], g["sport"], score_ticker, odds_str, base_edge, "LIVE", news_wire_data)
+            # 🔒 THE WHISTLE LOCK GATEKEEPER
+            if "FINAL" in str(g["clock"]).upper():
+                ai_directive = "🔒 SETTLED / MARKET CLOSED"
+                allocation_modifier = 0.0
+                base_edge = 0.0
+                odds_str = "CLOSED"
+            else:
+                base_edge = round(random.uniform(1.5, 7.2), 1)
+                ai_directive, allocation_modifier = query_groq_news_intelligence(g["home"], g["away"], g["sport"], score_ticker, odds_str, base_edge, "LIVE", news_wire_data)
             
             master_compiled_rows.append({
+                "Engine Layer": "🔴 LAYER 2: IN-PLAY LIVE", "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
+                "Time Metric": g["clock"], "Score Ticker": score_ticker, "Odds Line": f"Live Book ({odds_str})",
+                "Edge Margin %": base_edge, "AI Action Directive": ai_directive, "Pick Team": g["home"] if live_diff < 4 else g["away"],
+                "Breaking News Signal": news_wire_data[:120] + "..." if len(news_wire_data) > 120 else news_wire_data,
+                "Allocation Modifier": allocation_modifier
+            })
+
                 "Engine Layer": "🔴 LAYER 2: IN-PLAY LIVE", "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
                 "Time Metric": g["clock"], "Score Ticker": score_ticker, "Odds Line": f"Live Book ({odds_str})",
                 "Edge Margin %": base_edge, "AI Action Directive": ai_directive, "Pick Team": g["home"] if live_diff < 4 else g["away"],
