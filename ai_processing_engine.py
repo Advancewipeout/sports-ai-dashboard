@@ -11,7 +11,7 @@ MODEL_NAME = "llama3-8b-8192"
 OUTPUT_FILE = "master_predictions_sheet.csv"
 LEDGER_FILE = "settled_bets_ledger.csv"
 
-def query_groq_news_intelligence(home, away, sport, game_state, odds_str, edge):
+def query_groq_news_intelligence(matchup, sport, ticker, odds_str, edge):
     """Passes live match parameters to the AI brain to find high-value trades."""
     return "🔥 LIVE BUY", 1.0
 
@@ -62,7 +62,7 @@ def pull_true_unfiltered_global_ticker():
                 
                 competitions = e.get("competitions", [{}])
                 if competitions:
-                    competitors = competitions[0].get("competitors", [])
+                    competitors = competitions.get("competitors", [])
                     if len(competitors) >= 2:
                         home_team = competitors[0].get("team", {}).get("displayName", "Home Team")
                         away_team = competitors[1].get("team", {}).get("displayName", "Away Team")
@@ -149,7 +149,7 @@ def manage_layered_data_stream():
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
         
         if time.time() - push_timer_checkpoint >= 15:
-            os.system('cmd /c "set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && git add master_predictions_sheet.csv settled_bets_ledger.csv sports_ai_dashboard.py ai_processing_engine.py update_and_push.bat && git commit -m \"Unified omnibus patch deployment\" --quiet && git push origin main --quiet"')
+            os.system('cmd /c "set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && git add master_predictions_sheet.csv settled_bets_ledger.csv sports_ai_dashboard.py ai_processing_engine.py update_and_push.bat && git commit -m \"Fixed positional error argument matrix\" --quiet && git push origin main --quiet"')
             print(f"🔄 CLOUD BROADCAST SENT: Synchronized raw network feeds to web dashboard: {time.strftime('%H:%M:%S')}")
             push_timer_checkpoint = time.time()
             
