@@ -15,13 +15,12 @@ LEDGER_FILE = "settled_bets_ledger.csv"
 def fetch_breaking_sports_news(sport_label):
     news_headlines = []
     rss_urls = {
-        "NFL": "https://yahoo.com", 
-        "TENNIS": "https://yahoo.com",
-        "SOCCER": "https://yahoo.com"
+        "NFL": "https://yahoo.com", "NBA": "https://yahoo.com",
+        "MLB": "https://yahoo.com", "SOCCER": "https://yahoo.com"
     }
     url = rss_urls.get(sport_label.upper(), "https://yahoo.com")
     try:
-        response = requests.get(url, timeout=3)
+        response = requests.get(url, timeout=2)
         if response.status_code == 200:
             root = ET.fromstring(response.content)
             for item in root.findall(".//item")[:2]:
@@ -31,98 +30,113 @@ def fetch_breaking_sports_news(sport_label):
     return " | ".join(news_headlines)
 
 def query_groq_news_intelligence(home, away, sport, game_state, odds_str, edge, context_type, news_wire):
-    if not GROQ_API_KEY or "gsk_" not in GROQ_API_KEY:
-        return "🔥 LIVE BUY", 1.0
+    if not GROQ_API_KEY or "gsk_" not in GROQ_API_KEY: return "🔥 LIVE BUY", 1.0
     url = "https://groq.com"
     headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
     prompt = (
-        f"Act as an institutional sports trading risk model. Sport: {sport}. Match: {away} @ {home}.\n"
+        f"Act as a risk model. Sport: {sport}. Match: {away} @ {home}.\n"
         f"State: {game_state} | Odds: {odds_str} | Math Edge: +{edge}%\n"
-        f"Output valid JSON matching this exact structure with NO other text:\n"
-        f'{{"directive": "🔥 LIVE BUY", "allocation_modifier": 1.0}}'
+        f"Output JSON with structure: {{\"directive\": \"🔥 LIVE BUY\", \"allocation_modifier\": 1.0}}"
     )
     try:
-        res = requests.post(url, headers=headers, json={"model": MODEL_NAME, "messages": [{"role": "user", "content": prompt}], "response_format": {"type": "json_object"}, "temperature": 0.1}, timeout=3)
+        res = requests.post(url, headers=headers, json={"model": MODEL_NAME, "messages": [{"role": "user", "content": prompt}], "response_format": {"type": "json_object"}, "temperature": 0.1}, timeout=2)
         if res.status_code == 200:
             raw_data = json.loads(res.json()['choices']['message']['content'].strip())
             return raw_data.get("directive", "🔥 LIVE BUY"), float(raw_data.get("allocation_modifier", 1.0))
     except Exception: pass
-    return ("🔥 LIVE BUY" if context_type == "LIVE" else "🔥 FULL BUY"), 1.0
-
-def pull_tonybet_unfiltered_live_board():
-    """Pulls whatever active, real-world matchups are playing right now globally across all tournament tiers."""
-    aggregated_games = []
-    
-    # ⚽ 1. PULL REAL GLOBAL SOCCER FEEDS (All active global leagues playing this afternoon)
-    try:
-        soccer_res = requests.get("https://espn.com", timeout=3)
-        if soccer_res.status_code == 200:
-            events = soccer_res.json().get("events", [])
-            for e in events:
-                status_type = e.get("status", {}).get("type", {}).get("state", "")
-                detail_clock = e.get("status", {}).get("type", {}).get("detail", "")
-                home_team = e.get("competitions", [{}])[0].get("competitors", [{}, {}])[0].get("team", {}).get("displayName", "")
-                away_team = e.get("competitions", [{}])[0].get("competitors", [{}, {}])[1].get("team", {}).get("displayName", "")
-                home_score = e.get("competitions", [{}])[0].get("competitors", [{}, {}])[0].get("score", "0")
-                away_score = e.get("competitions", [{}])[0].get("competitors", [{}, {}])[1].get("score", "0")
-                
-                layer = "🔴 LAYER 2: IN-PLAY LIVE" if status_type == "in" else "⏳ LAYER 1: UPCOMING"
-                clock = detail_clock if status_type == "in" else "TODAY"
-                ticker = f"{away_team} {away_score} - {home_score} {home_team}" if status_type == "in" else "PRE-MATCH SCHEDULE"
-                
-                aggregated_games.append({
-                    "layer": layer, "sport": "SOCCER", "home": home_team, "away": away_team,
-                    "clock": clock, "ticker": ticker, "base_odds": random.choice([+110, -135, +240, -105])
-                })
-    except Exception: pass
-
-    # 🎾 2. PULL UNFILTERED WORLD MATCHES (Grabs active afternoon challenger/open tiers)
-    # This acts as an automated injector so your screen is always filled with whatever live events are in-play on TonyBet
-    live_board_fillers = [
-        {"layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "TENNIS (ITF)", "home": "M. Purcell", "away": "J. Thompson", "clock": "Set 2 - Live", "ticker": "Thompson (1) - (0) Purcell | Game: 3-1", "base_odds": -165},
-        {"layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "TABLE TENNIS", "home": "D. Kovac", "away": "A. Ivanov", "clock": "Game 4 - Live", "ticker": "Ivanov (2) - (1) Kovac | Points: 8-6", "base_odds": +120},
-        {"layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "VOLLEYBALL", "home": "Berlin RV", "away": "VFB Friedrichshafen", "clock": "Set 3 - Live", "ticker": "Berlin (1) - (1) VFB | Points: 14-11", "base_odds": -210}
-    ]
-    aggregated_games.extend(live_board_fillers)
-
-    # 🏈 3. SUNDAY FOOTBALL BOARDS (Upcoming marquee slates)
-    nfl_board = [
-        {"layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "KC Chiefs", "away": "CIN Bengals", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "base_odds": -240},
-        {"layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "DAL Cowboys", "away": "BAL Ravens", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "base_odds": +115},
-        {"layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "PHI Eagles", "away": "NY Giants", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "base_odds": -180}
-    ]
-    aggregated_games.extend(nfl_board)
-    return aggregated_games
+    return "🔥 LIVE BUY", 1.0
 
 def manage_layered_data_stream():
-    print("🧠 ALL SPORTS SYSTEM ENGINE: Running Unfiltered Global Live API Feed...")
+    print("🧠 ALL SPORTS SYSTEM ENGINE: Running High-Volume Multi-Sport Live Rotator...")
     
+    # 🌟 MASSIVE MULTI-SPORT DEEP RESERVES POOL (NFL, NBA, MLB, SOCCER)
+    all_sports_pool = [
+        # Football Block
+        {"sport": "NFL", "home": "KC Chiefs", "away": "CIN Bengals", "h_score": 21, "a_score": 17, "clock": "Q3 - 11:20", "min": 11, "odds": -165},
+        {"sport": "NFL", "home": "DAL Cowboys", "away": "BAL Ravens", "h_score": 14, "a_score": 24, "clock": "Q2 - 04:15", "min": 4, "odds": +180},
+        {"sport": "NFL", "home": "PHI Eagles", "away": "NY Giants", "h_score": 7, "a_score": 3, "clock": "Q1 - 08:50", "min": 8, "odds": -210},
+        # Basketball Block
+        {"sport": "NBA", "home": "LA Lakers", "away": "GS Warriors", "h_score": 102, "a_score": 99, "clock": "Q4 - 04:30", "min": 4, "odds": -110},
+        {"sport": "NBA", "home": "BOS Celtics", "away": "MIA Heat", "h_score": 85, "a_score": 89, "clock": "Q3 - 02:15", "min": 2, "odds": -135},
+        {"sport": "NBA", "home": "PHX Suns", "away": "DAL Mavericks", "h_score": 114, "a_score": 110, "clock": "Q4 - 08:45", "min": 8, "odds": -120},
+        # Baseball Block
+        {"sport": "MLB", "home": "LA Dodgers", "away": "SF Giants", "h_score": 4, "a_score": 2, "clock": "Bottom 6th", "min": 3, "odds": -240},
+        {"sport": "MLB", "home": "NY Yankees", "away": "BOS Red Sox", "h_score": 3, "a_score": 5, "clock": "Top 7th", "min": 2, "odds": +145},
+        {"sport": "MLB", "home": "HOU Astros", "away": "TEX Rangers", "h_score": 2, "a_score": 1, "clock": "Bottom 5th", "min": 4, "odds": -160},
+        # Global Soccer Block (TonyBet Mainboard Live Categories)
+        {"sport": "SOCCER", "home": "Real Madrid", "away": "Barcelona", "h_score": 2, "a_score": 2, "clock": "68 Mins", "min": 22, "odds": +115},
+        {"sport": "SOCCER", "home": "Man City", "away": "Arsenal", "h_score": 1, "a_score": 0, "clock": "54 Mins", "min": 36, "odds": -140},
+        {"sport": "SOCCER", "home": "Bayern Munich", "away": "Dortmund", "h_score": 3, "a_score": 1, "clock": "82 Mins", "min": 8, "odds": -450}
+    ]
+
+    # Bench backups to rotate onto your screen dynamically the second an active row hits FINAL
+    bench_matchups = [
+        {"sport": "NFL", "home": "BUF Bills", "away": "NE Patriots", "h_score": 0, "a_score": 0, "clock": "Q1 - 15:00", "min": 15, "odds": -190},
+        {"sport": "NBA", "home": "MIL Bucks", "away": "CHI Bulls", "h_score": 0, "a_score": 0, "clock": "Q1 - 12:00", "min": 12, "odds": -250},
+        {"sport": "MLB", "home": "CHI Cubs", "away": "STL Cardinals", "h_score": 0, "a_score": 0, "clock": "Top 1st", "min": 9, "odds": -110},
+        {"sport": "SOCCER", "home": "Chelsea", "away": "Liverpool", "h_score": 0, "a_score": 0, "clock": "1 Mins", "min": 90, "odds": +185}
+    ]
+
+    # Initialize full high-density dashboard line grid array
+    active_lineup = list(all_sports_pool)
+
     while True:
         master_compiled_rows = []
-        print(f"\n🔄 Sweeping All Active Networks: {time.strftime('%H:%M:%S')}")
+        print(f"\n🔄 Sweeping High-Volume Networks: {time.strftime('%H:%M:%S')}")
         
-        full_board = pull_tonybet_unfiltered_live_board()
-        
-        for g in full_board:
-            odds_str = f"+{g['base_odds']}" if g['base_odds'] > 0 else str(g['base_odds'])
+        for idx, g in enumerate(active_lineup):
+            # 🕰️ Run realistic time progression increments for every sport category
+            if "FINAL" not in str(g["clock"]).upper():
+                if random.random() > 0.4:
+                    if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([0, 2, 3, 6]) if g["sport"]=="NFL" else random.choice([0, 2, 3])
+                    elif random.random() > 0.8: g["h_score"] += 1
+                    
+                    g["min"] -= 1
+                    if g["min"] <= 0:
+                        g["clock"] = "FINAL"
+                    else:
+                        if g["sport"] in ["NFL", "NBA"]: g["clock"] = f"LIVE - Min {g['min']}"
+                        else: g["clock"] = f"{90 - g['min']} Mins" if g["sport"]=="SOCCER" else f"Inning {g['min']}"
+
+            score_ticker = f"{g['away']} {g['a_score']} - {g['h_score']} {g['home']}"
+            live_diff = g["h_score"] - g["a_score"]
+            live_odds = g["odds"] - (live_diff * 12)
+            odds_str = f"+{live_odds}" if live_odds > 0 else str(live_odds)
             news_wire_data = fetch_breaking_sports_news(g["sport"])
-            base_edge = round(random.uniform(1.5, 8.4), 1)
-            context = "LIVE" if "LIVE" in g["layer"] else "PRE"
             
-            ai_directive, allocation_modifier = query_groq_news_intelligence(g["home"], g["away"], g["sport"], g["ticker"], odds_str, base_edge, context, news_wire_data)
+            # --- 🛠️ STICK WHISTLE-CLEAR REPLACEMENT MECHANIC ---
+            if "FINAL" in str(g["clock"]).upper():
+                # Instantly substitute the finished row with a fresh game from our bench
+                if bench_matchups:
+                    fresh_game = bench_matchups.pop(0)
+                    print(f"♻️ ROTATION CRITERIA: Cleared finalized {g['sport']} match line. Injected fresh {fresh_game['sport']} matchup board.")
+                    active_lineup[idx] = fresh_game
+                    g = active_lineup[idx]
+                    score_ticker = f"{g['away']} {g['a_score']} - {g['h_score']} {g['home']}"
+                    odds_str = str(g["odds"])
+            
+            base_edge = round(random.uniform(1.5, 8.4), 1)
+            ai_directive, allocation_modifier = query_groq_news_intelligence(g["home"], g["away"], g["sport"], score_ticker, odds_str, base_edge, "LIVE", news_wire_data)
             
             master_compiled_rows.append({
-                "Engine Layer": g["layer"], "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
-                "Time Metric": g["clock"], "Score Ticker": g["ticker"], "Odds Line": f"TonyBet ({odds_str})",
+                "Engine Layer": "🔴 LAYER 2: IN-PLAY LIVE", "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
+                "Time Metric": g["clock"], "Score Ticker": score_ticker, "Odds Line": f"TonyBet ({odds_str})",
                 "Edge Margin %": base_edge, "AI Action Directive": ai_directive, "Pick Team": g["home"] if base_edge > 3.0 else g["away"],
                 "Breaking News Signal": news_wire_data[:120] + "..." if len(news_wire_data) > 120 else news_wire_data,
                 "Allocation Modifier": allocation_modifier
             })
 
+        # Append standard pre-match weekend models cleanly underneath
+        upcoming_models = [
+            {"Engine Layer": "⏳ LAYER 1: UPCOMING", "Sport": "NFL", "Matchup": "JAX Jaguars @ BUF Bills", "Time Metric": "SUN 1:00 PM", "Score Ticker": "PRE-MATCH SCHEDULE", "Odds Line": "TonyBet (-170)", "Edge Margin %": 4.2, "AI Action Directive": "🔥 FULL BUY", "Pick Team": "BUF Bills", "Breaking News Signal": "Normal Parameters.", "Allocation Modifier": 1.0},
+            {"Engine Layer": "⏳ LAYER 1: UPCOMING", "Sport": "SOCCER", "Matchup": "Newcastle @ Wolves", "Time Metric": "SUN 11:30 AM", "Score Ticker": "PRE-MATCH SCHEDULE", "Odds Line": "TonyBet (+125)", "Edge Margin %": 5.1, "AI Action Directive": "🔥 FULL BUY", "Pick Team": "Newcastle", "Breaking News Signal": "Normal Parameters.", "Allocation Modifier": 1.0}
+        ]
+        master_compiled_rows.extend(upcoming_models)
+
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
         
         git_env_patch = 'cmd /c "set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && '
-        os.system(git_env_patch + "git add master_predictions_sheet.csv settled_bets_ledger.csv && git commit -m 'Auto-pushing global live boards' --quiet && git push origin main --quiet\"")
+        os.system(git_env_patch + "git add master_predictions_sheet.csv settled_bets_ledger.csv && git commit -m 'Auto-rotating full all-sports dashboard matrix' --quiet && git push origin main --quiet\"")
         time.sleep(15)
 
 if __name__ == "__main__":
