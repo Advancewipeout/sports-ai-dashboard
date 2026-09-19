@@ -1,15 +1,4 @@
 Engine Layer,Sport,Matchup,Time Metric,Score Ticker,Odds Line,Edge Margin %,AI Action Directive,Pick Team,Breaking News Signal,Allocation Modifier
-🔴 LAYER 2: IN-PLAY LIVE,NFL,CIN Bengals @ KC Chiefs,LIVE - Min 6,CIN Bengals 17 - 40 KC Chiefs,TonyBet (-441),2.8,🔥 LIVE BUY,CIN Bengals,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,NFL,BAL Ravens @ DAL Cowboys,FINAL,BAL Ravens 24 - 26 DAL Cowboys,TonyBet (+156),5.9,🔥 LIVE BUY,DAL Cowboys,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,NFL,NY Giants @ PHI Eagles,FINAL,NY Giants 3 - 30 PHI Eagles,TonyBet (-534),8.1,🔥 LIVE BUY,PHI Eagles,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,NBA,GS Warriors @ LA Lakers,FINAL,GS Warriors 99 - 111 LA Lakers,TonyBet (-254),7.0,🔥 LIVE BUY,LA Lakers,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,NBA,CHI Bulls @ MIL Bucks,LIVE - Min 8,CHI Bulls 0 - 9 MIL Bucks,TonyBet (-358),3.4,🔥 LIVE BUY,MIL Bucks,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,NBA,DAL Mavericks @ PHX Suns,LIVE - Min 1,DAL Mavericks 110 - 119 PHX Suns,TonyBet (-228),2.9,🔥 LIVE BUY,DAL Mavericks,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,MLB,STL Cardinals @ CHI Cubs,Inning 5,STL Cardinals 0 - 0 CHI Cubs,TonyBet (-110),7.4,🔥 LIVE BUY,CHI Cubs,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,NFL,NE Patriots @ BUF Bills,LIVE - Min 9,NE Patriots 0 - 22 BUF Bills,TonyBet (-454),5.9,🔥 LIVE BUY,BUF Bills,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Liverpool @ Chelsea,2 Mins,Liverpool 0 - 1 Chelsea,TonyBet (+173),8.1,🔥 LIVE BUY,Chelsea,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Barcelona @ Real Madrid,74 Mins,Barcelona 2 - 3 Real Madrid,TonyBet (+103),2.5,🔥 LIVE BUY,Barcelona,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Arsenal @ Man City,63 Mins,Arsenal 0 - 1 Man City,TonyBet (-152),7.8,🔥 LIVE BUY,Man City,Global market parameters normal. Line values optimal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Dortmund @ Bayern Munich,86 Mins,Dortmund 1 - 3 Bayern Munich,TonyBet (-474),3.5,🔥 LIVE BUY,Bayern Munich,Global market parameters normal. Line values optimal.,1.0
-⏳ LAYER 1: UPCOMING,NFL,JAX Jaguars @ BUF Bills,SUN 1:00 PM,PRE-MATCH SCHEDULE,TonyBet (-170),4.2,🔥 FULL BUY,BUF Bills,Normal Parameters.,1.0
-⏳ LAYER 1: UPCOMING,SOCCER,Newcastle @ Wolves,SUN 11:30 AM,PRE-MATCH SCHEDULE,TonyBet (+125),5.1,🔥 FULL BUY,Newcastle,Normal Parameters.,1.0
+⏳ LAYER 1: UPCOMING,NFL,CIN Bengals @ KC Chiefs,SUN 4:25 PM,PRE-MATCH SCHEDULE,TonyBet (-240),4.3,🔥 FULL BUY,KC Chiefs,Global market parameters normal. Line values optimal.,1.0
+⏳ LAYER 1: UPCOMING,NFL,BAL Ravens @ DAL Cowboys,SUN 4:25 PM,PRE-MATCH SCHEDULE,TonyBet (+115),2.9,🔥 FULL BUY,BAL Ravens,Global market parameters normal. Line values optimal.,1.0
+⏳ LAYER 1: UPCOMING,NFL,NY Giants @ PHI Eagles,SUN 1:00 PM,PRE-MATCH SCHEDULE,TonyBet (-180),6.4,🔥 FULL BUY,PHI Eagles,Global market parameters normal. Line values optimal.,1.0
