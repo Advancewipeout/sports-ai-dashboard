@@ -12,11 +12,22 @@ pd_stream.write("---")
 filename = "master_predictions_sheet.csv"
 ledger_file = "settled_bets_ledger.csv"
 
-# 💰 SIDEBAR CONTROL PANELS (Keep outside the fragment so adjustments don't reset)
+# 💰 SIDEBAR CONTROL PANELS (Fully Restored & Protected from Resetting!)
 pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
 bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
 
-# 🏆 History Operations Wiped Cleanup Check
+# Ensure data core exists before populating sidebar filter choices
+if os.path.exists(filename):
+    df_init = pd.read_csv(filename)
+    sport_options = ["ALL"] + list(df_init["Sport"].unique())
+else:
+    sport_options = ["ALL"]
+
+selected_sport = pd_stream.sidebar.selectbox("Filter Market Sport", sport_options)
+strictness_trigger = pd_stream.sidebar.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=10.0, value=0.0, step=0.5)
+
+pd_stream.sidebar.write("---")
+pd_stream.sidebar.header("🏆 History Operations")
 if pd_stream.sidebar.button("🧹 Wipe Graded Bet Ledger History"):
     if os.path.exists(ledger_file):
         os.remove(ledger_file)
@@ -25,20 +36,28 @@ if pd_stream.sidebar.button("🧹 Wipe Graded Bet Ledger History"):
         pd_stream.sidebar.success("Ledger wiped clean!")
         pd_stream.rerun()
 
-# 🔄 THE NATIVE STREAMLIT LIVE SYNC TRIGGER (Bypasses text freezes completely!)
-@pd_stream.fragment(run_every=5)
+# 🔄 THE HIGH-SPEED LIVE FRAGMENT SYNC TRIGGER (Rapid 1-second hands-free motion!)
+@pd_stream.fragment(run_every=1)
 def render_live_sports_matrix():
     if not os.path.exists(filename):
         pd_stream.error("❌ master_predictions_sheet.csv not detected. Initialize your loop script inside VS Code.")
         return
 
-    # Force a fresh reload of the underlying data files from the cloud server every 5 seconds
+    # Force a rapid reload of the fresh spreadsheet numbers from your computer
     df = pd.read_csv(filename)
+    blueprint_df = df.copy()
     
-    # Render layout metric status blocks dynamically
+    if selected_sport != "ALL":
+        df = df[df["Sport"] == selected_sport]
+        blueprint_df = blueprint_df[blueprint_df["Sport"] == selected_sport]
+
+    # Filter main views dynamically by your strictness cutoff slider
+    df = df[df["Edge Margin %"] >= strictness_trigger]
+    
     live_layer_df = df[df["Engine Layer"].str.contains("LIVE")]
     upcoming_layer_df = df[df["Engine Layer"].str.contains("UPCOMING")]
 
+    # --- TOP MAIN STATUS BLOCKS ---
     col1, col2, col3 = pd_stream.columns(3)
     col1.metric("Live Matches Tracking Now", len(live_layer_df))
     col2.metric("Upcoming Systems Calculated", len(upcoming_layer_df))
@@ -63,7 +82,8 @@ def render_live_sports_matrix():
     # --- 📋 LOWER BLUEPRINTS ---
     pd_stream.write("---")
     pd_stream.write("### 📋 Automated Execution Order Blueprint (Scaled Cash Risks)")
-    active_orders = df[~df["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT", "PASS", "❌ PASS LINE"])]
+    active_orders = blueprint_df[blueprint_df["Edge Margin %"] >= strictness_trigger]
+    active_orders = active_orders[~active_orders["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT", "PASS", "❌ PASS LINE"])]
     
     if active_orders.empty:
         pd_stream.info("Awaiting high-value selections matching your edge cutoff rules...")
@@ -95,5 +115,5 @@ def render_live_sports_matrix():
             pd_stream.write("#### 📋 Detailed Settlement Audit Log Statements")
             pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
 
-# Turn the live synchronization motor execution layout layer on!
+# Ignite the live unblocked fragment channel
 render_live_sports_matrix()
