@@ -1,6 +1,7 @@
 import streamlit as pd_stream
 import pandas as pd
 import os
+import time
 
 pd_stream.set_page_config(page_title="Smitty's AI News Risk Desk", layout="wide")
 
@@ -39,6 +40,8 @@ else:
 
     # Filter main views by strictness threshold slider criteria
     df = df[df["Edge Margin %"] >= strictness_trigger]
+    
+    # Separate layers accurately
     live_layer_df = df[df["Engine Layer"].str.contains("LIVE")]
     upcoming_layer_df = df[df["Engine Layer"].str.contains("UPCOMING")]
 
@@ -100,3 +103,8 @@ else:
             pd_stream.line_chart(ledger_df["Running Bankroll"], use_container_width=True)
             pd_stream.write("#### 📋 Detailed Settlement Audit Log Statements")
             pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
+
+    # 💓 THE AUTOMATED UI INTERVAL HEARTBEAT
+    # Automatically triggers a smooth layout refresh every 4 seconds without screen blinking!
+    time.sleep(4)
+    pd_stream.rerun()
