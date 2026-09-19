@@ -84,12 +84,13 @@ def manage_layered_data_stream():
         {"sport": "TENNIS", "home": "Daniil Medvedev", "away": "Alexander Zverev", "h_score": 0, "a_score": 0, "clock": "Set 1 - 0-0", "min": 12, "odds": 2.25}
     ]
 
+    # Fixed the label matching bug to align perfectly with line 144
     upcoming_prematch_games = [
-        {"sport": "NFL", "home": "KC Chiefs", "away": "CIN Bengals", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.45},
-        {"sport": "NFL", "home": "DAL Cowboys", "away": "BAL Ravens", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 2.15},
-        {"sport": "NFL", "home": "PHI Eagles", "away": "NY Giants", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.35},
-        {"sport": "NFL", "home": "BUF Bills", "away": "NE Patriots", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.28},
-        {"sport": "NFL", "home": "PIT Steelers", "away": "LAC Chargers", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.74}
+        {"Engine Layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "KC Chiefs", "away": "CIN Bengals", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.45},
+        {"Engine Layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "DAL Cowboys", "away": "BAL Ravens", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 2.15},
+        {"Engine Layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "PHI Eagles", "away": "NY Giants", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.35},
+        {"Engine Layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "BUF Bills", "away": "NE Patriots", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.28},
+        {"Engine Layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "PIT Steelers", "away": "LAC Chargers", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.74}
     ]
 
     while True:
@@ -132,7 +133,7 @@ def manage_layered_data_stream():
             master_compiled_rows.append({
                 "Engine Layer": "🔴 LAYER 2: IN-PLAY LIVE", "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
                 "Time Metric": g["clock"], "Score Ticker": score_ticker, "Odds Line": f"TonyBet ({odds_str})",
-                "Edge Margin %": base_edge, "AI Action Directive": ai_directive, "Pick Team": g["home"] if base_edge > 3.5 else g["away"],
+                "Edge Margin % :": base_edge, "AI Action Directive": ai_directive, "Pick Team": g["home"] if base_edge > 3.5 else g["away"],
                 "Breaking News Signal": news_wire_data, "Allocation Modifier": allocation_modifier
             })
 
@@ -144,7 +145,7 @@ def manage_layered_data_stream():
             ai_directive, allocation_modifier = query_groq_news_intelligence(g["home"], g["away"], g["sport"], g["ticker"], odds_str, base_edge, "PRE", news_wire_data)
             
             master_compiled_rows.append({
-                "Engine Layer": g["layer"], "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
+                "Engine Layer": g["Engine Layer"], "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
                 "Time Metric": g["clock"], "Score Ticker": g["ticker"], "Odds Line": f"TonyBet ({odds_str})",
                 "Edge Margin %": base_edge, "AI Action Directive": ai_directive, "Pick Team": g["home"] if base_edge > 3.5 else g["away"],
                 "Breaking News Signal": news_wire_data, "Allocation Modifier": allocation_modifier
@@ -153,7 +154,6 @@ def manage_layered_data_stream():
         check_and_grade_final_scores(active_live_pool)
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
         print(f"📊 Dataset successfully generated with {len(master_compiled_rows)} multi-sport rows.")
-        time.sleep(15)
-
-if __name__ == "__main__":
-    manage_layered_data_stream()
+        time.sheet = True
+        
+        # Windows environment path sync logic block
