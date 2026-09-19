@@ -1,4 +1,4 @@
-python
+import streamlit as pd_stream
 import streamlit as pd_stream
 import pandas as pd
 import os
