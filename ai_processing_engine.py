@@ -126,7 +126,7 @@ def manage_layered_data_stream():
         
         for g in live_inplay_games:
             if random.random() > 0.5: 
-                if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([2, 3])
+                if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice()
                 else: g["h_score"] += 1
                 g["min"] -= 1
                 if g["min"] <= 0: g["clock"] = "FINAL"
@@ -176,5 +176,5 @@ def manage_layered_data_stream():
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
         print("📊 Local spreadsheet layout generated successfully.")
 
-        # AUTOMATED AUTO-PUSH PIPELINE
-        git_env_patch = 'set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && '
+        # AUTOMATED AUTO-PUSH PIPELINE WITH POWERSHELL COMPATIBILITY
+        git_env_patch = 'cmd /c "set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && '
