@@ -155,5 +155,4 @@ def manage_layered_data_stream():
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
         print(f"📊 Dataset successfully generated with {len(master_compiled_rows)} multi-sport rows.")
         
-        
         # Windows environment path sync logic block
