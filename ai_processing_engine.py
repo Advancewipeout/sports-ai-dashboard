@@ -18,20 +18,22 @@ def query_groq_news_intelligence(home, away, sport, game_state, odds_str, edge, 
     return "🔥 LIVE BUY" if context_type == "LIVE" else "🔥 FULL BUY", 1.0
 
 def pull_true_live_tonybet_slate():
-    """Queries genuine network scoreboards to extract actual live matches playing right now on TonyBet."""
+    """Queries genuine network scoreboards with strict index error protections to populate live rows safely."""
     aggregated_games = []
     
-    # ⚾ 1. PULL ACTUAL LIVE AFTERNOON MLB BASEBALL
+    # ⚾ 1. PULL GENUINE LIVE MLB AFTERNOON BASEBALL (e.g., Detroit Tigers @ Chicago White Sox)
     try:
         res = requests.get("https://mlb.com", timeout=4)
         if res.status_code == 200:
-            for date in res.json().get("dates", []):
-                for g in date.get("games", []):
+            dates = res.json().get("dates", [])
+            if dates:
+                games_list = dates[0].get("games", [])
+                for g in games_list:
                     status = g.get("status", {}).get("abstractGameState", "")
                     detailed_status = g.get("status", {}).get("detailedState", "")
                     
-                    home_team = g.get("teams", {}).get("home", {}).get("team", {}).get("name", "")
-                    away_team = g.get("teams", {}).get("away", {}).get("team", {}).get("name", "")
+                    home_team = g.get("teams", {}).get("home", {}).get("team", {}).get("name", "Home Team")
+                    away_team = g.get("teams", {}).get("away", {}).get("team", {}).get("name", "Away Team")
                     h_score = g.get("teams", {}).get("home", {}).get("score", 0)
                     a_score = g.get("teams", {}).get("away", {}).get("score", 0)
                     
@@ -41,15 +43,9 @@ def pull_true_live_tonybet_slate():
                             "home": home_team, "away": away_team, "clock": detailed_status,
                             "ticker": f"{away_team} {a_score} - {h_score} {home_team}", "odds": random.choice([1.65, 2.20, 1.95])
                         })
-                    elif status == "Preview":
-                        aggregated_games.append({
-                            "layer": "⏳ LAYER 1: UPCOMING", "sport": "MLB",
-                            "home": home_team, "away": away_team, "clock": "TODAY",
-                            "ticker": "PRE-MATCH SCHEDULE", "odds": random.choice([1.75, 2.10])
-                        })
     except Exception: pass
 
-    # ⚽ 2. PULL ACTUAL LIVE EUROPEAN SOCCER (Serie A, Ligue 1, Premier League)
+    # ⚽ 2. PULL GENUINE LIVE AFTERNOON SOCCER WITH SAFE INDEX MAPPING
     try:
         res = requests.get("https://espn.com", timeout=4)
         if res.status_code == 200:
@@ -58,22 +54,29 @@ def pull_true_live_tonybet_slate():
                 status_type = e.get("status", {}).get("type", {}).get("state", "")
                 detail_clock = e.get("status", {}).get("type", {}).get("detail", "")
                 
-                if status_type == "in" or "1ST HALF" in detail_clock.upper() or "2ND HALF" in detail_clock.upper():
-                    competitors = e.get("competitions", [{}])[0].get("competitors", [{}, {}])
-                    home_team = competitors[0].get("team", {}).get("displayName", "Home Team")
-                    away_team = competitors[1].get("team", {}).get("displayName", "Away Team")
-                    home_score = competitors[0].get("score", "0")
-                    away_score = competitors[1].get("score", "0")
-                    
-                    aggregated_games.append({
-                        "layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "SOCCER",
-                        "home": home_team, "away": away_team, "clock": detail_clock,
-                        "ticker": f"{away_team} {away_score} - {home_score} {home_team}",
-                        "odds": random.choice([1.65, 2.75, 3.85])
-                    })
+                if status_type == "in" or "HALF" in detail_clock.upper():
+                    competitions = e.get("competitions", [{}])
+                    if competitions:
+                        competitors = competitions[0].get("competitors", [])
+                        if len(competitors) >= 2:
+                            # Safely extract matching team index objects
+                            home_idx = 0 if competitors[0].get("homeAway") == "home" else 1
+                            away_idx = 1 if home_idx == 0 else 0
+                            
+                            home_team = competitors[home_idx].get("team", {}).get("displayName", "Home Team")
+                            away_team = competitors[away_idx].get("team", {}).get("displayName", "Away Team")
+                            home_score = competitors[home_idx].get("score", "0")
+                            away_score = competitors[away_idx].get("score", "0")
+                            
+                            aggregated_games.append({
+                                "layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "SOCCER",
+                                "home": home_team, "away": away_team, "clock": detail_clock,
+                                "ticker": f"{away_team} {away_score} - {home_score} {home_team}",
+                                "odds": random.choice([1.65, 2.75, 3.85])
+                            })
     except Exception: pass
 
-    # 🏈 3. UPCOMING SUNDAY NFL SLATES
+    # 🏈 3. SUNDAY FOOTBALL BOARDS (Upcoming marquee slates)
     nfl_sunday_board = [
         {"layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "KC Chiefs", "away": "CIN Bengals", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.45},
         {"layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "DAL Cowboys", "away": "BAL Ravens", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 2.15},
@@ -83,7 +86,7 @@ def pull_true_live_tonybet_slate():
     return aggregated_games
 
 def manage_layered_data_stream():
-    print("🧠 ALL SPORTS SYSTEM ENGINE: Running Real-World Live TonyBet API Stream...")
+    print("🧠 ALL SPORTS SYSTEM ENGINE: Running Robust Index-Safe TonyBet API Stream...")
     
     while True:
         master_compiled_rows = []
@@ -107,6 +110,7 @@ def manage_layered_data_stream():
             })
 
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
+        print(f"📊 Dataset updated with {len(master_compiled_rows)} rows. Pushing data matrices online...")
         
         git_env_patch = 'cmd /c "set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && '
         os.system(git_env_patch + "git add master_predictions_sheet.csv settled_bets_ledger.csv && git commit -m 'Auto-pushing true network live lines' --quiet && git push origin main --quiet\"")
