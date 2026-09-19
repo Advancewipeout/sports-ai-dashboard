@@ -121,13 +121,35 @@ def manage_layered_data_stream():
     ]
 
     while True:
+      def manage_layered_data_stream():
+    print("🧠 ALL SPORTS SYSTEM ENGINE: Running Corrected News-Sentiment Core...")
+    
+    live_inplay_games = [
+        {"sport": "NFL", "home": "KC Chiefs", "away": "BUF Bills", "h_score": 24, "a_score": 21, "clock": "Q4 - 04:15", "min": 4, "base_odds": -150},
+        {"sport": "NBA", "home": "LA Lakers", "away": "GS Warriors", "h_score": 98, "a_score": 96, "clock": "Q4 - 01:30", "min": 2, "base_odds": -110},
+        {"sport": "MLB", "home": "LA Dodgers", "away": "SF Giants", "h_score": 5, "a_score": 2, "clock": "Bottom 7th", "min": 1, "base_odds": -400},
+        {"sport": "NHL", "home": "EDM Oilers", "away": "TOR Maple Leafs", "h_score": 3, "a_score": 2, "clock": "3rd Period", "min": 3, "base_odds": +115}
+    ]
+    
+    upcoming_prematch_games = [
+        {"sport": "NFL", "home": "SF 49ers", "away": "LAR Rams", "odds": -180, "book": "DraftKings"},
+        {"sport": "NFL", "home": "PHI Eagles", "away": "DAL Cowboys", "odds": -110, "book": "FanDuel"},
+        {"sport": "NBA", "home": "BOS Celtics", "away": "MIA Heat", "odds": -220, "book": "DraftKings"},
+        {"sport": "NBA", "home": "DAL Mavericks", "away": "PHX Suns", "odds": -115, "book": "Caesars"},
+        {"sport": "MLB", "home": "NY Yankees", "away": "BOS Red Sox", "odds": -125, "book": "DraftKings"},
+        {"sport": "MLB", "home": "HOU Astros", "away": "TEX Rangers", "odds": -140, "book": "DraftKings"},
+        {"sport": "NHL", "home": "TBL Lightning", "away": "FLA Panthers", "odds": +125, "book": "BetMGM"},
+        {"sport": "NHL", "home": "NY Rangers", "away": "NJ Devils", "odds": -115, "book": "DraftKings"}
+    ]
+
+    while True:
         master_compiled_rows = []
         print(f"\n🔄 Sweeping Multi-Sport Processing Core: {time.strftime('%H:%M:%S')}")
         
-                # PROCESS ALL LIVE IN-PLAY SPORTS WITH WHISTLE LOCK SAFETY PROTECTION
+        # PROCESS ALL LIVE IN-PLAY SPORTS WITH WHISTLE LOCK SAFETY PROTECTION
         for g in live_inplay_games:
             if random.random() > 0.5: 
-                if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([0, 2, 3])
+                if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([2, 3])
                 else: g["h_score"] += 1
                 g["min"] -= 1
                 if g["min"] <= 0: g["clock"] = "FINAL"
@@ -150,13 +172,6 @@ def manage_layered_data_stream():
                 ai_directive, allocation_modifier = query_groq_news_intelligence(g["home"], g["away"], g["sport"], score_ticker, odds_str, base_edge, "LIVE", news_wire_data)
             
             master_compiled_rows.append({
-                "Engine Layer": "🔴 LAYER 2: IN-PLAY LIVE", "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
-                "Time Metric": g["clock"], "Score Ticker": score_ticker, "Odds Line": f"Live Book ({odds_str})",
-                "Edge Margin %": base_edge, "AI Action Directive": ai_directive, "Pick Team": g["home"] if live_diff < 4 else g["away"],
-                "Breaking News Signal": news_wire_data[:120] + "..." if len(news_wire_data) > 120 else news_wire_data,
-                "Allocation Modifier": allocation_modifier
-            })
-
                 "Engine Layer": "🔴 LAYER 2: IN-PLAY LIVE", "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
                 "Time Metric": g["clock"], "Score Ticker": score_ticker, "Odds Line": f"Live Book ({odds_str})",
                 "Edge Margin %": base_edge, "AI Action Directive": ai_directive, "Pick Team": g["home"] if live_diff < 4 else g["away"],
@@ -191,5 +206,3 @@ def manage_layered_data_stream():
         print("✅ Cloud synchronization complete! Next sweep in 15 seconds...")
         time.sleep(15)
 
-if __name__ == "__main__":
-    manage_layered_data_stream()
