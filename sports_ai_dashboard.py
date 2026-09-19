@@ -12,14 +12,13 @@ pd_stream.write("---")
 filename = "master_predictions_sheet.csv"
 ledger_file = "settled_bets_ledger.csv"
 
-# 💰 SIDEBAR CONTROL PANELS (Fully Restored & Protected from Resetting!)
+# 💰 SIDEBAR CONTROL PANELS
 pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
 bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
 
-# Ensure data core exists before populating sidebar filter choices
 if os.path.exists(filename):
     df_init = pd.read_csv(filename)
-    sport_options = ["ALL"] + list(df_init["Sport"].unique())
+    sport_options = ["ALL"] + list(df_init["Sport"].unique()) if "Sport" in df_init.columns else ["ALL"]
 else:
     sport_options = ["ALL"]
 
@@ -36,32 +35,31 @@ if pd_stream.sidebar.button("🧹 Wipe Graded Bet Ledger History"):
         pd_stream.sidebar.success("Ledger wiped clean!")
         pd_stream.rerun()
 
-# 🔄 THE HIGH-SPEED LIVE FRAGMENT SYNC TRIGGER (Rapid 1-second hands-free motion!)
+# 🔄 THE NATIVE STREAMLIT LIVE SYNC TRIGGER (Rapid 1-second hands-free motion!)
 @pd_stream.fragment(run_every=1)
 def render_live_sports_matrix():
     if not os.path.exists(filename):
         pd_stream.error("❌ master_predictions_sheet.csv not detected. Initialize your loop script inside VS Code.")
         return
 
-    # Force a rapid reload of the fresh spreadsheet numbers from your computer
     df = pd.read_csv(filename)
     blueprint_df = df.copy()
     
-    if selected_sport != "ALL":
+    if "Sport" in df.columns and selected_sport != "ALL":
         df = df[df["Sport"] == selected_sport]
         blueprint_df = blueprint_df[blueprint_df["Sport"] == selected_sport]
 
-    # Filter main views dynamically by your strictness cutoff slider
-    df = df[df["Edge Margin %"] >= strictness_trigger]
+    if "Edge Margin %" in df.columns:
+        df = df[df["Edge Margin %"] >= strictness_trigger]
     
-    live_layer_df = df[df["Engine Layer"].str.contains("LIVE")]
-    upcoming_layer_df = df[df["Engine Layer"].str.contains("UPCOMING")]
+    live_layer_df = df[df["Engine Layer"].str.contains("LIVE")] if "Engine Layer" in df.columns else pd.DataFrame()
+    upcoming_layer_df = df[df["Engine Layer"].str.contains("UPCOMING")] if "Engine Layer" in df.columns else pd.DataFrame()
 
     # --- TOP MAIN STATUS BLOCKS ---
     col1, col2, col3 = pd_stream.columns(3)
     col1.metric("Live Matches Tracking Now", len(live_layer_df))
     col2.metric("Upcoming Systems Calculated", len(upcoming_layer_df))
-    col3.metric("Max Discovered Statistical Edge", f"+{df['Edge Margin %'].max()}%" if not df.empty else "0.0%")
+    col3.metric("Max Discovered Statistical Edge", f"+{df['Edge Margin %'].max()}%" if not df.empty and "Edge Margin %" in df.columns else "0.0%")
     pd_stream.write("---")
 
     # 🔥 1. LIVE LAYER MATRIX
@@ -69,7 +67,8 @@ def render_live_sports_matrix():
     if live_layer_df.empty:
         pd_stream.info("No live games currently match your strictness filter settings.")
     else:
-        pd_stream.dataframe(live_layer_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
+        display_cols = [c for c in ["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"] if c in live_layer_df.columns]
+        pd_stream.dataframe(live_layer_df[display_cols], use_container_width=True, hide_index=True)
     pd_stream.write("---")
 
     # ⏳ 2. UPCOMING LAYER MATRIX
@@ -77,31 +76,35 @@ def render_live_sports_matrix():
     if upcoming_layer_df.empty:
         pd_stream.info("No upcoming games currently match your strictness filter settings.")
     else:
-        pd_stream.dataframe(upcoming_layer_df[["Sport", "Matchup", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
+        display_cols = [c for c in ["Sport", "Matchup", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"] if c in upcoming_layer_df.columns]
+        pd_stream.dataframe(upcoming_layer_df[display_cols], use_container_width=True, hide_index=True)
 
     # --- 📋 LOWER BLUEPRINTS ---
     pd_stream.write("---")
     pd_stream.write("### 📋 Automated Execution Order Blueprint (Scaled Cash Risks)")
-    active_orders = blueprint_df[blueprint_df["Edge Margin %"] >= strictness_trigger]
-    active_orders = active_orders[~active_orders["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT", "PASS", "❌ PASS LINE"])]
+    if "AI Action Directive" in blueprint_df.columns:
+        active_orders = blueprint_df[blueprint_df["Edge Margin %"] >= strictness_trigger] if "Edge Margin %" in blueprint_df.columns else blueprint_df
+        active_orders = active_orders[~active_orders["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT", "PASS", "❌ PASS LINE"])]
+    else:
+        active_orders = pd.DataFrame()
     
     if active_orders.empty:
         pd_stream.info("Awaiting high-value selections matching your edge cutoff rules...")
     else:
         for _, row in active_orders.iterrows():
-            layer_label = row["Engine Layer"]
-            matchup_title = row["Matchup"]
-            action_status = row["AI Action Directive"]
-            target_selection = row["Pick Team"]
-            odds_line_str = row["Odds Line"]
-            edge_pct_value = row["Edge Margin %"]
+            layer_label = row.get("Engine Layer", "LAYER 2")
+            matchup_title = row.get("Matchup", "Match")
+            action_status = row.get("AI Action Directive", "🔥 LIVE BUY")
+            target_selection = row.get("Pick Team", "Target")
+            odds_line_str = row.get("Odds Line", "TonyBet")
+            edge_pct_value = row.get("Edge Margin %", 0.0)
             
             risk_ratio = (edge_pct_value * 0.5) / 100
             suggested_cash_wager = round(bankroll * risk_ratio, 2)
             if suggested_cash_wager < 5.0: suggested_cash_wager = 25.00
                 
             blueprint_string = f"SOURCE ENGINE: [{layer_label}] | SIGNAL: [{action_status}] -> RISK ALLOCATION: ${suggested_cash_wager} ON: {target_selection} ({odds_line_str})"
-            pd_stream.markdown(f"**📍 {matchup_title} ({row['Sport']})** — Active Advantage: **+{edge_pct_value}%**")
+            pd_stream.markdown(f"**📍 {matchup_title} ({row.get('Sport', 'Sport')})** — Active Advantage: **+{edge_pct_value}%**")
             pd_stream.code(blueprint_string, language="text")
 
     # --- 🏆 HISTORICAL LEDGER ARCHIVE TRACKER ---
