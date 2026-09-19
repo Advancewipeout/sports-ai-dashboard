@@ -151,5 +151,4 @@ def manage_layered_data_stream():
             push_timer_checkpoint = time.time()
             
         time.sleep(1)
-
-if __name__ == "__main__":
+        
