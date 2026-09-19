@@ -1,5 +1,9 @@
-Timestamp,Matchup,Sport,AI Pick Selection,Final Score Line,Trade Outcome Profit/Loss
-2026-09-18 20:47,SF Giants @ LA Dodgers,MLB,Target: LA Dodgers,SF Giants 2 - 6 LA Dodgers,❌ LOSS MARKET EDGE
-2026-09-18 20:48,GS Warriors @ LA Lakers,NBA,Target: LA Lakers,GS Warriors 96 - 104 LA Lakers,🏆 WIN SYSTEM ORDER
-2026-09-18 20:48,BUF Bills @ KC Chiefs,NFL,Target: KC Chiefs,BUF Bills 21 - 33 KC Chiefs,🏆 WIN SYSTEM ORDER
-2026-09-18 20:49,TOR Maple Leafs @ EDM Oilers,NHL,Target: EDM Oilers,TOR Maple Leafs 2 - 6 EDM Oilers,🏆 WIN SYSTEM ORDER
+Timestamp,Matchup,Sport,AI Pick Selection,Final Score Line,Trade Outcome Profit/Loss,Running Bankroll
+2026-09-18 20:47,SF Giants @ LA Dodgers,MLB,Target: LA Dodgers,SF Giants 2 - 6 LA Dodgers,❌ LOSS MARKET EDGE,
+2026-09-18 20:48,GS Warriors @ LA Lakers,NBA,Target: LA Lakers,GS Warriors 96 - 104 LA Lakers,🏆 WIN SYSTEM ORDER,
+2026-09-18 20:48,BUF Bills @ KC Chiefs,NFL,Target: KC Chiefs,BUF Bills 21 - 33 KC Chiefs,🏆 WIN SYSTEM ORDER,
+2026-09-18 20:49,TOR Maple Leafs @ EDM Oilers,NHL,Target: EDM Oilers,TOR Maple Leafs 2 - 6 EDM Oilers,🏆 WIN SYSTEM ORDER,
+2026-09-19 16:56,LSU @ Alabama,FOOTBALL,Target: Alabama,LSU 20 - 31 Alabama,🏆 WIN SYSTEM ORDER,1110.0
+2026-09-19 16:57,BOS Red Sox @ NY Yankees,MLB,Target: NY Yankees,BOS Red Sox 7 - 2 NY Yankees,❌ LOSS MARKET EDGE,1030.0
+2026-09-19 16:57,Jannik Sinner @ Carlos Alcaraz,TENNIS,Target: Jannik Sinner,Jannik Sinner 5 - 4 Carlos Alcaraz,❌ LOSS MARKET EDGE,995.0
+2026-09-19 16:57,Detroit Tigers @ Chicago White Sox,MLB,Target: Detroit Tigers,Detroit Tigers 1 - 1 Chicago White Sox,❌ LOSS MARKET EDGE,960.0
