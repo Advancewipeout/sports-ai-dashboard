@@ -1,18 +1,18 @@
 Engine Layer,Sport,Matchup,Time Metric,Score Ticker,Odds Line,Edge Margin %,AI Action Directive,Pick Team,Breaking News Signal,Allocation Modifier
-🔴 LAYER 2: IN-PLAY LIVE,MLB,Detroit Tigers @ Chicago White Sox,Inning 9 - Active,Detroit Tigers 2 - 1 Chicago White Sox,TonyBet (1.65),8.2,🔥 LIVE BUY,Chicago White Sox,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Venezia FC @ Lazio Rome,45:10 Live Ticker,Venezia FC 0 - 0 Lazio Rome,TonyBet (2.35),6.1,🔥 LIVE BUY,Lazio Rome,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Toulouse FC @ Le Havre AC,46:10 Live Ticker,Toulouse FC 0 - 0 Le Havre AC,TonyBet (3.85),1.7,🔥 LIVE BUY,Toulouse FC,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,TENNIS,Jannik Sinner @ Carlos Alcaraz,Set Live - 9:10,Jannik Sinner 5 - 4 Carlos Alcaraz,TonyBet (1.8),4.6,🔥 LIVE BUY,Carlos Alcaraz,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,MLB,TEX Rangers @ HOU Astros,Inning 4 - Active,TEX Rangers 2 - 1 HOU Astros,TonyBet (1.7),5.1,🔥 LIVE BUY,HOU Astros,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,MLB,BOS Red Sox @ NY Yankees,Inning 7 - Active,BOS Red Sox 5 - 2 NY Yankees,TonyBet (2.65),2.5,🔥 LIVE BUY,BOS Red Sox,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Barcelona @ Real Madrid,68:10 Live Ticker,Barcelona 2 - 2 Real Madrid,TonyBet (2.1),8.2,🔥 LIVE BUY,Real Madrid,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,TENNIS,Alexander Zverev @ Daniil Medvedev,Set Live - 11:10,Alexander Zverev 3 - 6 Daniil Medvedev,TonyBet (1.55),5.5,🔥 LIVE BUY,Daniil Medvedev,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,TENNIS,Nick Kyrgios @ Novak Djokovic,Set Live - 5:10,Nick Kyrgios 1 - 2 Novak Djokovic,TonyBet (1.4),7.7,🔥 LIVE BUY,Novak Djokovic,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,FOOTBALL,Michigan @ Ohio State,Quarter Time - 40:40,Michigan 14 - 45 Ohio State,TonyBet (1.25),7.4,🔥 LIVE BUY,Ohio State,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,FOOTBALL,LSU @ Alabama,Quarter Time - 58:40,LSU 20 - 31 Alabama,TonyBet (2.45),3.6,🔥 LIVE BUY,Alabama,Line parameters normal.,1.0
-🔴 LAYER 2: IN-PLAY LIVE,FOOTBALL,Auburn @ Georgia,Quarter Time - 20:40,Auburn 3 - 17 Georgia,TonyBet (1.15),2.2,🔥 LIVE BUY,Auburn,Line parameters normal.,1.0
-⏳ LAYER 1: UPCOMING,NFL,CIN Bengals @ KC Chiefs,SUN 4:25 PM,PRE-MATCH SCHEDULE,TonyBet (1.45),1.4,🔥 FULL BUY,KC Chiefs,Normal parameters.,1.0
-⏳ LAYER 1: UPCOMING,NFL,BAL Ravens @ DAL Cowboys,SUN 4:25 PM,PRE-MATCH SCHEDULE,TonyBet (2.15),5.4,🔥 FULL BUY,DAL Cowboys,Normal parameters.,1.0
-⏳ LAYER 1: UPCOMING,NFL,NY Giants @ PHI Eagles,SUN 1:00 PM,PRE-MATCH SCHEDULE,TonyBet (1.35),2.7,🔥 FULL BUY,PHI Eagles,Normal parameters.,1.0
-⏳ LAYER 1: UPCOMING,NFL,NE Patriots @ BUF Bills,SUN 1:00 PM,PRE-MATCH SCHEDULE,TonyBet (1.28),6.3,🔥 FULL BUY,BUF Bills,Normal parameters.,1.0
-⏳ LAYER 1: UPCOMING,NFL,LAC Chargers @ PIT Steelers,SUN 1:00 PM,PRE-MATCH SCHEDULE,TonyBet (1.74),3.0,🔥 FULL BUY,PIT Steelers,Normal parameters.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,MLB,Detroit Tigers @ Chicago White Sox,Inning 6 - Active,Detroit Tigers 1 - 1 Chicago White Sox,TonyBet (1.65),3.0,🔥 LIVE BUY,Detroit Tigers,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Venezia FC @ Lazio Rome,42:13 Live Ticker,Venezia FC 0 - 0 Lazio Rome,TonyBet (2.35),3.9,🔥 LIVE BUY,Lazio Rome,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Toulouse FC @ Le Havre AC,43:13 Live Ticker,Toulouse FC 0 - 0 Le Havre AC,TonyBet (3.85),6.6,🔥 LIVE BUY,Le Havre AC,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,TENNIS,Jannik Sinner @ Carlos Alcaraz,Set Live - 6:13,Jannik Sinner 5 - 4 Carlos Alcaraz,TonyBet (1.8),2.7,🔥 LIVE BUY,Jannik Sinner,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,MLB,SF Giants @ LA Dodgers,Inning 8 - Active,SF Giants 2 - 4 LA Dodgers,TonyBet (1.45),3.6,🔥 LIVE BUY,LA Dodgers,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,MLB,BOS Red Sox @ NY Yankees,Inning 4 - Active,BOS Red Sox 5 - 2 NY Yankees,TonyBet (2.65),7.7,🔥 LIVE BUY,NY Yankees,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Barcelona @ Real Madrid,65:13 Live Ticker,Barcelona 2 - 1 Real Madrid,TonyBet (2.1),7.0,🔥 LIVE BUY,Real Madrid,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,TENNIS,Alexander Zverev @ Daniil Medvedev,Set Live - 8:13,Alexander Zverev 3 - 6 Daniil Medvedev,TonyBet (1.55),4.5,🔥 LIVE BUY,Daniil Medvedev,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,TENNIS,Nick Kyrgios @ Novak Djokovic,Set Live - 2:13,Nick Kyrgios 1 - 2 Novak Djokovic,TonyBet (1.4),7.7,🔥 LIVE BUY,Novak Djokovic,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,FOOTBALL,Michigan @ Ohio State,Quarter Time - 37:43,Michigan 14 - 24 Ohio State,TonyBet (1.25),3.8,🔥 LIVE BUY,Ohio State,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,FOOTBALL,LSU @ Alabama,Quarter Time - 55:43,LSU 20 - 17 Alabama,TonyBet (2.45),2.6,🔥 LIVE BUY,LSU,Line parameters normal.,1.0
+🔴 LAYER 2: IN-PLAY LIVE,FOOTBALL,Auburn @ Georgia,Quarter Time - 17:43,Auburn 3 - 10 Georgia,TonyBet (1.15),7.7,🔥 LIVE BUY,Georgia,Line parameters normal.,1.0
+⏳ LAYER 1: UPCOMING,NFL,CIN Bengals @ KC Chiefs,SUN 4:25 PM,PRE-MATCH SCHEDULE,TonyBet (1.45),4.5,🔥 FULL BUY,KC Chiefs,Normal parameters.,1.0
+⏳ LAYER 1: UPCOMING,NFL,BAL Ravens @ DAL Cowboys,SUN 4:25 PM,PRE-MATCH SCHEDULE,TonyBet (2.15),4.4,🔥 FULL BUY,DAL Cowboys,Normal parameters.,1.0
+⏳ LAYER 1: UPCOMING,NFL,NY Giants @ PHI Eagles,SUN 1:00 PM,PRE-MATCH SCHEDULE,TonyBet (1.35),6.3,🔥 FULL BUY,PHI Eagles,Normal parameters.,1.0
+⏳ LAYER 1: UPCOMING,NFL,NE Patriots @ BUF Bills,SUN 1:00 PM,PRE-MATCH SCHEDULE,TonyBet (1.28),3.5,🔥 FULL BUY,BUF Bills,Normal parameters.,1.0
+⏳ LAYER 1: UPCOMING,NFL,LAC Chargers @ PIT Steelers,SUN 1:00 PM,PRE-MATCH SCHEDULE,TonyBet (1.74),4.2,🔥 FULL BUY,PIT Steelers,Normal parameters.,1.0
