@@ -82,7 +82,6 @@ def manage_layered_data_stream():
 
     while True:
         master_compiled_rows = []
-        print(f"\n🔄 Sweeping Real Live Networks: {time.strftime('%H:%M:%S')}")
         
         # PROCESS ALL ACTIVE LIVE IN-PLAY TILES WITH AUTOMATIC WHISTLE REMOVALS
         for idx, g in enumerate(active_live_pool):
@@ -110,6 +109,7 @@ def manage_layered_data_stream():
             base_edge = round(random.uniform(1.5, 8.4), 1)
             pick_team = g["home"] if base_edge > 3.5 else g["away"]
             
+            # --- 🛠️ THE INSTANT WHISTLE-CLEAR FILTRATION AND BENCH ROTATION GATEWAY ---
             if "FINAL" in str(g["clock"]).upper():
                 completed_game_card = {
                     "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
@@ -119,7 +119,6 @@ def manage_layered_data_stream():
                 
                 if bench_rotations:
                     fresh_match = bench_rotations.pop(0)
-                    print(f"♻️ CLOCK CLEARANCE: Finalized row dropped. Injected fresh {fresh_match['sport']} active live row.")
                     active_live_pool[idx] = fresh_match
                     g = active_live_pool[idx]
                     score_ticker = f"{g['away']} {g['a_score']} - {g['h_score']} {g['home']}"
@@ -146,3 +145,5 @@ def manage_layered_data_stream():
                 "Breaking News Signal": news_wire_data, "Allocation Modifier": 1.0
             })
 
+        pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
+        print(f"🔄 Sweeping Multi-Sport Processing Core: {time.strftime('%H:%M:%S')}")
