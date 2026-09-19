@@ -1,13 +1,4 @@
 Engine Layer,Sport,Matchup,Time Metric,Score Ticker,Odds Line,Edge Margin %,AI Action Directive,Pick Team,Breaking News Signal,Allocation Modifier
-🔴 LAYER 2: IN-PLAY LIVE,NFL,BUF Bills @ KC Chiefs,FINAL,BUF Bills 21 - 32 KC Chiefs,Live Book (CLOSED),0.0,🔒 SETTLED / MARKET CLOSED,BUF Bills,No critical wire updates reported in the last 15 minutes. Line parameters normal.,0.0
-🔴 LAYER 2: IN-PLAY LIVE,NBA,GS Warriors @ LA Lakers,FINAL,GS Warriors 96 - 106 LA Lakers,Live Book (CLOSED),0.0,🔒 SETTLED / MARKET CLOSED,GS Warriors,No critical wire updates reported in the last 15 minutes. Line parameters normal.,0.0
-🔴 LAYER 2: IN-PLAY LIVE,MLB,SF Giants @ LA Dodgers,FINAL,SF Giants 2 - 9 LA Dodgers,Live Book (CLOSED),0.0,🔒 SETTLED / MARKET CLOSED,SF Giants,No critical wire updates reported in the last 15 minutes. Line parameters normal.,0.0
-🔴 LAYER 2: IN-PLAY LIVE,NHL,TOR Maple Leafs @ EDM Oilers,3rd Period,TOR Maple Leafs 2 - 5 EDM Oilers,Live Book (+70),1.5,🔥 LIVE BUY,EDM Oilers,No critical wire updates reported in the last 15 minutes. Line parameters normal.,1.0
-⏳ LAYER 1: UPCOMING,NFL,LAR Rams @ SF 49ers,TODAY/TONIGHT,PRE-MATCH SCHEDULE,DraftKings (-180),0.9,🔥 FULL BUY,LAR Rams,No critical wire updates reported in the last 15 minutes. Line parameters normal.,1.0
-⏳ LAYER 1: UPCOMING,NFL,DAL Cowboys @ PHI Eagles,TODAY/TONIGHT,PRE-MATCH SCHEDULE,FanDuel (-110),2.0,🔥 FULL BUY,DAL Cowboys,No critical wire updates reported in the last 15 minutes. Line parameters normal.,1.0
-⏳ LAYER 1: UPCOMING,NBA,MIA Heat @ BOS Celtics,TODAY/TONIGHT,PRE-MATCH SCHEDULE,DraftKings (-220),2.9,🔥 FULL BUY,BOS Celtics,No critical wire updates reported in the last 15 minutes. Line parameters normal.,1.0
-⏳ LAYER 1: UPCOMING,NBA,PHX Suns @ DAL Mavericks,TODAY/TONIGHT,PRE-MATCH SCHEDULE,Caesars (-115),4.0,🔥 FULL BUY,DAL Mavericks,No critical wire updates reported in the last 15 minutes. Line parameters normal.,1.0
-⏳ LAYER 1: UPCOMING,MLB,BOS Red Sox @ NY Yankees,TODAY/TONIGHT,PRE-MATCH SCHEDULE,DraftKings (-125),3.8,🔥 FULL BUY,NY Yankees,No critical wire updates reported in the last 15 minutes. Line parameters normal.,1.0
-⏳ LAYER 1: UPCOMING,MLB,TEX Rangers @ HOU Astros,TODAY/TONIGHT,PRE-MATCH SCHEDULE,DraftKings (-140),4.6,🔥 FULL BUY,HOU Astros,No critical wire updates reported in the last 15 minutes. Line parameters normal.,1.0
-⏳ LAYER 1: UPCOMING,NHL,FLA Panthers @ TBL Lightning,TODAY/TONIGHT,PRE-MATCH SCHEDULE,BetMGM (+125),4.5,🔥 FULL BUY,TBL Lightning,No critical wire updates reported in the last 15 minutes. Line parameters normal.,1.0
-⏳ LAYER 1: UPCOMING,NHL,NJ Devils @ NY Rangers,TODAY/TONIGHT,PRE-MATCH SCHEDULE,DraftKings (-115),2.0,🔥 FULL BUY,NJ Devils,No critical wire updates reported in the last 15 minutes. Line parameters normal.,1.0
+⏳ LAYER 1: UPCOMING,MLB,BOS Red Sox @ NY Yankees,Today 1:05 PM,PRE-MATCH SCHEDULE,DraftKings (-145),4.6,🔥 FULL BUY,NY Yankees,Line parameters normal. No major injury changes reported on wire.,1.0
+⏳ LAYER 1: UPCOMING,NFL,CIN Bengals @ KC Chiefs,Sunday 4:25 PM,PRE-MATCH SCHEDULE,DraftKings (-240),4.9,🔥 FULL BUY,KC Chiefs,Line parameters normal. No major injury changes reported on wire.,1.0
+⏳ LAYER 1: UPCOMING,NFL,BAL Ravens @ DAL Cowboys,Sunday 4:25 PM,PRE-MATCH SCHEDULE,DraftKings (+115),1.6,🔥 FULL BUY,BAL Ravens,Line parameters normal. No major injury changes reported on wire.,1.0
