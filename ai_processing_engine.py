@@ -124,7 +124,6 @@ def manage_layered_data_stream():
         master_compiled_rows = []
         print(f"\n🔄 Sweeping Multi-Sport Processing Core: {time.strftime('%H:%M:%S')}")
         
-        # PROCESS ALL LIVE IN-PLAY SPORTS WITH WHISTLE LOCK SAFETY PROTECTION
         for g in live_inplay_games:
             if random.random() > 0.5: 
                 if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([2, 3])
@@ -139,7 +138,6 @@ def manage_layered_data_stream():
             
             news_wire_data = fetch_breaking_sports_news(g["sport"])
             
-            # 🔒 THE WHISTLE LOCK GATEKEEPER
             if "FINAL" in str(g["clock"]).upper():
                 ai_directive = "🔒 SETTLED / MARKET CLOSED"
                 allocation_modifier = 0.0
@@ -180,6 +178,3 @@ def manage_layered_data_stream():
 
         # AUTOMATED AUTO-PUSH PIPELINE
         git_env_patch = 'set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && '
-        os.system(git_env_patch + "git add master_predictions_sheet.csv settled_bets_ledger.csv && git commit -m 'Auto-updates' --quiet && git push origin main --quiet")
-        print("✅ Cloud synchronization complete! Next sweep in 15 seconds...")
-        time.sleep(15)
