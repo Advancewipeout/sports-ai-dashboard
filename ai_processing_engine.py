@@ -17,13 +17,12 @@ def fetch_breaking_sports_news(sport_label):
 def query_groq_news_intelligence(home, away, sport, game_state, odds_str, edge, context_type, news_wire):
     return "🔥 LIVE BUY" if context_type == "LIVE" else "🔥 FULL BUY", 1.0
 
-def pull_true_live_tonybet_ slate():
+def pull_true_live_tonybet_slate():
     """Queries genuine, real-time sports networks to pull actual live matches playing right now."""
     aggregated_games = []
     
     # ⚽ PULL ACTUAL GLOBAL SOCCER LEAGUES (Packed on Saturday afternoons)
     try:
-        # Pulls live soccer scoreboards happening across active world leagues right now
         res = requests.get("https://espn.com", timeout=4)
         if res.status_code == 200:
             events = res.json().get("events", [])
@@ -31,13 +30,12 @@ def pull_true_live_tonybet_ slate():
                 status_type = e.get("status", {}).get("type", {}).get("state", "")
                 detail_clock = e.get("status", {}).get("type", {}).get("detail", "")
                 
-                # Filter to only capture games that are actively in-play this second
                 if status_type == "in":
-                    teams = e.get("competitions", [{}])[0].get("competitors", [Header, Header])
-                    home_team = teams[0].get("team", {}).get("displayName", "")
-                    away_team = teams[1].get("team", {}).get("displayName", "")
-                    home_score = teams[0].get("score", "0")
-                    away_score = teams[1].get("score", "0")
+                    competitors = e.get("competitions", [{}])[0].get("competitors", [{}, {}])
+                    home_team = competitors[0].get("team", {}).get("displayName", "")
+                    away_team = competitors[1].get("team", {}).get("displayName", "")
+                    home_score = competitors[0].get("score", "0")
+                    away_score = competitors[1].get("score", "0")
                     
                     aggregated_games.append({
                         "layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "SOCCER",
@@ -47,7 +45,7 @@ def pull_true_live_tonybet_ slate():
                     })
     except Exception: pass
 
-    # 🏈 PULL ACTUAL SATURDAY COLLEGE FOOTBALL FEEDS
+    # 🏈 PULL ACTUAL SATURDAY FOOTBALL FEEDS (College Football Live Slates)
     try:
         res = requests.get("https://espn.com", timeout=4)
         if res.status_code == 200:
@@ -57,11 +55,11 @@ def pull_true_live_tonybet_ slate():
                 detail_clock = e.get("status", {}).get("type", {}).get("detail", "")
                 
                 if status_type == "in":
-                    teams = e.get("competitions", [{}])[0].get("competitors", [{}, {}])
-                    home_team = teams[0].get("team", {}).get("displayName", "")
-                    away_team = teams[1].get("team", {}).get("displayName", "")
-                    home_score = teams[0].get("score", "0")
-                    away_score = teams[1].get("score", "0")
+                    competitors = e.get("competitions", [{}])[0].get("competitors", [{}, {}])
+                    home_team = competitors[0].get("team", {}).get("displayName", "")
+                    away_team = competitors[1].get("team", {}).get("displayName", "")
+                    home_score = competitors[0].get("score", "0")
+                    away_score = competitors[1].get("score", "0")
                     
                     aggregated_games.append({
                         "layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "FOOTBALL",
@@ -71,7 +69,7 @@ def pull_true_live_tonybet_ slate():
                     })
     except Exception: pass
 
-    # 🛡️ EMERGENCY RECOVERY BENCH: If global feeds are in-between time slots, load locked Sunday NFL matches
+    # 🛡️ EMERGENCY RECOVERY REGENERATOR: Sunday NFL match vectors
     if not aggregated_games:
         aggregated_games = [
             {"layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "KC Chiefs", "away": "CIN Bengals", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": -240},
@@ -106,7 +104,6 @@ def manage_layered_data_stream():
 
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
         
-        # Enforce automated auto-push straight to the cloud web server
         git_env_patch = 'cmd /c "set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && '
         os.system(git_env_patch + "git add master_predictions_sheet.csv settled_bets_ledger.csv && git commit -m 'Auto-pushing true network live lines' --quiet && git push origin main --quiet\"")
         time.sleep(15)
