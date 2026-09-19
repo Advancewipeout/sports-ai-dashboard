@@ -5,6 +5,7 @@ import random
 import requests
 import pandas as pd
 
+# Live System Infrastructure Configurations
 GROQ_API_KEY = "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"
 MODEL_NAME = "llama3-8b-8192"
 OUTPUT_FILE = "master_predictions_sheet.csv"
@@ -17,11 +18,14 @@ def query_groq_news_intelligence(home, away, sport, game_state, odds_str, edge, 
     return "🔥 LIVE BUY", 1.0
 
 def check_and_grade_final_scores(game_row):
+    """Logs completed games instantly into your Historical Performance Ledger table."""
     if not os.path.exists(LEDGER_FILE):
         ledger_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
     else:
-        try: ledger_df = pd.read_csv(LEDGER_FILE)
-        except Exception: ledger_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
+        try:
+            ledger_df = pd.read_csv(LEDGER_FILE)
+        except Exception:
+            ledger_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
         
     match_title = game_row["Matchup"]
     if not ledger_df.empty and match_title in ledger_df["Matchup"].values: 
@@ -37,12 +41,14 @@ def check_and_grade_final_scores(game_row):
         "AI Pick Selection": f"Target: {game_row['Pick Team']}", "Final Score Line": game_row["Score Ticker"], 
         "Trade Outcome Profit/Loss": outcome, "Running Bankroll": current_funds
     }])
+    
     ledger_df = pd.concat([ledger_df, new_row], ignore_index=True)
     ledger_df.to_csv(LEDGER_FILE, index=False)
 
 def manage_layered_data_stream():
     print("🧠 ALL SPORTS SYSTEM ENGINE: Running Complete TonyBet Real-Time Matrix...")
     
+    # MASTER DYNAMIC ACTIVE LIVE POOL WITH DETAILED MINUTE/SECOND VARIABLES
     active_live_pool = [
         {"sport": "MLB", "home": "Chicago White Sox", "away": "Detroit Tigers", "h_score": 1, "a_score": 1, "clock_label": "Inning 5", "elapsed_sec": 300, "total_duration": 540, "odds": 1.65},
         {"sport": "SOCCER", "home": "Lazio Rome", "away": "Venezia FC", "h_score": 0, "a_score": 0, "clock_label": "1st Half", "elapsed_sec": 2520, "total_duration": 5400, "odds": 2.35},
@@ -72,12 +78,10 @@ def manage_layered_data_stream():
         {"layer": "⏳ LAYER 1: UPCOMING", "sport": "NFL", "home": "PIT Steelers", "away": "LAC Chargers", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.74}
     ]
 
-    push_timer_checkpoint = time.time()
-
     while True:
         master_compiled_rows = []
-        print(f"\n🔄 Sweeping Real Live Networks: {time.strftime('%H:%M:%S')}")
         
+        # PROCESS INDEPENDENT MATCH CLOCK RECOGNITION MOTORS
         for idx, g in enumerate(active_live_pool):
             if "FINAL" not in str(g["clock_label"]).upper():
                 g["elapsed_sec"] += 1
@@ -107,6 +111,7 @@ def manage_layered_data_stream():
             base_edge = round(random.uniform(1.5, 8.4), 1)
             pick_team = g["home"] if base_edge > 3.5 else g["away"]
             
+            # --- 🛠️ THE INSTANT WHISTLE-CLEAR FILTRATION AND BENCH ROTATION GATEWAY ---
             if "FINAL" in str(g["clock_label"]).upper():
                 completed_game_card = {
                     "Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}",
@@ -140,13 +145,3 @@ def manage_layered_data_stream():
             })
 
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
-        
-        if time.time() - push_timer_checkpoint >= 15:
-            os.system('cmd /c "set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && git add master_predictions_sheet.csv settled_bets_ledger.csv && git commit -m \"Live updates\" --quiet && git push origin main --quiet"')
-            print(f"🔄 CLOUD BROADCAST SENT: {time.strftime('%H:%M:%S')}")
-            push_timer_checkpoint = time.time()
-            
-        time.sleep(1)
-
-if __name__ == "__main__":
-    manage_layered_data_stream()
