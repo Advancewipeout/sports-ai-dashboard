@@ -35,7 +35,6 @@ def pull_true_live_tonybet_slate():
                     h_score = g.get("teams", {}).get("home", {}).get("score", 0)
                     a_score = g.get("teams", {}).get("away", {}).get("score", 0)
                     
-                    # Force capture active live afternoon baseball (like Detroit Tigers @ Chicago White Sox)
                     if status == "Live" or "In Progress" in detailed_status or "Break" in detailed_status:
                         aggregated_games.append({
                             "layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "MLB",
@@ -58,10 +57,9 @@ def pull_true_live_tonybet_slate():
             for e in events:
                 status_type = e.get("status", {}).get("type", {}).get("state", "")
                 detail_clock = e.get("status", {}).get("type", {}).get("detail", "")
-                league_name = e.get("season", {}).get("slug", "Soccer").upper()
                 
                 if status_type == "in" or "1ST HALF" in detail_clock.upper() or "2ND HALF" in detail_clock.upper():
-                    competitors = e.get("competitions", [{}])[0].get("competitors", [Header, Header])
+                    competitors = e.get("competitions", [{}])[0].get("competitors", [{}, {}])
                     home_team = competitors[0].get("team", {}).get("displayName", "Home Team")
                     away_team = competitors[1].get("team", {}).get("displayName", "Away Team")
                     home_score = competitors[0].get("score", "0")
@@ -110,7 +108,6 @@ def manage_layered_data_stream():
 
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
         
-        # Enforce automated auto-push straight to the cloud web server
         git_env_patch = 'cmd /c "set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && '
         os.system(git_env_patch + "git add master_predictions_sheet.csv settled_bets_ledger.csv && git commit -m 'Auto-pushing true network live lines' --quiet && git push origin main --quiet\"")
         time.sleep(15)
