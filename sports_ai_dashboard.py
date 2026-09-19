@@ -112,5 +112,6 @@ else:
             pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
 
     # 💓 AUTOMATED UI INTERVAL HEARTBEAT REFRESH
-    time.sleep(3)
+    # Automatically triggers a smooth layout refresh every 4 seconds without screen blinking!
+    time.sleep(4)
     pd_stream.rerun()
