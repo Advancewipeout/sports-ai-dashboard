@@ -12,28 +12,51 @@ pd_stream.write("---")
 filename = "master_predictions_sheet.csv"
 ledger_file = "settled_bets_ledger.csv"
 
-if not os.path.exists(filename):
-    pd_stream.error("❌ master_predictions_sheet.csv not detected. Initialize your loop script inside VS Code.")
-else:
-    df = pd.read_csv(filename)
+# 💰 SIDEBAR CONTROL PANELS
+pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
+bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
 
-    # 💰 SIDEBAR CONTROL PANELS
-    pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
-    bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
-    selected_sport = pd_stream.sidebar.selectbox("Filter Market Sport", ["ALL"] + list(df["Sport"].unique()) if "Sport" in df.columns else ["ALL"])
-    strictness_trigger = pd_stream.sidebar.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=10.0, value=0.0, step=0.5)
-    
-    pd_stream.sidebar.write("---")
-    pd_stream.sidebar.header("🏆 History Operations")
-    if pd_stream.sidebar.button("🧹 Wipe Graded Bet Ledger History"):
-        if os.path.exists(ledger_file):
-            os.remove(ledger_file)
-            blank_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
-            blank_df.to_csv(ledger_file, index=False)
-            pd_stream.sidebar.success("Ledger wiped clean!")
-            pd_stream.rerun()
+# 🕒 Safe file reading catch to block pandas EmptyDataError crashes 100% of the time
+df_init = pd.DataFrame()
+if os.path.exists(filename):
+    try:
+        if os.path.getsize(filename) > 0:
+            df_init = pd.read_csv(filename)
+    except Exception:
+        pass
+
+sport_options = ["ALL"]
+if not df_init.empty and "Sport" in df_init.columns:
+    sport_options = ["ALL"] + list(df_init["Sport"].unique())
+
+selected_sport = pd_stream.sidebar.selectbox("Filter Market Sport", sport_options)
+strictness_trigger = pd_stream.sidebar.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=10.0, value=0.0, step=0.5)
+
+pd_stream.sidebar.write("---")
+pd_stream.sidebar.header("🏆 History Operations")
+if pd_stream.sidebar.button("🧹 Wipe Graded Bet Ledger History"):
+    if os.path.exists(ledger_file):
+        os.remove(ledger_file)
+        blank_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
+        blank_df.to_csv(ledger_file, index=False)
+        pd_stream.sidebar.success("Ledger wiped clean!")
+        pd_stream.rerun()
+
+# 🔄 THE NATIVE STREAMLIT LIVE SYNC TRIGGER (Rapid 1-second hands-free fragment loop)
+@pd_stream.fragment(run_every=1)
+def render_live_sports_matrix():
+    if not os.path.exists(filename) or os.path.getsize(filename) == 0:
+        pd_stream.info("⏳ Awaiting data stream sync... Your engine terminal loop is writing the live spreadsheet rows now.")
+        return
+
+    try:
+        df = pd.read_csv(filename)
+    except Exception:
+        pd_stream.info("⏳ Refreshing pipeline matrices... Hold tight.")
+        return
 
     blueprint_df = df.copy()
+    
     if "Sport" in df.columns and selected_sport != "ALL":
         df = df[df["Sport"] == selected_sport]
         blueprint_df = blueprint_df[blueprint_df["Sport"] == selected_sport]
@@ -54,7 +77,7 @@ else:
     # 🔥 1. LIVE LAYER MATRIX
     pd_stream.write("### 🔴 LAYER 2: Live In-Play Systems (Active Scores, Clocks & Breaking News Wire)")
     if live_layer_df.empty:
-        pd_stream.info("Awaiting live tickers matching your system strictness layout paths...")
+        pd_stream.info("No live games currently match your strictness filter settings.")
     else:
         display_cols = [c for c in ["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"] if c in live_layer_df.columns]
         pd_stream.dataframe(live_layer_df[display_cols], use_container_width=True, hide_index=True)
@@ -107,6 +130,5 @@ else:
             pd_stream.write("#### 📋 Detailed Settlement Audit Log Statements")
             pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
 
-    # 💓 STABILIZED INTERFACE HEARTBEAT RATE 
-    time.sleep(12)
-    pd_stream.rerun()
+# Run the stabilized engine
+render_live_sports_matrix()
