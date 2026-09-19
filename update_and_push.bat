@@ -14,7 +14,7 @@ python ai_processing_engine.py
 
 echo.
 echo 📡 STEP 2: BROADCASTING REAL-TIME DATA TO WEB SERVER...
-@fflags
+
 set LOCAL_GIT_PATH="%LocalAppData%\GitHubDesktop\bin"
 set PROG_GIT_CMD="%ProgramFiles%\Git\cmd"
 set PROG_GIT_BIN="%ProgramFiles%\Git\bin"
