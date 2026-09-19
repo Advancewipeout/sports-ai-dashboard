@@ -1,8 +1,6 @@
 import streamlit as pd_stream
-import streamlit as pd_stream
 import pandas as pd
 import os
-import time
 
 pd_stream.set_page_config(page_title="Smitty's AI News Risk Desk", layout="wide")
 
@@ -14,15 +12,15 @@ filename = "master_predictions_sheet.csv"
 ledger_file = "settled_bets_ledger.csv"
 
 if not os.path.exists(filename):
-    pd_stream.error("❌ master_predictions_sheet.csv not detected. Initialize your loop script.")
+    pd_stream.error("❌ master_predictions_sheet.csv not detected. Initialize your loop script inside VS Code.")
 else:
     df = pd.read_csv(filename)
 
-    # Sidebar inputs
+    # 💰 SIDEBAR CONTROL PANELS
     pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
     bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
     selected_sport = pd_stream.sidebar.selectbox("Filter Market Sport", ["ALL"] + list(df["Sport"].unique()))
-    strictness_trigger = pd_stream.sidebar.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=10.0, value=2.0, step=0.5)
+    strictness_trigger = pd_stream.sidebar.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=10.0, value=0.0, step=0.5)
     
     pd_stream.sidebar.write("---")
     pd_stream.sidebar.header("🏆 History Operations")
@@ -32,7 +30,6 @@ else:
             blank_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
             blank_df.to_csv(ledger_file, index=False)
             pd_stream.sidebar.success("Ledger wiped clean!")
-            time.sleep(1)
             pd_stream.rerun()
 
     blueprint_df = df.copy()
@@ -40,11 +37,12 @@ else:
         df = df[df["Sport"] == selected_sport]
         blueprint_df = blueprint_df[blueprint_df["Sport"] == selected_sport]
 
+    # Filter main views by strictness threshold slider criteria
     df = df[df["Edge Margin %"] >= strictness_trigger]
     live_layer_df = df[df["Engine Layer"].str.contains("LIVE")]
     upcoming_layer_df = df[df["Engine Layer"].str.contains("UPCOMING")]
 
-    # Status blocks
+    # --- TOP MAIN STATUS BLOCKS ---
     col1, col2, col3 = pd_stream.columns(3)
     col1.metric("Live Matches Tracking Now", len(live_layer_df))
     col2.metric("Upcoming Systems Calculated", len(upcoming_layer_df))
@@ -52,13 +50,19 @@ else:
     pd_stream.write("---")
 
     # 🔥 1. LIVE LAYER MATRIX
-    pd_stream.write("### 🔴 LAYER 2: Live In-Play Systems (Active Scores, Clocks & Breaking News News Wire)")
-    pd_stream.dataframe(live_layer_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
+    pd_stream.write("### 🔴 LAYER 2: Live In-Play Systems (Active Scores, Clocks & Breaking News Wire)")
+    if live_layer_df.empty:
+        pd_stream.info("No live games currently match your strictness filter settings.")
+    else:
+        pd_stream.dataframe(live_layer_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
     pd_stream.write("---")
 
     # ⏳ 2. UPCOMING LAYER MATRIX
     pd_stream.write("### ⏳ LAYER 1: Upcoming Pre-Match Models (Scheduled Selections)")
-    pd_stream.dataframe(upcoming_layer_df[["Sport", "Matchup", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
+    if upcoming_layer_df.empty:
+        pd_stream.info("No upcoming games currently match your strictness filter settings.")
+    else:
+        pd_stream.dataframe(upcoming_layer_df[["Sport", "Matchup", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
 
     # --- 📋 LOWER BLUEPRINTS ---
     pd_stream.write("---")
@@ -67,7 +71,7 @@ else:
     active_orders = active_orders[~active_orders["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT", "PASS", "❌ PASS LINE", "🛑 NEWS OVERRIDE: ABORT", "🔒 SETTLED / MARKET CLOSED"])]
     
     if active_orders.empty:
-        pd_stream.info("Waiting for edge percentages to match your minimum strictness cutoff limits...")
+        pd_stream.info("Awaiting high-value selections matching your edge cutoff rules...")
     else:
         for _, row in active_orders.iterrows():
             layer_label = row["Engine Layer"]
@@ -92,13 +96,7 @@ else:
     if os.path.exists(ledger_file):
         ledger_df = pd.read_csv(ledger_file)
         if not ledger_df.empty and "Running Bankroll" in ledger_df.columns:
-            # 📈 RESTORED VISUAL GROWTH GRAPH CHART COMPONENT
             pd_stream.write("#### 📊 Cumulative Capital Return Growth Chart (ROI Performance)")
             pd_stream.line_chart(ledger_df["Running Bankroll"], use_container_width=True)
             pd_stream.write("#### 📋 Detailed Settlement Audit Log Statements")
             pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
-        else:
-            pd_stream.info("Waiting for first live match clock cycle to reach a FINAL outcome state to populate chart vectors.")
-
-    time.sleep(5)
-    pd_stream.rerun()
