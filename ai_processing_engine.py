@@ -124,10 +124,10 @@ def manage_layered_data_stream():
         master_compiled_rows = []
         print(f"\n🔄 Sweeping Multi-Sport Processing Core: {time.strftime('%H:%M:%S')}")
         
-                # PROCESS ALL LIVE IN-PLAY SPORTS WITH WHISTLE LOCK SAFETY PROTECTION
+        # PROCESS ALL LIVE IN-PLAY SPORTS WITH WHISTLE LOCK SAFETY PROTECTION
         for g in live_inplay_games:
             if random.random() > 0.5: 
-                if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([0, 2, 3])
+                if g["sport"] in ["NFL", "NBA"]: g["h_score"] += random.choice([2, 3])
                 else: g["h_score"] += 1
                 g["min"] -= 1
                 if g["min"] <= 0: g["clock"] = "FINAL"
@@ -183,6 +183,3 @@ def manage_layered_data_stream():
         os.system(git_env_patch + "git add master_predictions_sheet.csv settled_bets_ledger.csv && git commit -m 'Auto-updates' --quiet && git push origin main --quiet")
         print("✅ Cloud synchronization complete! Next sweep in 15 seconds...")
         time.sleep(15)
-
-if __name__ == "__main__":
-    manage_layered_data_stream()
