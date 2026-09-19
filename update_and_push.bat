@@ -1,31 +1,25 @@
 @echo off
-title Sports AI Cloud Auto-Sync
+title Sports AI Ultimate Cloud Auto-Sync
 echo ===================================================
-echo 🧠 RUNNING UPDATES AND SYNCING TO STREAMLIT.APP
+echo 🏀 AUTOMATED LIVE CLOCK CLOUD PUSH ACTIVE
 echo ===================================================
 cd /d "%~dp0"
 
+:loop
 echo.
-echo 📡 Step 1: Building newest game schedules...
-python live_schedule_builder.py
-
-echo.
-echo ⚡ Step 2: Processing calculations via Groq API...
+echo 📡 [%time%] Step 1: Processing live scores and Groq API edge adjustments...
 python ai_processing_engine.py
 
 echo.
-echo 🌐 Step 3: Pushing new dataset to GitHub Cloud...
-
-:: Force check standard Windows paths for GitHub Desktop's Git tool
+echo 🌐 [%time%] Step 2: Syncing live dataset with Streamlit Cloud via GitHub Desktop...
 set PATH=%PATH%;%LocalAppData%\GitHubDesktop\bin;%ProgramFiles%\Git\cmd;%ProgramFiles%\Git\bin
-
-git add master_predictions_sheet.csv
-git commit -m "Auto-update sports predictions sheet"
-git push origin main
+git add master_predictions_sheet.csv settled_bets_ledger.csv >nul 2>&1
+git commit -m "Auto-syncing live court clock ticker" --quiet >nul 2>&1
+git push origin main --quiet >nul 2>&1
 
 echo.
 echo ===================================================
-echo ✅ SUCCESS: Cloud updates sent! 
-echo Your live site at smittysports-ai-dashboard.streamlit.app 
-echo will refresh automatically in about 15 seconds.
+echo ✅ Cloud dataset synchronized! Next update sweep in 15 seconds...
 echo ===================================================
+timeout /t 15 >nul
+goto loop
