@@ -16,11 +16,18 @@ ledger_file = "settled_bets_ledger.csv"
 pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
 bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
 
+# Safe file checking to prevent EmptyDataError crashes entirely
+df_init = pd.DataFrame()
 if os.path.exists(filename):
-    df_init = pd.read_csv(filename)
-    sport_options = ["ALL"] + list(df_init["Sport"].unique()) if "Sport" in df_init.columns else ["ALL"]
-else:
-    sport_options = ["ALL"]
+    try:
+        if os.path.getsize(filename) > 0:
+            df_init = pd.read_csv(filename)
+    except Exception:
+        pass
+
+sport_options = ["ALL"]
+if not df_init.empty and "Sport" in df_init.columns:
+    sport_options = ["ALL"] + list(df_init["Sport"].unique())
 
 selected_sport = pd_stream.sidebar.selectbox("Filter Market Sport", sport_options)
 strictness_trigger = pd_stream.sidebar.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=10.0, value=0.0, step=0.5)
@@ -38,11 +45,16 @@ if pd_stream.sidebar.button("🧹 Wipe Graded Bet Ledger History"):
 # 🔄 THE NATIVE STREAMLIT LIVE SYNC TRIGGER (Rapid 1-second hands-free motion!)
 @pd_stream.fragment(run_every=1)
 def render_live_sports_matrix():
-    if not os.path.exists(filename):
-        pd_stream.error("❌ master_predictions_sheet.csv not detected. Initialize your loop script inside VS Code.")
+    if not os.path.exists(filename) or os.path.getsize(filename) == 0:
+        pd_stream.info("⏳ Awaiting data stream sync... Your engine terminal loop is writing the live spreadsheet rows now.")
         return
 
-    df = pd.read_csv(filename)
+    try:
+        df = pd.read_csv(filename)
+    except Exception:
+        pd_stream.info("⏳ Refreshing pipeline matrices... Hold tight.")
+        return
+
     blueprint_df = df.copy()
     
     if "Sport" in df.columns and selected_sport != "ALL":
