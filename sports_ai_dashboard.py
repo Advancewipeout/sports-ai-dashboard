@@ -19,7 +19,7 @@ else:
 
     # 💰 SIDEBAR CONTROL PANELS
     pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
-    bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
+    bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll (\$)", min_value=10.0, value=1000.0, step=50.0)
     selected_sport = pd_stream.sidebar.selectbox("Filter Market Sport", ["ALL"] + list(df["Sport"].unique()))
     strictness_trigger = pd_stream.sidebar.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=10.0, value=0.0, step=0.5)
     
@@ -57,13 +57,11 @@ else:
     if live_layer_df.empty:
         pd_stream.info("No live games currently match your strictness filter settings.")
     else:
-        # ⚡ UNLOCKED STREAM MATRIX COMPONENT: Forces browser rendering layers to animate live!
-        pd_stream.data_editor(
+        # ✅ FIXED FLICKER-FREE CORE CONTAINER: Stays rock-solid on screen while data updates!
+        pd_stream.dataframe(
             live_layer_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], 
             use_container_width=True, 
-            hide_index=True,
-            disabled=True,
-            key=f"live_stream_{time.time()}"  # Dynamic stream keys break text freezing instantly!
+            hide_index=True
         )
     pd_stream.write("---")
 
@@ -96,7 +94,7 @@ else:
             suggested_cash_wager = round(bankroll * risk_ratio * news_scale_modifier, 2)
             if suggested_cash_wager < 5.0 and news_scale_modifier > 0: suggested_cash_wager = 25.00
                 
-            blueprint_string = f"SOURCE ENGINE: [{layer_label}] | SIGNAL: [{action_status}] -> RISK ALLOCATION: ${suggested_cash_wager} ON: {target_selection} ({odds_line_str})"
+            blueprint_string = f"SOURCE ENGINE: [{layer_label}] | SIGNAL: [{action_status}] -> RISK ALLOCATION: \${suggested_cash_wager} ON: {target_selection} ({odds_line_str})"
             pd_stream.markdown(f"**📍 {matchup_title} ({row['Sport']})** — Active Advantage: **+{edge_pct_value}%**")
             pd_stream.code(blueprint_string, language="text")
 
@@ -111,7 +109,7 @@ else:
             pd_stream.write("#### 📋 Detailed Settlement Audit Log Statements")
             pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
 
-    # 💓 AUTOMATED UI INTERVAL HEARTBEAT REFRESH
-    # Automatically triggers a smooth layout refresh every 4 seconds without screen blinking!
-    time.sleep(4)
+    # 💓 DYNAMIC SYNC REFRESH RATE HEARTBEAT
+    # Configured to run every 15 seconds to match your background `.bat` clock updates perfectly!
+    time.sleep(15)
     pd_stream.rerun()
