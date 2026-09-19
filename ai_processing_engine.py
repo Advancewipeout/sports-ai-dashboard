@@ -24,7 +24,7 @@ def fetch_breaking_sports_news(sport_label):
     }
     url = rss_urls.get(sport_label.upper(), "https://yahoo.com")
     try:
-        response = requests.get(url, timeout=4)
+        response = requests.get(url, timeout=2) # Shorter timeout prevents long freezes
         if response.status_code == 200:
             root = ET.fromstring(response.content)
             for item in root.findall(".//item")[:4]:
@@ -33,18 +33,12 @@ def fetch_breaking_sports_news(sport_label):
     except Exception:
         pass
     
-    # Injection of dynamic testing scenarios for verification filters
-    if sport_label.upper() == "NFL" and random.random() > 0.6:
-        return "⚠️ BREAKING: KC Chiefs Star Quarterback limping heavily during late pre-game drills. Questionable to return."
-    if sport_label.upper() == "NBA" and random.random() > 0.6:
-        return "🛑 ALARM: GS Warriors Head Coach announces late rest scratching for starting backcourt lineup."
-        
     if not news_headlines:
         return "No critical wire updates reported in the last 15 minutes. Line parameters normal."
     return " | ".join(news_headlines)
 
 def query_groq_news_intelligence(home, away, sport, game_state, odds_str, edge, context_type, news_wire):
-    """Processes numerical game variables blended with advanced linguistic text sentiment classification markers."""
+    """Pings Groq Cloud with an immediate automatic backup fallback to prevent empty terminal locks."""
     if not GROQ_API_KEY or "gsk_" not in GROQ_API_KEY:
         return "🔥 LIVE BUY" if context_type == "LIVE" else "🔥 FULL BUY", 1.0
 
@@ -56,20 +50,26 @@ def query_groq_news_intelligence(home, away, sport, game_state, odds_str, edge, 
         f"Matchup: {away} @ {home} | Current Line: {odds_str} | Base Math Edge: +{edge}%\n"
         f"GAME STATE LAYER: {game_state}\n"
         f"LIVE BREAKING NEWS WIRE: {news_wire}\n\n"
-        f"CRITICAL ASSIGNMENT:\n"
-        f"1. Audit the NEWS WIRE text. Check if it contains highly negative breaking alerts regarding injury, limping, late scratches, or benching.\n"
-        f"2. If massive negative injury or rest reports are present for a team, you MUST override the bet sizing to protect capital.\n"
-        f"3. Return a clean JSON block matching the structure below. Output NO thoughts, text, explanations, or formatting. Only raw valid JSON:\n"
-        f'{{"directive": "🔥 LIVE BUY" or "🔥 FULL BUY" or "⏳ HOLD LINE" or "🛡️ NEWS WARNING: SLICE" or "🛑 NEWS OVERRIDE: ABORT", "allocation_modifier": 1.0 or 0.5 or 0.0}}'
+        f"Instructions: Calculate your final trade action string from this list with NO notes or explanations:\n"
+        f"['🔥 LIVE BUY', '🔥 FULL BUY', '⏳ HOLD LINE', '🛑 PULL OUT', '🛡️ SLICE STAKE']"
     )
 
     try:
-        res = requests.post(url, headers=headers, json={"model": MODEL_NAME, "messages": [{"role": "user", "content": prompt}], "response_format": {"type": "json_object"}, "temperature": 0.1}, timeout=5)
+        # Added a strict 2-second timeout protection limit to stop internet lag instantly
+        res = requests.post(url, headers=headers, json={"model": MODEL_NAME, "messages": [{"role": "user", "content": prompt}], "response_format": {"type": "json_object"}, "temperature": 0.1}, timeout=2)
         if res.status_code == 200:
             raw_data = json.loads(res.json()['choices']['message']['content'].strip())
             return raw_data.get("directive", "🔥 LIVE BUY"), float(raw_data.get("allocation_modifier", 1.0))
-    except Exception: pass
-    return "🔥 FULL BUY" if context_type == "PRE" else "🔥 LIVE BUY", 1.0
+    except Exception:
+        pass
+        
+    # 🛡️ THE AUTOMATIC BACKUP ENGINE BYPASS: Fires instantly if the internet connection lags!
+    default_directive = "🔥 LIVE BUY" if context_type == "LIVE" else "🔥 FULL BUY"
+    if "WARNING" in news_wire or "BREAKING" in news_wire or "⚠️" in news_wire:
+        return "🛡️ NEWS WARNING: SLICE", 0.5
+    elif "🛑" in news_wire or "ALARM" in news_wire:
+        return "🛑 NEWS OVERRIDE: ABORT", 0.0
+    return default_directive, 1.0
 
 def calculate_implied_probability(odds):
     return 100 / (odds + 100) if odds > 0 else abs(odds) / (abs(odds) + 100)
@@ -102,7 +102,7 @@ def check_and_grade_final_scores(live_games_list):
         ledger_df.to_csv(LEDGER_FILE, index=False)
 
 def manage_layered_data_stream():
-    print("🧠 ALL SPORTS SYSTEM ENGINE: Running News-Sentiment Core...")
+    print("🧠 ALL SPORTS SYSTEM ENGINE: Running Corrected News-Sentiment Core...")
     
     live_inplay_games = [
         {"sport": "NFL", "home": "KC Chiefs", "away": "BUF Bills", "h_score": 24, "a_score": 21, "clock": "Q4 - 04:15", "min": 4, "base_odds": -150},
@@ -124,6 +124,7 @@ def manage_layered_data_stream():
 
     while True:
         master_compiled_rows = []
+        print(f"\n🔄 Sweeping Multi-Sport Processing Core: {time.strftime('%H:%M:%S')}")
         
         for g in live_inplay_games:
             if random.random() > 0.5: 
@@ -169,4 +170,7 @@ def manage_layered_data_stream():
 
         check_and_grade_final_scores(live_inplay_games)
         pd.DataFrame(master_compiled_rows).to_csv(OUTPUT_FILE, index=False)
-        print("📊 Data core updated with news-sentiment filtering matrices.")
+        print("📊 Local spreadsheet layout generated successfully.")
+
+        # AUTOMATED AUTO-PUSH PIPELINE
+        git_env_patch = 'set PATH=%PATH%;%LocalAppData%\\GitHubDesktop\\bin;%ProgramFiles%\\Git\\cmd && '
