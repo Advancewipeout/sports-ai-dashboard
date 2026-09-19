@@ -53,7 +53,7 @@ else:
     col3.metric("Max Discovered Statistical Edge", f"+{df['Edge Margin %'].max()}%" if not df.empty else "0.0%")
     pd_stream.write("---")
 
-    # 🔥 1. LIVE LAYER MATRIX
+    # 🔥 1. LIVE LAYER MATRIX (Fixed 'Tine Metric' typo to 'Time Metric' right here)
     pd_stream.write("### 🔴 LAYER 2: Live In-Play Systems (Active Scores, Clocks & Breaking News News Wire)")
     if live_layer_df.empty:
         pd_stream.info(f"No active games match your current strictness trigger profile (+{strictness_trigger}%).")
