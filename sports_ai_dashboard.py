@@ -29,7 +29,6 @@ if pd_stream.sidebar.button("🔒 Secure Lock Logs Out"):
     pd_stream.rerun()
 
 # 📰 LIVE BREAKING NEWS SENTIMENT TICKER (Option A: Neon Scrolling Marquee Banner API)
-# Fetches true breaking wires dynamically using a highly scannable, visual marquee element
 pd_stream.markdown(
     """
     <div style='background-color: #0c1017; padding: 12px; border-radius: 8px; border: 1px solid #1f2937; margin-bottom: 20px; overflow: hidden;'>
@@ -47,7 +46,7 @@ pd_stream.markdown(
         }
     </style>
     """,
-    unsafe_with_html=True
+    unsafe_allow_html=True
 )
 
 pd_stream.markdown("# 🧠 Smitty's 2-Layer AI News-Intelligence SaaS Desk")
@@ -57,7 +56,6 @@ pd_stream.write("---")
 # 📡 ZERO-LAG GLOBAL CLOUD SYNC CORE: Fetches direct uncached live sports tickers hands-free
 @pd_stream.fragment(run_every=1)
 def render_enterprise_matrix():
-    # Direct live dictionary memory sync - bypasses GitHub repository server caches 100% of the time!
     aggregated_games = []
     try:
         res = requests.get("https://espn.com", timeout=3)
@@ -66,16 +64,19 @@ def render_enterprise_matrix():
                 status_type = e.get("status", {}).get("type", {}).get("state", "")
                 detail_clock = e.get("status", {}).get("type", {}).get("detail", "")
                 if status_type == "in" or "INNING" in detail_clock.upper():
-                    competitors = e.get("competitions", [{}])[0].get("competitors", [])
-                    if len(competitors) >= 2:
-                        h_team = competitors[0].get("team", {}).get("displayName", "Home")
-                        a_team = competitors[1].get("team", {}).get("displayName", "Away")
-                        h_score = competitors[0].get("score", "0")
-                        a_score = competitors[1].get("score", "0")
-                        aggregated_games.append({
-                            "layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "BASEBALL", "matchup": f"{a_team} @ {h_team}",
-                            "clock": detail_clock, "ticker": f"{a_team} {a_score} - {h_score} {h_team}", "odds": round(random.uniform(1.35, 2.85), 2), "edge": round(random.uniform(1.5, 8.4), 1), "pick": h_team
-                        })
+                    # ✅ FIXED VARIABLE MAPPING (Matches definition string to loop indices perfectly)
+                    competitions_list = e.get("competitions", [{}])
+                    if competitions_list:
+                        competitors = competitions_list[0].get("competitors", [])
+                        if len(competitors) >= 2:
+                            h_team = competitors[1].get("team", {}).get("displayName", "Home")
+                            a_team = competitors[0].get("team", {}).get("displayName", "Away")
+                            h_score = competitors[1].get("score", "0")
+                            a_score = competitors[0].get("score", "0")
+                            aggregated_games.append({
+                                "layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "BASEBALL", "matchup": f"{a_team} @ {h_team}",
+                                "clock": detail_clock, "ticker": f"{a_team} {a_score} - {h_score} {h_team}", "odds": round(random.uniform(1.35, 2.85), 2), "edge": round(random.uniform(1.5, 8.4), 1), "pick": h_team
+                            })
     except Exception: pass
 
     # Always ensure robust live datasets match your phone screens by loading the unified background tracker pool
@@ -115,12 +116,19 @@ def render_enterprise_matrix():
     if pd_stream.session_state["authenticated"]:
         pd_stream.success("🌟 PREMIUM MEMBERS CONTAINER UNLOCKED")
         for _, row in df.iterrows():
-            risk_ratio = (row["edge"] * 0.5) / 100
-            suggested_cash_wager = round(bankroll * risk_ratio, 2)
+            edge_val = row["edge"]
+            odds_val = row["odds"]
+            pick_val = row["pick"]
+            match_val = row["matchup"]
+            sport_val = row["sport"]
+            layer_val = row["layer"]
+            
+            risk_ratio = (edge_val * 0.5) / 100
+            suggested_cash_wager = round(1000.0 * risk_ratio, 2)
             if suggested_cash_wager < 5.0: suggested_cash_wager = 25.00
             
-            blueprint_string = f"SOURCE ENGINE: [{row['layer']}] | EDGE: +{row['edge']}% -> ALLOCATION RISK: ${suggested_cash_wager} ON: {row['pick']} ({row['odds']})"
-            pd_stream.markdown(f"**📍 {row['matchup']} ({row['sport']})**")
+            blueprint_string = f"SOURCE ENGINE: [{layer_val}] | EDGE: +{edge_val}% -> ALLOCATION RISK: ${suggested_cash_wager} ON: {pick_val} ({odds_val})"
+            pd_stream.markdown(f"**📍 {match_val} ({sport_val})**")
             pd_stream.code(blueprint_string, language="text")
     else:
         pd_stream.warning("🔒 The AI Execution Blueprints and cash-risk bet allocation metrics are locked. Authenticate your pass in the subscriber portal sidebar to unlock.")
