@@ -7,28 +7,56 @@ import random
 
 pd_stream.set_page_config(page_title="Smitty's AI Sports Risk Desk", layout="wide")
 
-# 🔒 PREMIUM MEMBER AUTHENTICATION DECK (Option C: SaaS Login Protection Shield)
+# Safe file check definitions
+filename = "master_predictions_sheet.csv"
+ledger_file = "settled_bets_ledger.csv"
+
+# Safe file check to dynamically populate the sport selection filters up top
+df_init = pd.DataFrame()
+if os.path.exists(filename) and os.path.getsize(filename) > 0:
+    try: df_init = pd.read_csv(filename)
+    except Exception: pass
+
+sport_options = ["ALL"]
+if not df_init.empty and "Sport" in df_init.columns:
+    sport_options = ["ALL"] + list(df_init["Sport"].unique())
+
+# 💰 1. FULLY RESTORED PUBLIC FILTERS SECTION (Placed right at the very top!)
+pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
+bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
+selected_sport = pd_stream.sidebar.selectbox("Filter Market Sport", sport_options)
+strictness_trigger = pd_stream.sidebar.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=10.0, value=0.0, step=0.5)
+
+# 🔒 2. PREMIUM MEMBER AUTHENTICATION DECK (SaaS Login Protection Shield)
+pd_stream.sidebar.write("---")
 pd_stream.sidebar.header("🔐 Subscriber Portal Login")
 if "authenticated" not in pd_stream.session_state:
     pd_stream.session_state["authenticated"] = False
 
-# Hardcoded Master Credentials for your friends / beta testers (Can be scaled to cloud user DB later)
 username_input = pd_stream.sidebar.text_input("User Name Label")
-password_input = pd_stream.sidebar.text_input("Security Access Key Pin", type="password")
+password_input = pd_stream.sidebar.text_input("Security Access Key Pin (4-Digit)", type="password")
 
 if pd_stream.sidebar.button("🔓 Authenticate Premium Pass"):
     if username_input == "smitty" and password_input == "8501":
         pd_stream.session_state["authenticated"] = True
-        pd_stream.sidebar.success("Access Granted! Welcome to the Desk.")
+        pd_stream.sidebar.success("Access Granted!")
         pd_stream.rerun()
     else:
-        pd_stream.sidebar.error("Invalid credentials block. Verify passkey pins.")
+        pd_stream.sidebar.error("Invalid credentials block.")
 
 if pd_stream.sidebar.button("🔒 Secure Lock Logs Out"):
     pd_stream.session_state["authenticated"] = False
     pd_stream.rerun()
 
-# 📰 LIVE BREAKING NEWS SENTIMENT TICKER (Option A: Neon Scrolling Marquee Banner API)
+if pd_stream.sidebar.button("🧹 Wipe Graded Bet Ledger History"):
+    if os.path.exists(ledger_file):
+        os.remove(ledger_file)
+        blank_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
+        blank_df.to_csv(ledger_file, index=False)
+        pd_stream.sidebar.success("Ledger wiped clean!")
+        pd_stream.rerun()
+
+# 📰 LIVE BREAKING NEWS SENTIMENT TICKER (Neon Scrolling Marquee Banner)
 pd_stream.markdown(
     """
     <div style='background-color: #0c1017; padding: 12px; border-radius: 8px; border: 1px solid #1f2937; margin-bottom: 20px; overflow: hidden;'>
@@ -53,84 +81,88 @@ pd_stream.markdown("# 🧠 Smitty's 2-Layer AI News-Intelligence SaaS Desk")
 pd_stream.markdown("### Real-Time Global Synchronized Split Engine: Clocks, Scheduled Models & Subscriber Value Blueprints")
 pd_stream.write("---")
 
-# 📡 ZERO-LAG GLOBAL CLOUD SYNC CORE: Fetches direct uncached live sports tickers hands-free
+# 📡 ZERO-LAG HIGH-SPEED REFRESH INTERVAL HEARTBEAT
 @pd_stream.fragment(run_every=1)
 def render_enterprise_matrix():
-    aggregated_games = []
-    try:
-        res = requests.get("https://espn.com", timeout=3)
-        if res.status_code == 200:
-            for e in res.json().get("events", []):
-                status_type = e.get("status", {}).get("type", {}).get("state", "")
-                detail_clock = e.get("status", {}).get("type", {}).get("detail", "")
-                if status_type == "in" or "INNING" in detail_clock.upper():
-                    # ✅ FIXED VARIABLE MAPPING (Matches definition string to loop indices perfectly)
-                    competitions_list = e.get("competitions", [{}])
-                    if competitions_list:
-                        competitors = competitions_list[0].get("competitors", [])
-                        if len(competitors) >= 2:
-                            h_team = competitors[1].get("team", {}).get("displayName", "Home")
-                            a_team = competitors[0].get("team", {}).get("displayName", "Away")
-                            h_score = competitors[1].get("score", "0")
-                            a_score = competitors[0].get("score", "0")
-                            aggregated_games.append({
-                                "layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "BASEBALL", "matchup": f"{a_team} @ {h_team}",
-                                "clock": detail_clock, "ticker": f"{a_team} {a_score} - {h_score} {h_team}", "odds": round(random.uniform(1.35, 2.85), 2), "edge": round(random.uniform(1.5, 8.4), 1), "pick": h_team
-                            })
-    except Exception: pass
-
-    # Always ensure robust live datasets match your phone screens by loading the unified background tracker pool
-    system_anchor_pool = [
-        {"layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "BASEBALL", "matchup": "Toronto Blue Jays @ Texas Rangers", "clock": "9th Inning Top", "ticker": "TOR 2 - 6 TEX", "odds": 15.50, "edge": 5.4, "pick": "Texas Rangers"},
-        {"layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "BASEBALL", "matchup": "Atlanta Braves @ Houston Astros", "clock": "Break Top 9", "ticker": "ATL 6 - 3 HOU", "odds": 1.01, "edge": 2.1, "pick": "Atlanta Braves"},
-        {"layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "BASEBALL", "matchup": "Washington Nationals @ St. Louis Cardinals", "clock": "Extra Inning Bottom", "ticker": "WSH 5 - 8 STL", "odds": 3.09, "edge": 4.8, "pick": "St. Louis Cardinals"},
-        {"layer": "🔴 LAYER 2: IN-PLAY LIVE", "sport": "SOCCER", "matchup": "Orlando City SC @ Inter Miami CF", "clock": "54:53 Live Ticker", "ticker": "ORL 1 - 2 MIA", "odds": 2.15, "edge": 6.1, "pick": "Inter Miami CF"},
-        {"layer": "⏳ LAYER 1: UPCOMING", "sport": "FOOTBALL", "matchup": "Miami Dolphins @ San Francisco 49ers", "clock": "SUN 04:25 p.m.", "ticker": "PRE-MATCH SCHEDULE", "odds": 7.25, "edge": 8.1, "pick": "San Francisco 49ers"},
-        {"layer": "⏳ LAYER 1: UPCOMING", "sport": "FOOTBALL", "matchup": "New York Giants @ Los Angeles Rams", "clock": "MON 08:15 p.m.", "ticker": "PRE-MATCH SCHEDULE", "odds": 2.88, "edge": 6.7, "pick": "Los Angeles Rams"}
-    ]
+    if not os.path.exists(filename) or os.path.getsize(filename) == 0:
+        pd_stream.info("Awaiting local loop synchronization...")
+        return
+        
+    df = pd.read_csv(filename)
+    blueprint_df = df.copy()
     
-    for item in system_anchor_pool:
-        if not any(x["matchup"] == item["matchup"] for x in aggregated_games):
-            aggregated_games.append(item)
+    # Filter datasets dynamically based on your restored top sidebar selections
+    if "Sport" in df.columns and selected_sport != "ALL":
+        df = df[df["Sport"] == selected_sport]
+        blueprint_df = blueprint_df[blueprint_df["Sport"] == selected_sport]
 
-    df = pd.DataFrame(aggregated_games)
-    live_df = df[df["layer"].str.contains("LIVE")]
-    upcoming_df = df[df["layer"].str.contains("UPCOMING")]
+    if "Edge Margin %" in df.columns:
+        df = df[df["Edge Margin %"] >= strictness_trigger]
+        
+    live_df = df[df["Engine Layer"].str.contains("LIVE|LAYER 2", case=False, na=False)] if "Engine Layer" in df.columns else pd.DataFrame()
+    upcoming_df = df[df["Engine Layer"].str.contains("UPCOMING|LAYER 1", case=False, na=False)] if "Engine Layer" in df.columns else pd.DataFrame()
 
     col1, col2, col3 = pd_stream.columns(3)
     col1.metric("Live Matches Tracking Now", len(live_df))
     col2.metric("Upcoming Systems Calculated", len(upcoming_df))
-    col3.metric("Max Discovered Statistical Edge", f"+{df['edge'].max()}%" if not df.empty else "0.0%")
+    col3.metric("Max Discovered Statistical Edge", f"+{df['Edge Margin %'].max()}%" if not df.empty and "Edge Margin %" in df.columns else "0.0%")
     pd_stream.write("---")
 
+    # 🔥 1. LIVE LAYER MATRIX (Brought to the main view, updating in real-time)
     pd_stream.write("### 🔴 LAYER 2: Live In-Play Systems (Active Scores, Clocks & Wires)")
-    pd_stream.dataframe(live_df[["sport", "matchup", "clock", "ticker", "odds", "edge"]], use_container_width=True, hide_index=True)
+    if live_df.empty:
+        pd_stream.info("No active live matches match your sidebar filter settings.")
+    else:
+        pd_stream.dataframe(live_layer_cols := live_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive"]], use_container_width=True, hide_index=True)
     pd_stream.write("---")
 
+    # ⏳ 2. UPCOMING LAYER MATRIX
     pd_stream.write("### ⏳ LAYER 1: Upcoming Pre-Match Models (Scheduled Selections)")
-    pd_stream.dataframe(upcoming_df[["sport", "matchup", "clock", "odds", "edge"]], use_container_width=True, hide_index=True)
+    if upcoming_df.empty:
+        pd_stream.info("No upcoming models computed.")
+    else:
+        pd_stream.dataframe(upcoming_df[["Sport", "Matchup", "Time Metric", "Odds Line", "Edge Margin %", "AI Action Directive"]], use_container_width=True, hide_index=True)
     pd_stream.write("---")
 
-    # 🔒 MEMBERS LOGIN SHIELD TRIGGER
+    # 🔒 MEMBERS ACCESS BLUEPRINT LOCK SHIELD
     pd_stream.write("### 📋 Automated Execution Order Blueprint (Scaled Cash Risks)")
     if pd_stream.session_state["authenticated"]:
-        pd_stream.success("🌟 PREMIUM MEMBERS CONTAINER UNLOCKED")
-        for _, row in df.iterrows():
-            edge_val = row["edge"]
-            odds_val = row["odds"]
-            pick_val = row["pick"]
-            match_val = row["matchup"]
-            sport_val = row["sport"]
-            layer_val = row["layer"]
-            
-            risk_ratio = (edge_val * 0.5) / 100
-            suggested_cash_wager = round(1000.0 * risk_ratio, 2)
-            if suggested_cash_wager < 5.0: suggested_cash_wager = 25.00
-            
-            blueprint_string = f"SOURCE ENGINE: [{layer_val}] | EDGE: +{edge_val}% -> ALLOCATION RISK: ${suggested_cash_wager} ON: {pick_val} ({odds_val})"
-            pd_stream.markdown(f"**📍 {match_val} ({sport_val})**")
-            pd_stream.code(blueprint_string, language="text")
+        pd_stream.success("🌟 AI PREMIUM MEMBER POSITIONS UNLOCKED")
+        active_orders = blueprint_df[blueprint_df["Edge Margin %"] >= strictness_trigger] if "Edge Margin %" in blueprint_df.columns else blueprint_df
+        active_orders = active_orders[~active_orders["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT", "PASS", "❌ PASS LINE"])]
+        
+        if active_orders.empty:
+            pd_stream.info("No high-value selections match your minimum value edge cutoff.")
+        else:
+            for _, row in active_orders.iterrows():
+                edge_val = row.get("Edge Margin %", 0.0)
+                odds_val = row.get("Odds Line", "TonyBet")
+                pick_val = row.get("Pick Team", "Target Selection")
+                match_val = row.get("Matchup", "Match")
+                sport_val = row.get("Sport", "Sport")
+                layer_val = row.get("Engine Layer", "LAYER 2")
+                
+                risk_ratio = (edge_val * 0.5) / 100
+                suggested_cash_wager = round(bankroll * risk_ratio, 2)
+                if suggested_cash_wager < 5.0: suggested_cash_wager = 25.00
+                
+                blueprint_string = f"SOURCE ENGINE: [{layer_val}] | EDGE: +{edge_val}% -> ALLOCATION RISK: ${suggested_cash_wager} ON: {pick_val} ({odds_val})"
+                pd_stream.markdown(f"**📍 {match_val} ({sport_val})**")
+                pd_stream.code(blueprint_string, language="text")
     else:
-        pd_stream.warning("🔒 The AI Execution Blueprints and cash-risk bet allocation metrics are locked. Authenticate your pass in the subscriber portal sidebar to unlock.")
+        pd_stream.warning("🔒 The AI Decision buy directives and scaled cash allocations are encrypted. Authenticate your 4-digit passkey pin in the subscriber portal sidebar to view.")
+
+    # --- 🏆 HISTORICAL LEDGER ARCHIVE TRACKER
+    pd_stream.write("---")
+    pd_stream.write("### 🏆 Historical Performance Settlement Archive (Graded Bet Ledger)")
+    if os.path.exists(ledger_file):
+        try:
+            ledger_df = pd.read_csv(ledger_file)
+            if not ledger_df.empty and "Running Bankroll" in ledger_df.columns:
+                pd_stream.write("#### 📊 Cumulative Capital Return Growth Chart (ROI Performance)")
+                pd_stream.line_chart(ledger_df["Running Bankroll"], use_container_width=True)
+                pd_stream.write("#### 📋 Detailed Settlement Audit Log Statements")
+                pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
+        except Exception: pass
 
 render_enterprise_matrix()
