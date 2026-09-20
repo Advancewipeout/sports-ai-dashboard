@@ -9,40 +9,44 @@ pd_stream.markdown("# 🧠 Smitty's 2-Layer AI News-Intelligence Desk")
 pd_stream.markdown("### Real-Time Split Engine: Processing Live Tickers, Scheduled Models & Global News Sentiment Wires")
 pd_stream.write("---")
 
-# 🔗 CHANGE THESE TWO STRINGS TO MATCH YOUR EXACT REPOSITORY AND USERNAME TO ENGAGE UNCACHED MOTORS
-GITHUB_USERNAME = "YOUR_GITHUB_USERNAME_HERE"
-REPO_NAME = "YOUR_REPO_NAME_HERE"
-
-# Unified fail-safe path network lookup
-local_file = "master_predictions_sheet.csv"
+filename = "master_predictions_sheet.csv"
 ledger_file = "settled_bets_ledger.csv"
-cdn_url = f"https://jsdelivr.net{GITHUB_USERNAME}/{REPO_NAME}@main/master_predictions_sheet.csv?t={time.time()}"
 
 # 💰 SIDEBAR CONTROL PANELS
 pd_stream.sidebar.header("⚙️ Bankroll Management Desk")
 bankroll = pd_stream.sidebar.number_input("Total Trading Bankroll ($)", min_value=10.0, value=1000.0, step=50.0)
 
-# 🔄 THE NATIVE STREAMLIT LIVE SYNC TRIGGER (High-Speed 1-second hands-free fragment loop)
+df_init = pd.DataFrame()
+if os.path.exists(filename) and os.path.getsize(filename) > 0:
+    try: df_init = pd.read_csv(filename)
+    except Exception: pass
+
+sport_options = ["ALL"]
+if not df_init.empty and "Sport" in df_init.columns:
+    sport_options = ["ALL"] + list(df_init["Sport"].unique())
+
+selected_sport = pd_stream.sidebar.selectbox("Filter Market Sport", sport_options)
+strictness_trigger = pd_stream.sidebar.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=10.0, value=0.0, step=0.5)
+
+pd_stream.sidebar.write("---")
+pd_stream.sidebar.header("🏆 History Operations")
+if pd_stream.sidebar.button("🧹 Wipe Graded Bet Ledger History"):
+    if os.path.exists(ledger_file):
+        os.remove(ledger_file)
+        blank_df = pd.DataFrame(columns=["Timestamp", "Matchup", "Sport", "AI Pick Selection", "Final Score Line", "Trade Outcome Profit/Loss", "Running Bankroll"])
+        blank_df.to_csv(ledger_file, index=False)
+        pd_stream.sidebar.success("Ledger wiped clean!")
+        pd_stream.rerun()
+
+# 🔄 THE NATIVE STREAMLIT LIVE SYNC TRIGGER (High-Speed Local 1-second fragment loop)
 @pd_stream.fragment(run_every=1)
 def render_live_sports_matrix():
-    df = pd.DataFrame()
-    
-    # Try reading directly from the ultra-fast CDN network cache bypass first
-    try:
-        df = pd.read_csv(cdn_url)
-    except Exception:
-        # Fall back to local storage sheet array if network is initializing
-        if os.path.exists(local_file) and os.path.getsize(local_file) > 0:
-            try: df = pd.read_csv(local_file)
-            except Exception: pass
-
-    if df.empty:
-        pd_stream.info("⏳ Synchronizing network channels... Hold tight.")
+    if not os.path.exists(filename) or os.path.getsize(filename) == 0:
+        pd_stream.info("⏳ Awaiting data stream sync... Your engine terminal loop is writing the live spreadsheet rows now.")
         return
 
-    sport_options = ["ALL"] + list(df["Sport"].unique()) if "Sport" in df.columns else ["ALL"]
-    selected_sport = pd_stream.sidebar.selectbox("Filter Market Sport", sport_options, key="sport_select")
-    strictness_trigger = pd_stream.sidebar.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=10.0, value=0.0, step=0.5, key="edge_slider")
+    try: df = pd.read_csv(filename)
+    except Exception: return
 
     blueprint_df = df.copy()
     
@@ -68,8 +72,7 @@ def render_live_sports_matrix():
     if live_layer_df.empty:
         pd_stream.info("No live games currently match your strictness filter settings.")
     else:
-        display_cols = [c for c in ["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"] if c in live_layer_df.columns]
-        pd_stream.dataframe(live_layer_df[display_cols], use_container_width=True, hide_index=True)
+        pd_stream.dataframe(live_layer_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
     pd_stream.write("---")
 
     # ⏳ 2. UPCOMING LAYER MATRIX
@@ -77,8 +80,7 @@ def render_live_sports_matrix():
     if upcoming_layer_df.empty:
         pd_stream.info("No upcoming games currently match your strictness filter settings.")
     else:
-        display_cols = [c for c in ["Sport", "Matchup", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"] if c in upcoming_layer_df.columns]
-        pd_stream.dataframe(upcoming_layer_df[display_cols], use_container_width=True, hide_index=True)
+        pd_stream.dataframe(upcoming_layer_df[["Sport", "Matchup", "Odds Line", "Edge Margin %", "AI Action Directive", "Breaking News Signal", "Pick Team"]], use_container_width=True, hide_index=True)
 
     # --- 📋 LOWER BLUEPRINTS ---
     pd_stream.write("---")
@@ -108,5 +110,15 @@ def render_live_sports_matrix():
             pd_stream.markdown(f"**📍 {matchup_title} ({row.get('Sport', 'Sport')})** — Active Advantage: **+{edge_pct_value}%**")
             pd_stream.code(blueprint_string, language="text")
 
-# Ignite the live unblocked fragment channel
+    # --- 🏆 HISTORICAL LEDGER ARCHIVE TRACKER ---
+    pd_stream.write("---")
+    pd_stream.write("### 🏆 Historical Performance Settlement Archive (Graded Bet Ledger)")
+    if os.path.exists(ledger_file):
+        ledger_df = pd.read_csv(ledger_file)
+        if not ledger_df.empty and "Running Bankroll" in ledger_df.columns:
+            pd_stream.write("#### 📊 Cumulative Capital Return Growth Chart (ROI Performance)")
+            pd_stream.line_chart(ledger_df["Running Bankroll"], use_container_width=True)
+            pd_stream.write("#### 📋 Detailed Settlement Audit Log Statements")
+            pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
+
 render_live_sports_matrix()
