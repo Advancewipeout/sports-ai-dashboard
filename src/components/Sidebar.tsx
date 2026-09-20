@@ -8,6 +8,8 @@ interface SidebarProps {
   onToggleAutoRefresh: () => void;
   refreshInterval: number;
   onIntervalChange: (sec: number) => void;
+  autoSettlementEnabled?: boolean;
+  onToggleAutoSettlement?: () => void;
   isAuthenticated: boolean;
   onAuthenticate: (pin: string) => boolean;
   onLogout: () => void;
@@ -23,6 +25,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onToggleAutoRefresh,
   refreshInterval,
   onIntervalChange,
+  autoSettlementEnabled = true,
+  onToggleAutoSettlement,
   isAuthenticated,
   onAuthenticate,
   onLogout,
@@ -55,9 +59,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
         
         <div className="bg-[#131b29] border border-gray-800 rounded-lg p-3.5">
-          <label className="text-xs text-gray-400 block mb-1 font-medium">
-            Active Total Bankroll ($)
-          </label>
+          <div className="flex items-center justify-between mb-1">
+            <label className="text-xs text-gray-400 font-medium">
+              Active Total Bankroll ($)
+            </label>
+            <span className="text-[10px] text-emerald-400 font-mono flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+              Saved in Memory
+            </span>
+          </div>
           <div className="relative">
             <span className="absolute left-3 top-2.5 text-gray-400 font-mono text-sm">$</span>
             <input
@@ -96,6 +106,26 @@ export const Sidebar: React.FC<SidebarProps> = ({
             >
               {isAutoRefreshing ? 'ONLINE' : 'PAUSED'}
             </button>
+          </div>
+
+          <div className="flex items-center justify-between pt-1 border-t border-gray-800/80">
+            <span className="text-xs text-gray-300">Auto-Grade Finished:</span>
+            {onToggleAutoSettlement ? (
+              <button
+                onClick={onToggleAutoSettlement}
+                className={`px-3 py-1 text-xs font-bold font-mono rounded cursor-pointer transition ${
+                  autoSettlementEnabled
+                    ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
+                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                }`}
+              >
+                {autoSettlementEnabled ? 'ACTIVE' : 'MANUAL'}
+              </button>
+            ) : (
+              <span className="px-2 py-0.5 text-[10px] font-bold font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded">
+                AUTO-ENABLED
+              </span>
+            )}
           </div>
 
           {/* Rapid Presets */}

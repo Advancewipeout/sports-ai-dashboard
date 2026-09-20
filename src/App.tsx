@@ -16,16 +16,123 @@ import { QuickToolsBar } from './components/QuickToolsBar';
 import { CheckCircle2, X } from 'lucide-react';
 import { americanToDecimal } from './utils/oddsEngine';
 
+// LocalStorage Persistence Keys
+const STORAGE_KEYS = {
+  BANKROLL: 'sports_desk_active_bankroll',
+  AUTO_REFRESH: 'sports_desk_auto_refresh',
+  REFRESH_INTERVAL: 'sports_desk_refresh_interval',
+  AUTO_SETTLEMENT: 'sports_desk_auto_settlement',
+  LEDGER: 'sports_desk_settled_ledger'
+};
+
 export function App() {
   const [games, setGames] = useState<GameRecord[]>(INITIAL_GAMES);
-  const [ledger, setLedger] = useState<SettledBet[]>(INITIAL_LEDGER);
-  const [bankroll, setBankroll] = useState<number>(1000);
-  const [isAutoRefreshing, setIsAutoRefreshing] = useState<boolean>(true);
-  const [refreshInterval, setRefreshInterval] = useState<number>(3);
+  
+  // Initialize persistent states from localStorage with safe fallbacks
+  const [ledger, setLedger] = useState<SettledBet[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.LEDGER);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {
+      // Fallback
+    }
+    return INITIAL_LEDGER;
+  });
+
+  const [bankroll, setBankroll] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.BANKROLL);
+      if (saved !== null) {
+        const parsed = parseFloat(saved);
+        if (!isNaN(parsed) && parsed > 0) return parsed;
+      }
+    } catch {
+      // Fallback
+    }
+    return 1000;
+  });
+
+  const [isAutoRefreshing, setIsAutoRefreshing] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.AUTO_REFRESH);
+      if (saved !== null) return saved === 'true';
+    } catch {
+      // Fallback
+    }
+    return true;
+  });
+
+  const [refreshInterval, setRefreshInterval] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.REFRESH_INTERVAL);
+      if (saved !== null) {
+        const parsed = parseInt(saved, 10);
+        if (!isNaN(parsed) && parsed >= 1 && parsed <= 60) return parsed;
+      }
+    } catch {
+      // Fallback
+    }
+    return 3;
+  });
+
+  const [autoSettlementEnabled, setAutoSettlementEnabled] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.AUTO_SETTLEMENT);
+      if (saved !== null) return saved === 'true';
+    } catch {
+      // Fallback
+    }
+    return true;
+  });
+
   const [lastUpdated, setLastUpdated] = useState<string>('Just now');
   const [engineLatency, setEngineLatency] = useState<number>(18);
   const [tickFlash, setTickFlash] = useState<boolean>(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+  // Sync memory states to localStorage whenever changed
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.BANKROLL, bankroll.toString());
+    } catch {
+      // Storage full or restricted
+    }
+  }, [bankroll]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.AUTO_REFRESH, isAutoRefreshing.toString());
+    } catch {
+      // Storage full or restricted
+    }
+  }, [isAutoRefreshing]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.REFRESH_INTERVAL, refreshInterval.toString());
+    } catch {
+      // Storage full or restricted
+    }
+  }, [refreshInterval]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.AUTO_SETTLEMENT, autoSettlementEnabled.toString());
+    } catch {
+      // Storage full or restricted
+    }
+  }, [autoSettlementEnabled]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.LEDGER, JSON.stringify(ledger));
+    } catch {
+      // Storage full or restricted
+    }
+  }, [ledger]);
 
   // Filters
   const [selectedSport, setSelectedSport] = useState<string>('ALL');
@@ -252,6 +359,8 @@ export function App() {
             onToggleAutoRefresh={() => setIsAutoRefreshing(!isAutoRefreshing)}
             refreshInterval={refreshInterval}
             onIntervalChange={setRefreshInterval}
+            autoSettlementEnabled={autoSettlementEnabled}
+            onToggleAutoSettlement={() => setAutoSettlementEnabled(!autoSettlementEnabled)}
             isAuthenticated={isAuthenticated}
             onAuthenticate={handleAuthenticate}
             onLogout={handleLogout}
