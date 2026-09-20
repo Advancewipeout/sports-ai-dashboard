@@ -64,8 +64,31 @@ export function App() {
           if (game.engineLayer.includes('LIVE')) {
             const delta = (Math.random() * 0.4 - 0.2);
             const newEdge = Math.max(1.0, parseFloat((game.edgeMarginPct + delta).toFixed(1)));
+
+            // Occasional live score tick (e.g. baseball run or basketball bucket)
+            let updatedScore = game.scoreTicker;
+            if (Math.random() < 0.12) {
+              if (game.sport === 'MLB') {
+                const parts = game.scoreTicker.match(/([A-Z]+)\s*(\d+)\s*-\s*(\d+)\s*([A-Z]+)/);
+                if (parts) {
+                  const s1 = parseInt(parts[2], 10) + (Math.random() > 0.5 ? 1 : 0);
+                  const s2 = parseInt(parts[3], 10) + (s1 === parseInt(parts[2], 10) ? 1 : 0);
+                  updatedScore = `${parts[1]} ${s1} - ${s2} ${parts[4]}`;
+                }
+              } else if (game.sport === 'NBA') {
+                const parts = game.scoreTicker.match(/([A-Z]+)\s*(\d+)\s*-\s*(\d+)\s*([A-Z]+)/);
+                if (parts) {
+                  const pts = Math.random() > 0.4 ? 2 : 3;
+                  const s1 = parseInt(parts[2], 10) + (Math.random() > 0.5 ? pts : 0);
+                  const s2 = parseInt(parts[3], 10) + (s1 === parseInt(parts[2], 10) ? pts : 0);
+                  updatedScore = `${parts[1]} ${s1} - ${s2} ${parts[4]}`;
+                }
+              }
+            }
+
             return {
               ...game,
+              scoreTicker: updatedScore,
               edgeMarginPct: newEdge
             };
           }

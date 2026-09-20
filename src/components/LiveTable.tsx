@@ -2,6 +2,7 @@ import React from 'react';
 import { GameRecord } from '../types';
 import { Radio, Zap, Sparkles, Target, ShieldCheck } from 'lucide-react';
 import { Sparkline } from './Sparkline';
+import { LiveGameClock } from './LiveGameClock';
 
 interface LiveTableProps {
   games: GameRecord[];
@@ -116,10 +117,7 @@ export const LiveTable: React.FC<LiveTableProps> = ({
                     </div>
                   </td>
                   <td className="py-3 px-3 text-gray-300 whitespace-nowrap">
-                    <span className="flex items-center gap-1.5 text-rose-400">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping" />
-                      {game.timeMetric}
-                    </span>
+                    <LiveGameClock initialTimeMetric={game.timeMetric} sport={game.sport} />
                   </td>
                   <td className="py-3 px-3 font-bold text-white bg-[#101724] whitespace-nowrap">
                     {game.scoreTicker}
