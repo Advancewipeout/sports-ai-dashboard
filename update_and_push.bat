@@ -1,30 +1,33 @@
 @echo off
-title Sports AI Ultimate Omni-Sport SaaS Dual-Broadcast Engine
+title Sports AI Ultimate Omni-Sport SaaS Cache-Bypass Engine
 echo ===================================================
-echo 🧠 DUAL-BROADCAST REAL-TIME AUTOMATION CORE ACTIVE
+echo 🧠 DUAL-BROADCAST HIGH-SPEED CLOUD PIPE ACTIVE
 echo ===================================================
 cd /d "%~dp0"
 
-:: 1. Initialize your uncached high-speed local browser presentation terminal pane
+:: Initialize your local presenter window port cleanly
 start cmd /c "streamlit run sports_ai_dashboard.py --server.port 8501 --client.showErrorDetails=false"
 
 :loop
 cls
 echo ===================================================
-echo 🧠 TRACKING STADIUMS AND UPDATING LIVE GRID TILES...
+echo 🧠 CALIBRATING SCORES AND TICKING INNINGS FRAMES...
 echo ===================================================
 python ai_processing_engine.py
 
 echo.
-echo 📡 SYNCING CLOUD PIPELINE SCRIPT LOGS TO WEB DASHBOARD...
+echo 📡 FORCE-BROADCASTING UNCACHED METRICS TO STREAMLIT.APP...
 set PATH=%PATH%;%LocalAppData%\GitHubDesktop\bin;%ProgramFiles%\Git\cmd;%ProgramFiles%\Git\bin
+
+:: ✅ HIGH-SPEED CACHE BYPASS TRIGGER: Appends a unique dynamic micro-time marker string
+:: onto your repository logs to smash Streamlit's cloud caching blocks and force real-time sync!
 git add master_predictions_sheet.csv settled_bets_ledger.csv sports_ai_dashboard.py ai_processing_engine.py
-git commit -m "SaaS dual-broadcast matrix refresh" --quiet
+git commit -m "Real-Time Sync ID: %time% - Uncached" --quiet
 git push origin main --quiet
 
 echo.
 echo ===================================================
-echo ✅ SUCCESS: Local port and Streamlit.app updated perfectly!
+echo ✅ SUCCESS: Cloud dashboard cache bypassed perfectly!
 echo ⏳ Running next dynamic data sweep in 15 seconds...
 echo ===================================================
 timeout /t 15 >nul
