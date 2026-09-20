@@ -1,8 +1,8 @@
 Engine Layer,Sport,Matchup,Time Metric,Score Ticker,TonyBet,TonyBet_raw,BetMGM,BetMGM_raw,Edge Margin %,AI Action Directive,Pick Team
-🔴 LAYER 2: IN-PLAY LIVE,BASEBALL,SF Giants @ LA Dodgers,Inning 4 - Active,SF Giants 0 - 2 LA Dodgers,TonyBet (1.74),1.74,BetMGM (1.72),1.76,4.1,🔥 LIVE BUY,LA Dodgers
-🔴 LAYER 2: IN-PLAY LIVE,BASEBALL,SF Giants @ LA Dodgers,Inning 2 - Active,SF Giants 0 - 2 LA Dodgers,TonyBet (1.74),1.74,BetMGM (1.76),1.72,8.2,🔥 LIVE BUY,LA Dodgers
-🔴 LAYER 2: IN-PLAY LIVE,BASEBALL,Miami Marlins @ San Diego Padres,Inning 9 - Active,Miami Marlins 6 - 6 San Diego Padres,TonyBet (1.14),1.14,BetMGM (1.15),1.13,4.9,🔥 LIVE BUY,San Diego Padres
-🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Orlando City SC @ Inter Miami CF,60:34 Live Ticker,Orlando City SC 1 - 3 Inter Miami CF,TonyBet (2.15),2.15,BetMGM (2.13),2.13,1.8,🔥 LIVE BUY,Orlando City SC
-⏳ LAYER 1: UPCOMING,FOOTBALL,Miami Dolphins @ San Francisco 49ers,SUN 04:25 p.m.,PRE-MATCH SCHEDULE,TonyBet (7.25),7.25,BetMGM (7.25),7.18,1.3,🔥 FULL BUY,Miami Dolphins
-⏳ LAYER 1: UPCOMING,FOOTBALL,New York Giants @ Los Angeles Rams,MON 08:15 p.m.,PRE-MATCH SCHEDULE,TonyBet (2.88),2.88,BetMGM (2.88),2.91,2.1,🔥 FULL BUY,New York Giants
-⏳ LAYER 1: UPCOMING,FOOTBALL,Jacksonville Jaguars @ Denver Broncos,SUN 04:05 p.m.,PRE-MATCH SCHEDULE,TonyBet (2.37),2.37,BetMGM (2.35),2.42,2.4,🔥 FULL BUY,Jacksonville Jaguars
+🔴 LAYER 2: IN-PLAY LIVE,BASEBALL,SF Giants @ LA Dodgers,Inning 1 - Active,SF Giants 1 - 2 LA Dodgers,TonyBet (1.74),1.74,BetMGM (1.72),1.76,7.6,🔥 LIVE BUY,LA Dodgers
+🔴 LAYER 2: IN-PLAY LIVE,BASEBALL,SF Giants @ LA Dodgers,Inning 8 - Active,SF Giants 1 - 2 LA Dodgers,TonyBet (1.74),1.74,BetMGM (1.74),1.74,4.2,🔥 LIVE BUY,LA Dodgers
+🔴 LAYER 2: IN-PLAY LIVE,BASEBALL,SF Giants @ LA Dodgers,Inning 6 - Active,SF Giants 0 - 2 LA Dodgers,TonyBet (1.74),1.74,BetMGM (1.72),1.72,3.8,🔥 LIVE BUY,LA Dodgers
+🔴 LAYER 2: IN-PLAY LIVE,SOCCER,Orlando City SC @ Inter Miami CF,66:44 Live Ticker,Orlando City SC 1 - 4 Inter Miami CF,TonyBet (2.15),2.15,BetMGM (2.15),2.11,7.0,🔥 LIVE BUY,Inter Miami CF
+⏳ LAYER 1: UPCOMING,FOOTBALL,Miami Dolphins @ San Francisco 49ers,SUN 04:25 p.m.,PRE-MATCH SCHEDULE,TonyBet (7.25),7.25,BetMGM (7.18),7.1,2.1,🔥 FULL BUY,Miami Dolphins
+⏳ LAYER 1: UPCOMING,FOOTBALL,New York Giants @ Los Angeles Rams,MON 08:15 p.m.,PRE-MATCH SCHEDULE,TonyBet (2.88),2.88,BetMGM (2.88),2.85,4.6,🔥 FULL BUY,Los Angeles Rams
+⏳ LAYER 1: UPCOMING,FOOTBALL,Jacksonville Jaguars @ Denver Broncos,SUN 04:05 p.m.,PRE-MATCH SCHEDULE,TonyBet (2.37),2.37,BetMGM (2.32),2.37,3.2,🔥 FULL BUY,Jacksonville Jaguars
