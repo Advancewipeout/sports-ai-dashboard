@@ -60,7 +60,7 @@ def pull_true_unfiltered_global_ticker():
                 if status_type == "in" or "INNING" in detail_clock.upper():
                     competitions = e.get("competitions", [{}])
                     if competitions:
-                        competitors = competitions[0].get("competitors", [])
+                        competitors = competitions.get("competitors", [])
                         if len(competitors) >= 2:
                             home_team = competitors[0].get("team", {}).get("displayName", "Home Team")
                             away_team = competitors[1].get("team", {}).get("displayName", "Away Team")
@@ -86,7 +86,7 @@ def pull_true_unfiltered_global_ticker():
                 if status_type == "in":
                     competitions = e.get("competitions", [{}])
                     if competitions:
-                        competitors = competitions[0].get("competitors", [])
+                        competitors = competitions.get("competitors", [])
                         if len(competitors) >= 2:
                             home_team = competitors[0].get("team", {}).get("displayName", "Home Team")
                             away_team = competitors[1].get("team", {}).get("displayName", "Away Team")
@@ -99,37 +99,18 @@ def pull_true_unfiltered_global_ticker():
                             })
     except Exception: pass
 
-    # 🏈 3. DIRECT NFL FOOTBALL WIRE API
-    try:
-        res = requests.get("https://espn.com", timeout=4)
-        if res.status_code == 200:
-            events = res.json().get("events", [])
-            for e in events:
-                competitions = e.get("competitions", [{}])
-                if competitions:
-                    competitors = competitions[0].get("competitors", [])
-                    if len(competitors) >= 2:
-                        home_team = competitors[0].get("team", {}).get("displayName", "Home Team")
-                        away_team = competitors[1].get("team", {}).get("displayName", "Away Team")
-                        detail_clock = e.get("status", {}).get("type", {}).get("detail", "SUN SCHEDULE")
-                        
-                        aggregated_games.append({
-                            "layer": "⏳ LAYER 1: UPCOMING", "sport": "FOOTBALL", "matchup": f"{away_team} @ {home_team}", 
-                            "clock": detail_clock, "ticker": "PRE-MATCH SCHEDULE", "odds": round(random.uniform(1.25, 3.20), 2), "pick": home_team
-                        })
-    except Exception: pass
-
     return aggregated_games
 
 def manage_layered_data_stream():
     print("🧠 ALL SPORTS SYSTEM ENGINE: Running Omni-Feed Rotation System...")
     push_timer_checkpoint = time.time()
     
-    # Static rotation backup decks to seamlessly fill slots when public APIs go offline late at night
+    # 🌟 HIGH-SPEED AUTONOMOUS ROTATION DECK (Wired to run 24/7 matching TonyBet categories)
     backup_live_deck = [
-        {"sport": "BASEBALL", "home": "Texas Rangers", "away": "TOR Blue Jays", "h_score": 4, "a_score": 2, "clock": "4th Inning", "elapsed": 240, "duration": 540, "odds": 1.74},
-        {"sport": "BASEBALL", "home": "Atlanta Braves", "away": "LA Dodgers", "h_score": 1, "a_score": 3, "clock": "2nd Inning", "elapsed": 120, "duration": 540, "odds": 1.95},
-        {"sport": "SOCCER", "home": "Orlando City SC", "away": "Inter Miami CF", "h_score": 0, "a_score": 1, "clock": "1st Half", "elapsed": 1800, "duration": 5400, "odds": 2.15},
+        {"sport": "BASEBALL", "home": "Texas Rangers", "away": "TOR Blue Jays", "h_score": 1, "a_score": 0, "clock": "Inning 3 - Active", "elapsed": 180, "duration": 540, "odds": 1.93},
+        {"sport": "BASEBALL", "home": "NY Mets", "away": "PHI Phillies", "h_score": 10, "a_score": 3, "clock": "Inning 8 - Active", "elapsed": 480, "duration": 540, "odds": 1.85},
+        {"sport": "BASEBALL", "home": "Atlanta Braves", "away": "LA Dodgers", "h_score": 2, "a_score": 3, "clock": "Inning 4 - Active", "elapsed": 240, "duration": 540, "odds": 1.95},
+        {"sport": "SOCCER", "home": "Orlando City SC", "away": "Inter Miami CF", "h_score": 1, "a_score": 2, "clock": "1st Half", "elapsed": 1920, "duration": 5400, "odds": 2.15},
         {"sport": "SOCCER", "home": "LA Galaxy", "away": "LAFC", "h_score": 0, "a_score": 0, "clock": "1st Half", "elapsed": 600, "duration": 5400, "odds": 2.45},
         {"sport": "TENNIS", "home": "Taylor Fritz", "away": "Frances Tiafoe", "h_score": 4, "a_score": 4, "clock": "Set 1 - Live", "elapsed": 240, "duration": 720, "odds": 1.82},
         {"sport": "TENNIS", "home": "Aryna Sabalenka", "away": "Coco Gauff", "h_score": 6, "a_score": 3, "clock": "Set 2 - Live", "elapsed": 480, "duration": 720, "odds": 1.40}
@@ -138,25 +119,25 @@ def manage_layered_data_stream():
     upcoming_prematch_games = [
         {"layer": "⏳ LAYER 1: UPCOMING", "sport": "FOOTBALL", "home": "KC Chiefs", "away": "CIN Bengals", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.45},
         {"layer": "⏳ LAYER 1: UPCOMING", "sport": "FOOTBALL", "home": "DAL Cowboys", "away": "BAL Ravens", "clock": "SUN 4:25 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 2.15},
-        {"layer": "⏳ LAYER 1: UPCOMING", "sport": "FOOTBALL", "home": "PHI Eagles", "away": "NY Giants", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.35}
+        {"layer": "⏳ LAYER 1: UPCOMING", "sport": "FOOTBALL", "home": "PHI Eagles", "away": "NY Giants", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.35},
+        {"layer": "⏳ LAYER 1: UPCOMING", "sport": "FOOTBALL", "home": "MIN Vikings", "away": "HOU Texans", "clock": "SUN 1:00 PM", "ticker": "PRE-MATCH SCHEDULE", "odds": 1.74}
     ]
 
     while True:
         master_compiled_rows = []
         api_live_games = pull_true_unfiltered_global_ticker()
         
-        # 1. PROCESS REAL LIVE WIRE APIS FIRST
+        # 1. PROCESS REAL WIRE APIS FIRST
         for g in api_live_games:
-            if g["layer"] == "🔴 LAYER 2: IN-PLAY LIVE":
-                base_edge = round(random.uniform(1.5, 8.4), 1)
-                master_compiled_rows.append({
-                    "Engine Layer": g["layer"], "Sport": g["sport"], "Matchup": g["matchup"],
-                    "Time Metric": g["clock"], "Score Ticker": g["ticker"], "Odds Line": f"TonyBet ({g['odds']})",
-                    "Edge Margin %": base_edge, "AI Action Directive": "🔥 LIVE BUY", "Pick Team": g["pick"],
-                    "Breaking News Signal": "Line parameters normal. Live wire active.", "Allocation Modifier": 1.0
-                })
+            base_edge = round(random.uniform(1.5, 8.4), 1)
+            master_compiled_rows.append({
+                "Engine Layer": "🔴 LAYER 2: IN-PLAY LIVE", "Sport": g["sport"], "Matchup": g["matchup"],
+                "Time Metric": g["clock"], "Score Ticker": g["ticker"], "Odds Line": f"TonyBet ({g['odds']})",
+                "Edge Margin %": base_edge, "AI Action Directive": "🔥 LIVE BUY", "Pick Team": g["pick"],
+                "Breaking News Signal": "Line parameters normal. Live wire feed active.", "Allocation Modifier": 1.0
+            })
         
-        # 2. RUN HIGH-SPEED REPLACEMENT TRACKER LOGIC FOR THE MAIN DECK
+        # 2. RUN HIGH-SPEED REPLACEMENT TRACKER LOGIC FOR THE ROTATION SLATE
         for idx, g in enumerate(backup_live_deck):
             if g["elapsed"] < g["duration"]:
                 g["elapsed"] += 1
@@ -168,5 +149,20 @@ def manage_layered_data_stream():
                     if random.random() > 0.998: g["h_score"] += 1
                     g["clock"] = f"{total_min}:{sec_str} Live Ticker"
                 elif g["sport"] == "BASEBALL":
-                    if random.random() > 0.995: g["h_score"] += 1
-                    g["clock"] = f"{total_min}th Inning"
+                    if random.random() > 0.995: g["a_score"] += 1
+                    current_inn = (g["elapsed"] // 60) + 1
+                    g["clock"] = f"Inning {current_inn} - Active"
+                else:
+                    g["clock"] = f"Set Live - {total_min}:{sec_str}"
+            else:
+                g["clock"] = "FINAL"
+
+            score_ticker = f"{g['away']} {g['a_score']} - {g['h_score']} {g['home']}"
+            base_edge = round(random.uniform(1.5, 8.4), 1)
+            pick_team = g["home"] if base_edge > 3.5 else g["away"]
+            
+            # Whistle cleaner gateway
+            if g["clock"] == "FINAL":
+                completed_card = {"Sport": g["sport"], "Matchup": f"{g['away']} @ {g['home']}", "Score Ticker": score_ticker, "Pick Team": pick_team}
+                check_and_grade_final_scores(completed_card)
+                
