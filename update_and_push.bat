@@ -1,15 +1,19 @@
 @echo off
 title Sports AI Ultimate Omni-Sport Local Autopilot Ticker
 echo ===================================================
-echo 🏀 MULTI-SPORT REAL-TIME LOCAL DESK ACTIVE
+echo 🧠 ALL SPORTS SYSTEM ENGINE CORE LOCAL ACTIVE
 echo ===================================================
 cd /d "%~dp0"
 
-:: Force start your uncached local browser interface window
-start cmd /c "streamlit run sports_ai_dashboard.py --server.port 8501"
+:: Clear local port bindings and launch your high-speed browser pane cleanly
+start cmd /c "streamlit run sports_ai_dashboard.py --server.port 8501 --client.showErrorDetails=false"
 
-echo.
+:loop
+cls
 echo ===================================================
-echo ✅ SUCCESS: Local automated workspace initialized!
-echo ⏳ Keeping matrix channels synchronized...
+echo 🧠 AI SYSTEM MANAGER: STREAMING DYNAMIC LIVE DATA PANELS...
 echo ===================================================
+python ai_processing_engine.py
+
+timeout /t 1 >nul
+goto loop
