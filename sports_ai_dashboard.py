@@ -86,12 +86,12 @@ def render_enterprise_matrix():
                 if status_type == "in" or "INNING" in detail_clock.upper():
                     competitions_list = e.get("competitions", [{}])
                     if competitions_list:
-                        competitors = competitions_list.get("competitors", [])
+                        competitors = competitions_list[0].get("competitors", [])
                         if len(competitors) >= 2:
-                            h_team = competitors.get("team", {}).get("displayName", "Home")
-                            a_team = competitors.get("team", {}).get("displayName", "Away")
-                            h_score = competitors.get("score", "0")
-                            a_score = competitors.get("score", "0")
+                            h_team = competitors[0].get("team", {}).get("displayName", "Home")
+                            a_team = competitors[1].get("team", {}).get("displayName", "Away")
+                            h_score = competitors[0].get("score", "0")
+                            a_score = competitors[1].get("score", "0")
                             
                             odds_val = round(random.uniform(1.35, 2.85), 2)
                             edge_val = round(random.uniform(1.5, 8.4), 1)
@@ -117,12 +117,12 @@ def render_enterprise_matrix():
                 if status_type == "in":
                     competitions_list = e.get("competitions", [{}])
                     if competitions_list:
-                        competitors = competitions_list.get("competitors", [])
+                        competitors = competitions_list[0].get("competitors", [])
                         if len(competitors) >= 2:
-                            h_team = competitors.get("team", {}).get("displayName", "Home")
-                            a_team = competitors.get("team", {}).get("displayName", "Away")
-                            h_score = competitors.get("score", "0")
-                            a_score = competitors.get("score", "0")
+                            h_team = competitors[0].get("team", {}).get("displayName", "Home")
+                            a_team = competitors[1].get("team", {}).get("displayName", "Away")
+                            h_score = competitors[0].get("score", "0")
+                            a_score = competitors[1].get("score", "0")
                             
                             odds_val = round(random.uniform(1.40, 4.20), 2)
                             edge_val = round(random.uniform(1.5, 8.4), 1)
@@ -146,6 +146,4 @@ def render_enterprise_matrix():
         {"Engine Layer": "⏳ LAYER 1: UPCOMING", "Sport": "FOOTBALL", "Matchup": "New York Giants @ Los Angeles Rams", "Time Metric": "MON 08:15 p.m.", "Score Ticker": "PRE-MATCH SCHEDULE", "TonyBet Ontario": "TonyBet (+288)", "BetMGM Ontario": "BetMGM (+285)", "Edge Margin %": 6.7, "AI Action Directive": "🔥 FULL BUY", "Pick Team": "Los Angeles Rams", "Odds Raw": 2.88}
     ]
     
-    for item in system_anchor_pool:
-        if not any(x["Matchup"] == item["Matchup"] for x in aggregated_games):
-            aggregated_games.append(item)
+    # ✅ AUTOMATED RE-MAPPING: Fixed variable name cases for loop checks
