@@ -89,7 +89,7 @@ def render_enterprise_matrix():
     try: df = pd.read_csv(filename)
     except Exception: return
 
-    # ✅ FIXED AUTOMATED COLUMN ALIGNMENT MAPPING: Bypasses KeyError crashes permanently!
+    # AUTOMATED COLUMN ALIGNMENT MAPPING
     rename_map = {}
     for col in df.columns:
         if "sport" in col.lower(): rename_map[col] = "Sport"
