@@ -38,14 +38,14 @@ export const LiveTable: React.FC<LiveTableProps> = ({ games, onOpenPrediction, t
         <table className="w-full text-left text-xs font-mono">
           <thead>
             <tr className="border-b border-gray-800 text-gray-400 uppercase tracking-wider bg-[#0a0e17]">
-              <th className="py-3 px-3">Sport</th>
+              <th className="py-3 px-3">Sport / League</th>
               <th className="py-3 px-4">Matchup</th>
               <th className="py-3 px-3">Clock / Status</th>
               <th className="py-3 px-3">Live Score</th>
               <th className="py-3 px-3 text-cyan-400">TonyBet (ON)</th>
               <th className="py-3 px-3 text-amber-400">BetMGM (ON)</th>
               <th className="py-3 px-3 text-[#00ff66]">Edge %</th>
-              <th className="py-3 px-3">Action Directive</th>
+              <th className="py-3 px-3">AI Decision</th>
               <th className="py-3 px-3 text-right">Reasoning</th>
             </tr>
           </thead>
@@ -60,9 +60,14 @@ export const LiveTable: React.FC<LiveTableProps> = ({ games, onOpenPrediction, t
               games.map((game) => (
                 <tr key={game.id} className="hover:bg-[#141c2b] transition group">
                   <td className="py-3.5 px-3">
-                    <span className="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-bold border border-gray-700">
-                      {game.sport}
-                    </span>
+                    <div className="flex flex-col gap-1 items-start">
+                      <span className="px-2 py-0.5 rounded bg-gray-800 text-gray-200 font-bold text-[10px] border border-gray-700">
+                        {game.sport}
+                      </span>
+                      <span className="px-1.5 py-0.5 rounded bg-cyan-950/60 text-cyan-300 font-mono text-[10px] border border-cyan-800/40">
+                        {game.league}
+                      </span>
+                    </div>
                   </td>
                   <td className="py-3.5 px-4 font-semibold text-white">
                     {game.matchup}
@@ -88,10 +93,19 @@ export const LiveTable: React.FC<LiveTableProps> = ({ games, onOpenPrediction, t
                     +{game.edgeMarginPct}%
                   </td>
                   <td className="py-3.5 px-3">
-                    <span className="px-2.5 py-1 rounded bg-[#00ff66]/10 text-[#00ff66] border border-[#00ff66]/30 font-bold text-[11px] flex items-center gap-1 w-fit">
-                      <Zap className="w-3 h-3" />
-                      {game.aiActionDirective}
-                    </span>
+                    <div className="flex flex-col gap-1 items-start">
+                      <span className={`px-2.5 py-1 rounded font-bold text-[11px] flex items-center gap-1 w-fit ${
+                        game.aiActionDirective.includes('BUY')
+                          ? 'bg-[#00ff66]/10 text-[#00ff66] border border-[#00ff66]/30'
+                          : 'bg-rose-500/10 text-rose-400 border border-rose-500/30'
+                      }`}>
+                        <Zap className="w-3 h-3" />
+                        {game.aiActionDirective}
+                      </span>
+                      <span className="text-[10px] text-gray-400 font-mono">
+                        Target: <strong className="text-gray-200">{game.pickTeam}</strong>
+                      </span>
+                    </div>
                   </td>
                   <td className="py-3.5 px-3 text-right">
                     <button

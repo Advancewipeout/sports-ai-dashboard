@@ -24,6 +24,7 @@ export function App() {
 
   // Filters
   const [selectedSport, setSelectedSport] = useState<string>('ALL');
+  const [selectedLeague, setSelectedLeague] = useState<string>('ALL');
   const [minEdge, setMinEdge] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -75,19 +76,41 @@ export function App() {
     setIsAuthenticated(false);
   };
 
-  // Filtered games
+  const sportsList = ['ALL', 'MLB', 'NFL', 'NBA', 'NHL', 'SOCCER', 'UFC', 'TENNIS'];
+
+  const leagueList = useMemo(() => {
+    const list = Array.from(new Set(games.map((g) => g.league)));
+    return ['ALL', ...list];
+  }, [games]);
+
+  // Filtered games with deep search across teams, leagues, and AI decisions
   const filteredGames = useMemo(() => {
     return games.filter((game) => {
       const matchSport = selectedSport === 'ALL' || game.sport.toUpperCase() === selectedSport.toUpperCase();
+      const matchLeague = selectedLeague === 'ALL' || game.league.toUpperCase() === selectedLeague.toUpperCase();
       const matchEdge = game.edgeMarginPct >= minEdge;
+      
+      const q = searchQuery.trim().toLowerCase();
       const matchSearch =
-        searchQuery === '' ||
-        game.matchup.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        game.sport.toLowerCase().includes(searchQuery.toLowerCase());
+        q === '' ||
+        game.matchup.toLowerCase().includes(q) ||
+        game.sport.toLowerCase().includes(q) ||
+        game.league.toLowerCase().includes(q) ||
+        game.pickTeam.toLowerCase().includes(q) ||
+        game.aiActionDirective.toLowerCase().includes(q) ||
+        game.scoreTicker.toLowerCase().includes(q) ||
+        (game.periodOrClock ? game.periodOrClock.toLowerCase().includes(q) : false) ||
+        game.timeMetric.toLowerCase().includes(q);
 
-      return matchSport && matchEdge && matchSearch;
+      return matchSport && matchLeague && matchEdge && matchSearch;
     });
-  }, [games, selectedSport, minEdge, searchQuery]);
+  }, [games, selectedSport, selectedLeague, minEdge, searchQuery]);
+
+  const aiDecisionsCount = useMemo(() => {
+    const buy = filteredGames.filter((g) => g.aiActionDirective.includes('BUY')).length;
+    const pass = filteredGames.filter((g) => g.aiActionDirective.includes('NO VALUE') || g.pickTeam.toLowerCase() === 'pass').length;
+    return { buy, pass };
+  }, [filteredGames]);
 
   const liveGames = useMemo(() => {
     return filteredGames.filter((g) => g.engineLayer.includes('LIVE'));
@@ -107,8 +130,6 @@ export function App() {
     const totalPnl = ledger.reduce((acc, item) => acc + item.profitOrLoss, 0);
     return totalPnl;
   }, [ledger]);
-
-  const sportsList = ['ALL', 'MLB', 'NFL', 'NBA', 'NHL', 'SOCCER'];
 
   return (
     <div className="min-h-screen bg-[#0c1017] text-[#e5e7eb] p-3 sm:p-6 lg:p-8">
@@ -153,11 +174,16 @@ export function App() {
             <FiltersBar
               selectedSport={selectedSport}
               onSportChange={setSelectedSport}
+              selectedLeague={selectedLeague}
+              onLeagueChange={setSelectedLeague}
+              leagueList={leagueList}
               minEdge={minEdge}
               onMinEdgeChange={setMinEdge}
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
               sportsList={sportsList}
+              totalMatchesCount={filteredGames.length}
+              aiDecisionsCount={aiDecisionsCount}
             />
 
             {/* Layer 2: Live In-Play Table */}
