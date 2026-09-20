@@ -1,28 +1,28 @@
 @echo off
 title Sports AI Ultimate Omni-Sport SaaS Force-Sync Engine
 echo ===================================================
-echo 📡 DUAL-BROADCAST UNBLOCKED CLOUD PIPELINE ACTIVE
+echo 📡 DUAL-BROADCAST 100%% AUTOPILOT PIPELINE ACTIVE
 echo ===================================================
 cd /d "%~dp0"
 
-:: 1. Initialize your local presentation host window pane cleanly in the background
+:: 1. Keep your local presentation host window pane running cleanly in the background
 start cmd /c "streamlit run sports_ai_dashboard.py --server.port 8501 --client.showErrorDetails=false"
 
 :loop
 cls
 echo ===================================================
-echo 🧠 CALIBRATING ATHLETIC SCALPS AND TICKING CLOCKS...
+echo 🧠 AI ENGINE: SCALPING REAL-TIME LIVE MARKET DATA...
 echo ===================================================
 python ai_processing_engine.py
 
 echo.
-echo 📡 BROADCASTING FORCE-OVERWRITE SNAPSHOT TO STREAMLIT.APP...
+echo 📡 BROADCASTING FORCED OVERWRITE TO STREAMLIT.APP SERVER...
 set PATH=%PATH%;%LocalAppData%\GitHubDesktop\bin;%ProgramFiles%\Git\cmd;%ProgramFiles%\Git\bin
 
-:: ✅ CRITICAL FORCE-SYNC PIPELINE: Bypasses cloud history restrictions 
-:: by forcing a strict overwrite index block straight to the master repository branch!
+:: ✅ THE TRUE AUTOPILOT ENGINE: Automatically stages, titles the commit with a live timestamp,
+:: and forcefully pushes it straight to the internet repository with zero manual clicks required!
 git add master_predictions_sheet.csv settled_bets_ledger.csv sports_ai_dashboard.py ai_processing_engine.py
-git commit -m "Live SaaS Matrix Stream Refresh" --quiet
+git commit -m "Autopilot Sync - %time%" --quiet
 git push origin main --force --quiet
 
 echo.
