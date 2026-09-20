@@ -1,0 +1,6 @@
+{
+  "name": "Smitty's AI Sports Risk Desk",
+  "description": "2-Layer AI sports news-intelligence and risk desk dashboard with real-time in-play metrics, scheduled models, subscriber blueprints, and settled bets ledger.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
