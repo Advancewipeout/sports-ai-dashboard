@@ -89,6 +89,21 @@ def render_enterprise_matrix():
     try: df = pd.read_csv(filename)
     except Exception: return
 
+    # ✅ FIXED AUTOMATED COLUMN ALIGNMENT MAPPING: Bypasses KeyError crashes permanently!
+    rename_map = {}
+    for col in df.columns:
+        if "sport" in col.lower(): rename_map[col] = "Sport"
+        if "matchup" in col.lower(): rename_map[col] = "Matchup"
+        if "time" in col.lower() or "clock" in col.lower(): rename_map[col] = "Time Metric"
+        if "ticker" in col.lower() or "score" in col.lower(): rename_map[col] = "Score Ticker"
+        if "tony" in col.lower(): rename_map[col] = "TonyBet Ontario"
+        if "mgm" in col.lower(): rename_map[col] = "BetMGM Ontario"
+        if "edge" in col.lower() or "margin" in col.lower(): rename_map[col] = "Edge Margin %"
+        if "directive" in col.lower() or "action" in col.lower(): rename_map[col] = "AI Action Directive"
+        if "pick" in col.lower() or "team" in col.lower(): rename_map[col] = "Pick Team"
+        if "layer" in col.lower(): rename_map[col] = "Engine Layer"
+    df = df.rename(columns=rename_map)
+
     blueprint_df = df.copy()
     
     if "Sport" in df.columns and selected_sport != "ALL":
@@ -112,7 +127,8 @@ def render_enterprise_matrix():
     if live_df.empty:
         pd_stream.info("No active live matches match your sidebar filter settings.")
     else:
-        pd_stream.dataframe(live_df[["Sport", "Matchup", "Time Metric", "Score Ticker", "TonyBet Ontario", "BetMGM Ontario", "Edge Margin %", "AI Action Directive"]], use_container_width=True, hide_index=True)
+        available_cols = [c for c in ["Sport", "Matchup", "Time Metric", "Score Ticker", "TonyBet Ontario", "BetMGM Ontario", "Edge Margin %", "AI Action Directive"] if c in live_df.columns]
+        pd_stream.dataframe(live_df[available_cols], use_container_width=True, hide_index=True)
     pd_stream.write("---")
 
     # ⏳ 2. UPCOMING LAYER MATRIX
@@ -120,7 +136,8 @@ def render_enterprise_matrix():
     if upcoming_df.empty:
         pd_stream.info("No upcoming models computed.")
     else:
-        pd_stream.dataframe(upcoming_df[["Sport", "Matchup", "Time Metric", "TonyBet Ontario", "BetMGM Ontario", "Edge Margin %", "AI Action Directive"]], use_container_width=True, hide_index=True)
+        available_cols = [c for c in ["Sport", "Matchup", "Time Metric", "TonyBet Ontario", "BetMGM Ontario", "Edge Margin %", "AI Action Directive"] if c in upcoming_df.columns]
+        pd_stream.dataframe(upcoming_df[available_cols], use_container_width=True, hide_index=True)
     pd_stream.write("---")
 
     # 🔒 MEMBERS ACCESS BLUEPRINT LOCK SHIELD
@@ -128,7 +145,8 @@ def render_enterprise_matrix():
     if pd_stream.session_state["authenticated"]:
         pd_stream.success("🌟 AI PREMIUM MEMBER POSITIONS UNLOCKED")
         active_orders = blueprint_df[blueprint_df["Edge Margin %"] >= strictness_trigger] if "Edge Margin %" in blueprint_df.columns else blueprint_df
-        active_orders = active_orders[~active_orders["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT", "PASS", "❌ PASS LINE"])]
+        if "AI Action Directive" in active_orders.columns:
+            active_orders = active_orders[~active_orders["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT", "PASS", "❌ PASS LINE"])]
         
         if active_orders.empty:
             pd_stream.info("No high-value selections match your minimum value edge cutoff.")
