@@ -92,15 +92,52 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </button>
           </div>
 
+          {/* Rapid Presets */}
+          <div className="flex items-center gap-1.5 pt-1">
+            <button
+              type="button"
+              onClick={() => onIntervalChange(2)}
+              className={`flex-1 py-1 text-[10px] font-mono font-bold rounded transition cursor-pointer ${
+                refreshInterval === 2
+                  ? 'bg-cyan-500 text-black shadow-md shadow-cyan-500/20'
+                  : 'bg-[#0e1622] text-gray-400 hover:bg-[#182335] border border-gray-800'
+              }`}
+            >
+              ⚡ 2s TURBO
+            </button>
+            <button
+              type="button"
+              onClick={() => onIntervalChange(4)}
+              className={`flex-1 py-1 text-[10px] font-mono font-bold rounded transition cursor-pointer ${
+                refreshInterval === 4
+                  ? 'bg-[#00ff66] text-black shadow-md shadow-[#00ff66]/20'
+                  : 'bg-[#0e1622] text-gray-400 hover:bg-[#182335] border border-gray-800'
+              }`}
+            >
+              🔥 4s RAPID
+            </button>
+            <button
+              type="button"
+              onClick={() => onIntervalChange(8)}
+              className={`flex-1 py-1 text-[10px] font-mono font-bold rounded transition cursor-pointer ${
+                refreshInterval === 8
+                  ? 'bg-amber-500 text-black shadow-md shadow-amber-500/20'
+                  : 'bg-[#0e1622] text-gray-400 hover:bg-[#182335] border border-gray-800'
+              }`}
+            >
+              🎯 8s STD
+            </button>
+          </div>
+
           <div>
             <div className="flex justify-between text-xs text-gray-400 mb-1">
               <span>Poll Interval:</span>
-              <span className="font-mono text-cyan-400">{refreshInterval}s</span>
+              <span className="font-mono text-cyan-400 font-bold">{refreshInterval}s {refreshInterval <= 3 ? '(Ultra-Fast)' : ''}</span>
             </div>
             <input
               type="range"
-              min="2"
-              max="30"
+              min="1"
+              max="20"
               step="1"
               value={refreshInterval}
               onChange={(e) => onIntervalChange(parseInt(e.target.value, 10))}

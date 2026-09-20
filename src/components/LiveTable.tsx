@@ -5,9 +5,10 @@ import { Radio, Zap, Sparkles } from 'lucide-react';
 interface LiveTableProps {
   games: GameRecord[];
   onOpenPrediction: (game: GameRecord) => void;
+  tickFlash?: boolean;
 }
 
-export const LiveTable: React.FC<LiveTableProps> = ({ games, onOpenPrediction }) => {
+export const LiveTable: React.FC<LiveTableProps> = ({ games, onOpenPrediction, tickFlash }) => {
   return (
     <div className="bg-[#0e141f] border border-[#1f2937] rounded-xl p-5 mb-6 shadow-xl">
       <div className="flex items-center justify-between mb-4">
@@ -81,7 +82,9 @@ export const LiveTable: React.FC<LiveTableProps> = ({ games, onOpenPrediction })
                   <td className="py-3.5 px-3 text-amber-400 font-bold">
                     {game.betMgmOntario}
                   </td>
-                  <td className="py-3.5 px-3 font-bold text-[#00ff66]">
+                  <td className={`py-3.5 px-3 font-bold transition-colors duration-300 ${
+                    tickFlash ? 'text-white bg-[#00ff66]/20 rounded' : 'text-[#00ff66]'
+                  }`}>
                     +{game.edgeMarginPct}%
                   </td>
                   <td className="py-3.5 px-3">

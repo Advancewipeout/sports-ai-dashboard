@@ -16,8 +16,10 @@ export function App() {
   const [ledger, setLedger] = useState<SettledBet[]>(INITIAL_LEDGER);
   const [bankroll, setBankroll] = useState<number>(1000);
   const [isAutoRefreshing, setIsAutoRefreshing] = useState<boolean>(true);
-  const [refreshInterval, setRefreshInterval] = useState<number>(5);
+  const [refreshInterval, setRefreshInterval] = useState<number>(3);
   const [lastUpdated, setLastUpdated] = useState<string>('Just now');
+  const [engineLatency, setEngineLatency] = useState<number>(18);
+  const [tickFlash, setTickFlash] = useState<boolean>(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   // Filters
@@ -33,7 +35,10 @@ export function App() {
     if (!isAutoRefreshing) return;
 
     const interval = setInterval(() => {
+      const startTime = performance.now();
       setLastUpdated(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+      setTickFlash(true);
+      setTimeout(() => setTickFlash(false), 600);
       
       // Simulate live jitter on in-play game scores and minute clocks
       setGames((prev) =>
@@ -50,14 +55,13 @@ export function App() {
           return game;
         })
       );
+
+      const latencyMs = Math.round(performance.now() - startTime + 12 + Math.random() * 8);
+      setEngineLatency(latencyMs);
     }, refreshInterval * 1000);
 
     return () => clearInterval(interval);
   }, [isAutoRefreshing, refreshInterval]);
-
-  const handleManualRefresh = () => {
-    setLastUpdated(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
-  };
 
   const handleAuthenticate = (pin: string): boolean => {
     if (pin.trim() === '8501') {
@@ -113,8 +117,10 @@ export function App() {
         <HeaderBanner
           lastUpdated={lastUpdated}
           isAutoRefreshing={isAutoRefreshing}
-          onManualRefresh={handleManualRefresh}
           activeLiveCount={liveGames.length}
+          refreshInterval={refreshInterval}
+          engineLatency={engineLatency}
+          tickFlash={tickFlash}
         />
 
         {/* Main Layout Grid */}
@@ -158,6 +164,7 @@ export function App() {
             <LiveTable
               games={liveGames}
               onOpenPrediction={(game) => setSelectedGameForModal(game)}
+              tickFlash={tickFlash}
             />
 
             {/* Layer 1: Upcoming Pre-Match Models Table */}

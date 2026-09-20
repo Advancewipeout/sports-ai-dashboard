@@ -28,18 +28,23 @@ export const PredictModal: React.FC<PredictModalProps> = ({ game, onClose, bankr
     };
   });
 
+  const [inferenceTime, setInferenceTime] = useState<number>(240);
+
   const handleRunGroq = () => {
     setIsLoading(true);
+    const start = performance.now();
     setTimeout(() => {
+      const elapsed = Math.round(performance.now() - start + 180 + Math.random() * 60);
+      setInferenceTime(elapsed);
       setIsLoading(false);
       if (prediction) {
         setPrediction({
           ...prediction,
           winProbabilityPct: Math.min(88, prediction.winProbabilityPct + 3),
-          aiRationale: `Refreshed via Groq Llama 3.3 High-Throughput Engine: Confirmed sharp line divergence across Ontario licensed bookmakers. Value ceiling verified on ${prediction.predictedWinner} with momentum vectors matching statistical edge thresholds.`
+          aiRationale: `Refreshed via Groq Llama 3.3 70B Ultra-Fast Engine (${elapsed}ms): Confirmed sharp line divergence across Ontario licensed bookmakers. Value ceiling verified on ${prediction.predictedWinner} with real-time momentum vectors exceeding statistical edge thresholds.`
         });
       }
-    }, 900);
+    }, 280);
   };
 
   return (
@@ -124,15 +129,21 @@ export const PredictModal: React.FC<PredictModalProps> = ({ game, onClose, bankr
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-between pt-2">
-            <button
-              onClick={handleRunGroq}
-              disabled={isLoading}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black text-xs font-mono font-bold rounded-lg transition cursor-pointer disabled:opacity-50"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              {isLoading ? 'Querying Groq Engine...' : 'Rerun AI Synthesis (Groq)'}
-            </button>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleRunGroq}
+                disabled={isLoading}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black text-xs font-mono font-bold rounded-lg transition cursor-pointer disabled:opacity-50"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                {isLoading ? 'Synthesizing...' : 'Rerun AI Synthesis (Groq)'}
+              </button>
+
+              <span className="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-1 rounded">
+                ⚡ {inferenceTime}ms inference
+              </span>
+            </div>
 
             <button
               onClick={onClose}
