@@ -1,6 +1,6 @@
 {
   "name": "Smitty's AI Sports Risk Desk",
-  "description": "2-Layer AI sports news-intelligence and risk desk dashboard with real-time in-play metrics, scheduled models, subscriber blueprints, and settled bets ledger.",
+  "description": "Professional AI sports risk desk featuring 4-book Ontario odds comparison (TonyBet, BetMGM, FanDuel, theScore Bet), live steam sparklines, dual-stake arbitrage calculator, 1-click paper trade tracker, and institutional analytics.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

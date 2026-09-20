@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DollarSign, Shield, Lock, Unlock, Sliders, Radio, KeyRound } from 'lucide-react';
+import { DollarSign, Shield, Lock, Unlock, Sliders, Radio, KeyRound, Calculator, Target, BarChart3, Zap } from 'lucide-react';
 
 interface SidebarProps {
   bankroll: number;
@@ -11,6 +11,9 @@ interface SidebarProps {
   isAuthenticated: boolean;
   onAuthenticate: (pin: string) => boolean;
   onLogout: () => void;
+  onOpenHedge?: () => void;
+  onOpenPaperBet?: () => void;
+  onScrollToLedger?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -22,7 +25,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onIntervalChange,
   isAuthenticated,
   onAuthenticate,
-  onLogout
+  onLogout,
+  onOpenHedge,
+  onOpenPaperBet,
+  onScrollToLedger
 }) => {
   const [pinInput, setPinInput] = useState('');
   const [authError, setAuthError] = useState(false);
@@ -144,6 +150,55 @@ export const Sidebar: React.FC<SidebarProps> = ({
               className="w-full accent-[#00ff66] cursor-pointer"
             />
           </div>
+        </div>
+      </div>
+
+      {/* Desk Feature Tools */}
+      <div>
+        <div className="flex items-center gap-2 text-white font-mono font-bold text-sm mb-3">
+          <Zap className="w-4 h-4 text-[#00ff66]" />
+          <span>PRO TOOLS & CALCULATORS</span>
+        </div>
+
+        <div className="bg-[#131b29] border border-gray-800 rounded-lg p-3 flex flex-col gap-2 font-mono">
+          {onOpenHedge && (
+            <button
+              onClick={onOpenHedge}
+              className="w-full py-2 px-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded text-xs font-bold flex items-center justify-between transition cursor-pointer"
+            >
+              <span className="flex items-center gap-2">
+                <Calculator className="w-3.5 h-3.5 text-[#00ff66]" />
+                Arb / Hedge Calculator
+              </span>
+              <span className="text-[10px] bg-[#00ff66]/20 text-[#00ff66] px-1.5 py-0.5 rounded">Lock ROI</span>
+            </button>
+          )}
+
+          {onOpenPaperBet && (
+            <button
+              onClick={onOpenPaperBet}
+              className="w-full py-2 px-2.5 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 rounded text-xs font-bold flex items-center justify-between transition cursor-pointer"
+            >
+              <span className="flex items-center gap-2">
+                <Target className="w-3.5 h-3.5 text-cyan-400" />
+                1-Click Paper Bet Log
+              </span>
+              <span className="text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded">Simulate</span>
+            </button>
+          )}
+
+          {onScrollToLedger && (
+            <button
+              onClick={onScrollToLedger}
+              className="w-full py-2 px-2.5 bg-gray-800/80 hover:bg-gray-700 text-gray-300 border border-gray-700 rounded text-xs font-bold flex items-center justify-between transition cursor-pointer"
+            >
+              <span className="flex items-center gap-2">
+                <BarChart3 className="w-3.5 h-3.5 text-amber-400" />
+                Ledger & Performance
+              </span>
+              <span className="text-[10px] text-gray-400">Charts</span>
+            </button>
+          )}
         </div>
       </div>
 

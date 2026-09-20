@@ -8,14 +8,20 @@ export interface GameRecord {
   scoreTicker: string;
   tonyBetOntario: string;
   betMgmOntario: string;
+  fanDuelOntario: string;
+  theScoreOntario: string;
+  bestBook: string;
   edgeMarginPct: number;
   aiActionDirective: string;
   pickTeam: string;
   periodOrClock?: string;
   status?: 'in_progress' | 'scheduled' | 'finished';
+  sparkline: number[];
+  steamTrend: 'STEAM_UP' | 'STEAM_DOWN' | 'STABLE';
 }
 
 export interface SettledBet {
+  id?: string;
   timestamp: string;
   matchup: string;
   sport: string;
@@ -25,6 +31,11 @@ export interface SettledBet {
   outcomeLabel: string;
   profitOrLoss: number;
   runningBankroll: number;
+  stake?: number;
+  odds?: string;
+  bookmaker?: string;
+  edgePct?: number;
+  status?: 'PENDING' | 'WON' | 'LOST';
 }
 
 export interface PredictionResult {

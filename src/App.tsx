@@ -10,6 +10,11 @@ import { UpcomingTable } from './components/UpcomingTable';
 import { SubscriberBlueprint } from './components/SubscriberBlueprint';
 import { LedgerSection } from './components/LedgerSection';
 import { PredictModal } from './components/PredictModal';
+import { HedgeCalculatorModal } from './components/HedgeCalculatorModal';
+import { PaperBetModal } from './components/PaperBetModal';
+import { QuickToolsBar } from './components/QuickToolsBar';
+import { CheckCircle2, X } from 'lucide-react';
+import { americanToDecimal } from './utils/oddsEngine';
 
 export function App() {
   const [games, setGames] = useState<GameRecord[]>(INITIAL_GAMES);
@@ -28,8 +33,20 @@ export function App() {
   const [minEdge, setMinEdge] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Active Prediction Modal
+  // Modals
   const [selectedGameForModal, setSelectedGameForModal] = useState<GameRecord | null>(null);
+  const [hedgeGame, setHedgeGame] = useState<GameRecord | null>(null);
+  const [paperBetGame, setPaperBetGame] = useState<GameRecord | null>(null);
+
+  // Notification Toast
+  const [toast, setToast] = useState<{ message: string; sub?: string } | null>(null);
+
+  const showToast = (message: string, sub?: string) => {
+    setToast({ message, sub });
+    setTimeout(() => {
+      setToast((curr) => (curr?.message === message ? null : curr));
+    }, 3500);
+  };
 
   // Auto Refresh timer simulation for live scores and subtle in-play odds movement
   useEffect(() => {
@@ -45,7 +62,6 @@ export function App() {
       setGames((prev) =>
         prev.map((game) => {
           if (game.engineLayer.includes('LIVE')) {
-            // slightly fluctuate edge margin by +/- 0.1% for realism
             const delta = (Math.random() * 0.4 - 0.2);
             const newEdge = Math.max(1.0, parseFloat((game.edgeMarginPct + delta).toFixed(1)));
             return {
@@ -131,10 +147,60 @@ export function App() {
     return totalPnl;
   }, [ledger]);
 
+  // Top game for quick tools launcher
+  const topArbGame = useMemo(() => {
+    if (games.length === 0) return null;
+    const sorted = [...games].sort((a, b) => b.edgeMarginPct - a.edgeMarginPct);
+    return sorted[0];
+  }, [games]);
+
+  const scrollToLedger = () => {
+    const el = document.getElementById('performance-ledger');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // 1-Click Paper Bet handler
+  const handleBetPlaced = (newBet: SettledBet) => {
+    setLedger((prev) => [newBet, ...prev]);
+    showToast(
+      `🎯 Paper Trade Logged: $${newBet.stake?.toFixed(2)} on ${newBet.aiPickSelection}`,
+      `${newBet.bookmaker} (${newBet.odds}) • Status: ${newBet.status}`
+    );
+  };
+
+  // Settlement simulator handler
+  const handleSettleBet = (betId: string, outcome: 'WON' | 'LOST') => {
+    setLedger((prev) =>
+      prev.map((bet) => {
+        if (bet.id === betId) {
+          const stake = bet.stake || 50;
+          const decimal = americanToDecimal(bet.odds || '+100');
+          const pnl = outcome === 'WON' ? parseFloat(((decimal - 1) * stake).toFixed(2)) : -stake;
+          const running = bet.runningBankroll + pnl;
+
+          return {
+            ...bet,
+            status: outcome,
+            outcomeLabel: outcome === 'WON' ? 'WIN (COVERED)' : 'LOSS (MISSED)',
+            profitOrLoss: pnl,
+            runningBankroll: running
+          };
+        }
+        return bet;
+      })
+    );
+    showToast(
+      `Graded Bet as ${outcome}`,
+      `Ledger and bankroll capital updated in real-time.`
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#0c1017] text-[#e5e7eb] p-3 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Top Bloomberg Header Banner */}
+        {/* Top Header Banner */}
         <HeaderBanner
           lastUpdated={lastUpdated}
           isAutoRefreshing={isAutoRefreshing}
@@ -142,6 +208,15 @@ export function App() {
           refreshInterval={refreshInterval}
           engineLatency={engineLatency}
           tickFlash={tickFlash}
+        />
+
+        {/* Quick Tools & Feature Access Launchpad */}
+        <QuickToolsBar
+          topArbGame={topArbGame}
+          onOpenHedge={(game) => setHedgeGame(game)}
+          onOpenPaperBet={(game) => setPaperBetGame(game)}
+          onScrollToLedger={scrollToLedger}
+          totalPaperBets={ledger.length}
         />
 
         {/* Main Layout Grid */}
@@ -157,6 +232,9 @@ export function App() {
             isAuthenticated={isAuthenticated}
             onAuthenticate={handleAuthenticate}
             onLogout={handleLogout}
+            onOpenHedge={() => topArbGame && setHedgeGame(topArbGame)}
+            onOpenPaperBet={() => topArbGame && setPaperBetGame(topArbGame)}
+            onScrollToLedger={scrollToLedger}
           />
 
           {/* Main Dashboard Content */}
@@ -190,6 +268,8 @@ export function App() {
             <LiveTable
               games={liveGames}
               onOpenPrediction={(game) => setSelectedGameForModal(game)}
+              onOpenHedge={(game) => setHedgeGame(game)}
+              onOpenPaperBet={(game) => setPaperBetGame(game)}
               tickFlash={tickFlash}
             />
 
@@ -197,6 +277,8 @@ export function App() {
             <UpcomingTable
               games={upcomingGames}
               onOpenPrediction={(game) => setSelectedGameForModal(game)}
+              onOpenHedge={(game) => setHedgeGame(game)}
+              onOpenPaperBet={(game) => setPaperBetGame(game)}
             />
 
             {/* Automated Execution Order Blueprint (Kelly Sizing) */}
@@ -207,7 +289,10 @@ export function App() {
             />
 
             {/* Historical Settled Bet Ledger & Chart */}
-            <LedgerSection ledger={ledger} />
+            <LedgerSection
+              ledger={ledger}
+              onSettleBet={handleSettleBet}
+            />
           </div>
         </div>
 
@@ -217,6 +302,43 @@ export function App() {
           onClose={() => setSelectedGameForModal(null)}
           bankroll={bankroll}
         />
+
+        {/* Guaranteed Arbitrage & Hedging Calculator Modal */}
+        {hedgeGame && (
+          <HedgeCalculatorModal
+            game={hedgeGame}
+            onClose={() => setHedgeGame(null)}
+          />
+        )}
+
+        {/* 1-Click Paper Trading Modal */}
+        {paperBetGame && (
+          <PaperBetModal
+            game={paperBetGame}
+            currentBankroll={bankroll + netProfit}
+            onClose={() => setPaperBetGame(null)}
+            onBetPlaced={handleBetPlaced}
+          />
+        )}
+
+        {/* Floating Notification Toast */}
+        {toast && (
+          <div className="fixed bottom-5 right-5 z-50 bg-[#0e141f] border border-[#00ff66]/50 rounded-xl p-3.5 shadow-2xl shadow-black/80 flex items-center gap-3 animate-fade-in font-mono text-xs">
+            <div className="p-1.5 bg-[#00ff66]/20 rounded-lg text-[#00ff66]">
+              <CheckCircle2 className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="text-white font-bold">{toast.message}</div>
+              {toast.sub && <div className="text-gray-400 text-[11px]">{toast.sub}</div>}
+            </div>
+            <button
+              onClick={() => setToast(null)}
+              className="text-gray-400 hover:text-white p-1 ml-2 rounded cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

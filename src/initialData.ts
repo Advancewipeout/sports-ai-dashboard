@@ -12,10 +12,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'LAD 5 - 4 SD',
     tonyBetOntario: '+125',
     betMgmOntario: '-105',
+    fanDuelOntario: '+115',
+    theScoreOntario: '+120',
+    bestBook: 'TonyBet',
     edgeMarginPct: 7.3,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Los Angeles Dodgers',
-    periodOrClock: 'Top 7th, 2 Outs'
+    periodOrClock: 'Top 7th, 2 Outs',
+    sparkline: [2.10, 2.15, 2.20, 2.22, 2.25],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-live-2',
@@ -27,10 +32,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'ATL 3 - 3 PHI',
     tonyBetOntario: '+110',
     betMgmOntario: '-115',
+    fanDuelOntario: '+105',
+    theScoreOntario: '+108',
+    bestBook: 'TonyBet',
     edgeMarginPct: 4.2,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Atlanta Braves',
-    periodOrClock: 'Bottom 8th, 1 Out'
+    periodOrClock: 'Bottom 8th, 1 Out',
+    sparkline: [2.00, 2.05, 2.08, 2.10, 2.10],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-3',
@@ -42,10 +52,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'BOS 88 - 82 MIA',
     tonyBetOntario: '-115',
     betMgmOntario: '-102',
+    fanDuelOntario: '-110',
+    theScoreOntario: '-108',
+    bestBook: 'BetMGM',
     edgeMarginPct: 3.1,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Boston Celtics',
-    periodOrClock: '3rd Quarter'
+    periodOrClock: '3rd Quarter',
+    sparkline: [1.95, 1.92, 1.88, 1.86, 1.87],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-live-4',
@@ -57,10 +72,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'MIL 104 - 106 NYK',
     tonyBetOntario: '+145',
     betMgmOntario: '+115',
+    fanDuelOntario: '+125',
+    theScoreOntario: '+130',
+    bestBook: 'TonyBet',
     edgeMarginPct: 6.4,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Milwaukee Bucks',
-    periodOrClock: '4th Quarter'
+    periodOrClock: '4th Quarter',
+    sparkline: [2.15, 2.25, 2.35, 2.40, 2.45],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-4',
@@ -70,12 +90,17 @@ export const INITIAL_GAMES: GameRecord[] = [
     engineLayer: '🔴 LAYER 2: LIVE',
     timeMetric: '68:51 Live Ticker',
     scoreTicker: 'ARS 2 - 1 CHE',
-    tonyBetOntario: '+140',
-    betMgmOntario: '+120',
-    edgeMarginPct: 3.8,
+    tonyBetOntario: '-155',
+    betMgmOntario: '-180',
+    fanDuelOntario: '-165',
+    theScoreOntario: '-170',
+    bestBook: 'TonyBet',
+    edgeMarginPct: 5.3,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Arsenal',
-    periodOrClock: '2nd Half'
+    periodOrClock: '2nd Half',
+    sparkline: [1.75, 1.70, 1.68, 1.65, 1.64],
+    steamTrend: 'STEAM_DOWN'
   },
   {
     id: 'game-live-6',
@@ -87,10 +112,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'RMA 1 - 2 FCB',
     tonyBetOntario: '+185',
     betMgmOntario: '+150',
+    fanDuelOntario: '+160',
+    theScoreOntario: '+165',
+    bestBook: 'TonyBet',
     edgeMarginPct: 6.9,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Barcelona',
-    periodOrClock: '2nd Half'
+    periodOrClock: '2nd Half',
+    sparkline: [2.50, 2.65, 2.75, 2.80, 2.85],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-live-7',
@@ -102,10 +132,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'INT 1 - 0 JUV',
     tonyBetOntario: '-140',
     betMgmOntario: '-165',
+    fanDuelOntario: '-150',
+    theScoreOntario: '-155',
+    bestBook: 'TonyBet',
     edgeMarginPct: 4.5,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Inter Milan',
-    periodOrClock: '2nd Half'
+    periodOrClock: '2nd Half',
+    sparkline: [1.80, 1.76, 1.73, 1.71, 1.71],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-live-8',
@@ -117,10 +152,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'MIA 3 - 1 LAG',
     tonyBetOntario: '-180',
     betMgmOntario: '-215',
+    fanDuelOntario: '-195',
+    theScoreOntario: '-200',
+    bestBook: 'TonyBet',
     edgeMarginPct: 5.2,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Inter Miami',
-    periodOrClock: '2nd Half'
+    periodOrClock: '2nd Half',
+    sparkline: [1.62, 1.58, 1.56, 1.55, 1.55],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-live-9',
@@ -132,10 +172,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'EDM 3 - 2 VAN',
     tonyBetOntario: '+120',
     betMgmOntario: '-105',
+    fanDuelOntario: '+110',
+    theScoreOntario: '+115',
+    bestBook: 'TonyBet',
     edgeMarginPct: 5.5,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Edmonton Oilers',
-    periodOrClock: '2nd Period'
+    periodOrClock: '2nd Period',
+    sparkline: [2.05, 2.10, 2.15, 2.18, 2.20],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-live-10',
@@ -147,10 +192,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'VGK 2 - 3 COL',
     tonyBetOntario: '-130',
     betMgmOntario: '-150',
+    fanDuelOntario: '-140',
+    theScoreOntario: '-135',
+    bestBook: 'TonyBet',
     edgeMarginPct: 4.0,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Colorado Avalanche',
-    periodOrClock: '3rd Period'
+    periodOrClock: '3rd Period',
+    sparkline: [1.82, 1.79, 1.78, 1.76, 1.77],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-live-11',
@@ -162,10 +212,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'ALC 6-4, 4-6, 4-3',
     tonyBetOntario: '+135',
     betMgmOntario: '+110',
+    fanDuelOntario: '+120',
+    theScoreOntario: '+125',
+    bestBook: 'TonyBet',
     edgeMarginPct: 5.9,
     aiActionDirective: '🔥 LIVE BUY',
     pickTeam: 'Carlos Alcaraz',
-    periodOrClock: 'Final Set'
+    periodOrClock: 'Final Set',
+    sparkline: [2.10, 2.20, 2.28, 2.32, 2.35],
+    steamTrend: 'STEAM_UP'
   },
 
   // --- LAYER 1: UPCOMING SCHEDULED MATRICES ---
@@ -179,9 +234,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-120',
     betMgmOntario: '+110',
+    fanDuelOntario: '-112',
+    theScoreOntario: '-115',
+    bestBook: 'BetMGM',
     edgeMarginPct: 6.8,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Kansas City Chiefs'
+    pickTeam: 'Kansas City Chiefs',
+    sparkline: [1.90, 1.88, 1.85, 1.84, 1.83],
+    steamTrend: 'STEAM_DOWN'
   },
   {
     id: 'game-up-1',
@@ -193,9 +253,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '+115',
     betMgmOntario: '-105',
+    fanDuelOntario: '+105',
+    theScoreOntario: '+110',
+    bestBook: 'TonyBet',
     edgeMarginPct: 5.4,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'San Francisco 49ers'
+    pickTeam: 'San Francisco 49ers',
+    sparkline: [2.00, 2.05, 2.10, 2.12, 2.15],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-up-2',
@@ -207,9 +272,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-110',
     betMgmOntario: '+105',
+    fanDuelOntario: '-105',
+    theScoreOntario: '-108',
+    bestBook: 'BetMGM',
     edgeMarginPct: 4.9,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Baltimore Ravens'
+    pickTeam: 'Baltimore Ravens',
+    sparkline: [1.95, 1.93, 1.91, 1.91, 1.91],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-up-3',
@@ -221,9 +291,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-105',
     betMgmOntario: '-110',
+    fanDuelOntario: '-108',
+    theScoreOntario: '-106',
+    bestBook: 'TonyBet',
     edgeMarginPct: 0.8,
     aiActionDirective: '❌ NO VALUE',
-    pickTeam: 'Pass'
+    pickTeam: 'Pass',
+    sparkline: [1.95, 1.95, 1.94, 1.95, 1.95],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-up-4',
@@ -235,9 +310,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-145',
     betMgmOntario: '-165',
+    fanDuelOntario: '-155',
+    theScoreOntario: '-150',
+    bestBook: 'TonyBet',
     edgeMarginPct: 3.9,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Dallas Cowboys'
+    pickTeam: 'Dallas Cowboys',
+    sparkline: [1.74, 1.72, 1.70, 1.69, 1.69],
+    steamTrend: 'STEAM_DOWN'
   },
   {
     id: 'game-5',
@@ -248,10 +328,15 @@ export const INITIAL_GAMES: GameRecord[] = [
     timeMetric: 'Tonight 19:00 EST',
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-135',
-    betMgmOntario: '-115',
-    edgeMarginPct: 4.1,
-    aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Toronto Maple Leafs'
+    betMgmOntario: '-150',
+    fanDuelOntario: '-140',
+    theScoreOntario: '-138',
+    bestBook: 'TonyBet',
+    edgeMarginPct: 3.2,
+    aiActionDirective: '🔥 VALUE BUY',
+    pickTeam: 'Toronto Maple Leafs',
+    sparkline: [1.78, 1.76, 1.75, 1.74, 1.74],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-up-5',
@@ -263,9 +348,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '+125',
     betMgmOntario: '+105',
+    fanDuelOntario: '+115',
+    theScoreOntario: '+120',
+    bestBook: 'TonyBet',
     edgeMarginPct: 3.7,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'New York Rangers'
+    pickTeam: 'New York Rangers',
+    sparkline: [2.15, 2.18, 2.22, 2.25, 2.25],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-up-6',
@@ -277,9 +367,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-125',
     betMgmOntario: '-140',
+    fanDuelOntario: '-130',
+    theScoreOntario: '-128',
+    bestBook: 'TonyBet',
     edgeMarginPct: 2.8,
     aiActionDirective: '🔥 VALUE BUY',
-    pickTeam: 'Winnipeg Jets'
+    pickTeam: 'Winnipeg Jets',
+    sparkline: [1.82, 1.81, 1.80, 1.80, 1.80],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-6',
@@ -289,11 +384,16 @@ export const INITIAL_GAMES: GameRecord[] = [
     engineLayer: '⏳ LAYER 1: UPCOMING',
     timeMetric: 'Tomorrow 13:05 EST',
     scoreTicker: 'Scheduled',
-    tonyBetOntario: '+105',
-    betMgmOntario: '-110',
-    edgeMarginPct: 3.6,
+    tonyBetOntario: '-130',
+    betMgmOntario: '-155',
+    fanDuelOntario: '-142',
+    theScoreOntario: '-145',
+    bestBook: 'TonyBet',
+    edgeMarginPct: 4.1,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'New York Yankees'
+    pickTeam: 'New York Yankees',
+    sparkline: [1.80, 1.78, 1.77, 1.76, 1.77],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-up-7',
@@ -305,9 +405,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '+135',
     betMgmOntario: '+110',
+    fanDuelOntario: '+120',
+    theScoreOntario: '+128',
+    bestBook: 'TonyBet',
     edgeMarginPct: 5.1,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Houston Astros'
+    pickTeam: 'Houston Astros',
+    sparkline: [2.18, 2.24, 2.30, 2.32, 2.35],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-up-8',
@@ -319,9 +424,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-115',
     betMgmOntario: '+105',
+    fanDuelOntario: '-102',
+    theScoreOntario: '-105',
+    bestBook: 'BetMGM',
     edgeMarginPct: 4.8,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Toronto Blue Jays'
+    pickTeam: 'Toronto Blue Jays',
+    sparkline: [1.95, 1.92, 1.89, 1.87, 1.87],
+    steamTrend: 'STEAM_DOWN'
   },
   {
     id: 'game-7',
@@ -331,11 +441,16 @@ export const INITIAL_GAMES: GameRecord[] = [
     engineLayer: '⏳ LAYER 1: UPCOMING',
     timeMetric: 'Tomorrow 22:00 EST',
     scoreTicker: 'Scheduled',
-    tonyBetOntario: '+130',
-    betMgmOntario: '+125',
+    tonyBetOntario: '+110',
+    betMgmOntario: '+105',
+    fanDuelOntario: '+108',
+    theScoreOntario: '+110',
+    bestBook: 'TonyBet',
     edgeMarginPct: 0.9,
     aiActionDirective: '❌ NO VALUE',
-    pickTeam: 'Pass'
+    pickTeam: 'Pass',
+    sparkline: [2.08, 2.10, 2.09, 2.10, 2.10],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-up-9',
@@ -347,9 +462,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-110',
     betMgmOntario: '+110',
+    fanDuelOntario: '+102',
+    theScoreOntario: '-102',
+    bestBook: 'BetMGM',
     edgeMarginPct: 5.7,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Denver Nuggets'
+    pickTeam: 'Denver Nuggets',
+    sparkline: [2.00, 1.96, 1.93, 1.91, 1.91],
+    steamTrend: 'STEAM_DOWN'
   },
   {
     id: 'game-up-10',
@@ -361,9 +481,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-135',
     betMgmOntario: '-155',
+    fanDuelOntario: '-145',
+    theScoreOntario: '-140',
+    bestBook: 'TonyBet',
     edgeMarginPct: 4.3,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Minnesota Timberwolves'
+    pickTeam: 'Minnesota Timberwolves',
+    sparkline: [1.77, 1.75, 1.74, 1.74, 1.74],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-up-11',
@@ -375,9 +500,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '+115',
     betMgmOntario: '-110',
+    fanDuelOntario: '+105',
+    theScoreOntario: '+110',
+    bestBook: 'TonyBet',
     edgeMarginPct: 7.1,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Manchester City'
+    pickTeam: 'Manchester City',
+    sparkline: [2.00, 2.05, 2.10, 2.12, 2.15],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-up-12',
@@ -389,9 +519,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-165',
     betMgmOntario: '-195',
+    fanDuelOntario: '-180',
+    theScoreOntario: '-175',
+    bestBook: 'TonyBet',
     edgeMarginPct: 5.8,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Liverpool'
+    pickTeam: 'Liverpool',
+    sparkline: [1.65, 1.62, 1.60, 1.60, 1.61],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-up-13',
@@ -403,9 +538,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-170',
     betMgmOntario: '-200',
+    fanDuelOntario: '-185',
+    theScoreOntario: '-180',
+    bestBook: 'TonyBet',
     edgeMarginPct: 4.6,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Bayern Munich'
+    pickTeam: 'Bayern Munich',
+    sparkline: [1.64, 1.61, 1.59, 1.59, 1.59],
+    steamTrend: 'STABLE'
   },
   {
     id: 'game-up-14',
@@ -417,9 +557,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '+120',
     betMgmOntario: '+105',
+    fanDuelOntario: '+110',
+    theScoreOntario: '+115',
+    bestBook: 'TonyBet',
     edgeMarginPct: 3.4,
     aiActionDirective: '🔥 VALUE BUY',
-    pickTeam: 'Toronto FC'
+    pickTeam: 'Toronto FC',
+    sparkline: [2.10, 2.15, 2.18, 2.20, 2.20],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-up-15',
@@ -431,9 +576,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-450',
     betMgmOntario: '-550',
+    fanDuelOntario: '-500',
+    theScoreOntario: '-480',
+    bestBook: 'TonyBet',
     edgeMarginPct: 8.2,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Jon Jones'
+    pickTeam: 'Jon Jones',
+    sparkline: [1.25, 1.24, 1.23, 1.22, 1.22],
+    steamTrend: 'STEAM_DOWN'
   },
   {
     id: 'game-up-16',
@@ -445,9 +595,14 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '+135',
     betMgmOntario: '+110',
+    fanDuelOntario: '+120',
+    theScoreOntario: '+125',
+    bestBook: 'TonyBet',
     edgeMarginPct: 4.5,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Merab Dvalishvili'
+    pickTeam: 'Merab Dvalishvili',
+    sparkline: [2.20, 2.25, 2.30, 2.33, 2.35],
+    steamTrend: 'STEAM_UP'
   },
   {
     id: 'game-up-17',
@@ -459,51 +614,118 @@ export const INITIAL_GAMES: GameRecord[] = [
     scoreTicker: 'Scheduled',
     tonyBetOntario: '-125',
     betMgmOntario: '-145',
+    fanDuelOntario: '-135',
+    theScoreOntario: '-130',
+    bestBook: 'TonyBet',
     edgeMarginPct: 4.2,
     aiActionDirective: '🔥 FULL BUY',
-    pickTeam: 'Novak Djokovic'
+    pickTeam: 'Novak Djokovic',
+    sparkline: [1.83, 1.81, 1.80, 1.80, 1.80],
+    steamTrend: 'STABLE'
   }
 ];
 
 export const INITIAL_LEDGER: SettledBet[] = [
   {
+    id: 'trade-1',
     timestamp: '2026-09-19 14:10:22',
     matchup: 'Houston Astros @ Texas Rangers',
     sport: 'MLB',
+    league: 'MLB',
     aiPickSelection: 'Houston Astros',
     finalScoreLine: 'HOU 6 - 3 TEX',
     outcomeLabel: 'WIN (COVERED)',
     profitOrLoss: 85.00,
-    runningBankroll: 1085.00
+    runningBankroll: 1085.00,
+    stake: 65.00,
+    odds: '+130',
+    bookmaker: 'TonyBet',
+    edgePct: 6.2,
+    status: 'WON'
   },
   {
+    id: 'trade-2',
     timestamp: '2026-09-19 16:45:00',
     matchup: 'Baltimore Ravens @ Pittsburgh Steelers',
     sport: 'NFL',
+    league: 'NFL',
     aiPickSelection: 'Baltimore Ravens',
     finalScoreLine: 'BAL 24 - 20 PIT',
     outcomeLabel: 'WIN (COVERED)',
     profitOrLoss: 95.50,
-    runningBankroll: 1180.50
+    runningBankroll: 1180.50,
+    stake: 80.00,
+    odds: '+119',
+    bookmaker: 'TonyBet',
+    edgePct: 5.8,
+    status: 'WON'
   },
   {
+    id: 'trade-3',
     timestamp: '2026-09-19 19:20:15',
     matchup: 'Denver Nuggets @ Dallas Mavericks',
     sport: 'NBA',
+    league: 'NBA',
     aiPickSelection: 'Dallas Mavericks',
     finalScoreLine: 'DEN 112 - 108 DAL',
     outcomeLabel: 'LOSS (MISSED)',
     profitOrLoss: -60.00,
-    runningBankroll: 1120.50
+    runningBankroll: 1120.50,
+    stake: 60.00,
+    odds: '+105',
+    bookmaker: 'BetMGM',
+    edgePct: 4.1,
+    status: 'LOST'
   },
   {
+    id: 'trade-4',
     timestamp: '2026-09-19 21:05:40',
     matchup: 'Liverpool vs Manchester City',
     sport: 'SOCCER',
+    league: 'Premier League',
     aiPickSelection: 'Liverpool',
     finalScoreLine: 'LIV 2 - 1 MCI',
     outcomeLabel: 'WIN (COVERED)',
     profitOrLoss: 120.00,
-    runningBankroll: 1240.50
+    runningBankroll: 1240.50,
+    stake: 75.00,
+    odds: '+160',
+    bookmaker: 'TonyBet',
+    edgePct: 7.4,
+    status: 'WON'
+  },
+  {
+    id: 'trade-5',
+    timestamp: '2026-09-19 22:40:10',
+    matchup: 'Alex Pereira vs Jiri Prochazka',
+    sport: 'UFC',
+    league: 'UFC 303',
+    aiPickSelection: 'Alex Pereira',
+    finalScoreLine: 'KO Rd 2 (0:13)',
+    outcomeLabel: 'WIN (COVERED)',
+    profitOrLoss: 72.00,
+    runningBankroll: 1312.50,
+    stake: 60.00,
+    odds: '+120',
+    bookmaker: 'TonyBet',
+    edgePct: 5.5,
+    status: 'WON'
+  },
+  {
+    id: 'trade-6',
+    timestamp: '2026-09-20 00:15:30',
+    matchup: 'Toronto Maple Leafs @ Ottawa Senators',
+    sport: 'NHL',
+    league: 'NHL',
+    aiPickSelection: 'Toronto Maple Leafs',
+    finalScoreLine: 'TOR 4 - 2 OTT',
+    outcomeLabel: 'WIN (COVERED)',
+    profitOrLoss: 68.00,
+    runningBankroll: 1380.50,
+    stake: 50.00,
+    odds: '+136',
+    bookmaker: 'theScore Bet',
+    edgePct: 4.8,
+    status: 'WON'
   }
 ];
