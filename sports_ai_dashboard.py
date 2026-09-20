@@ -1,4 +1,4 @@
-# sport_ai_dashboard.py (CLEAN, DUPLICATE-COLUMN FIX + ROBUSTNESS)
+# sport_ai_dashboard.py (ROBUST duplicate-column fix; coalesces mapped groups)
 import os
 import time
 from datetime import datetime
@@ -27,7 +27,6 @@ def make_unique_columns(columns):
     seen = {}
     out = []
     for c in columns:
-        # convert to string for safe hashing
         key = str(c)
         if key in seen:
             seen[key] += 1
@@ -46,18 +45,12 @@ def load_master(path: str) -> pd.DataFrame:
     try:
         df = pd.read_csv(path)
     except Exception:
-        # corrupted or unreadable file -> return empty
         return pd.DataFrame()
-
-    # Trim column names
     df.columns = [str(c).strip() for c in df.columns]
-
-    # Normalize "Edge Margin %" to numeric when present (strip %).
     if "Edge Margin %" in df.columns:
         try:
             df["Edge Margin %"] = pd.to_numeric(df["Edge Margin %"].astype(str).str.replace("%", "", regex=False), errors="coerce")
         except Exception:
-            # if conversion fails, leave as-is (will be filtered safely later)
             pass
     return df
 
@@ -67,6 +60,50 @@ def file_mtime(path: str):
         return os.path.getmtime(path)
     except Exception:
         return None
+
+
+def build_canonical_dataframe(df: pd.DataFrame, rename_map: dict) -> pd.DataFrame:
+    """
+    Build a new dataframe where original columns that map to the same canonical name
+    are coalesced into a single canonical column (first non-null wins).
+    Any columns not mentioned in rename_map are preserved as-is.
+    This prevents duplicate column names after renaming.
+    """
+    if df is None or df.empty:
+        return df.copy()
+
+    # invert rename_map into groups: canonical -> [original_cols...]
+    groups = {}
+    for orig_col, canonical in rename_map.items():
+        groups.setdefault(canonical, []).append(orig_col)
+
+    # columns that are mapped (we'll replace them with canonical ones)
+    mapped_cols = set(rename_map.keys())
+
+    # start building new_df with non-mapped columns preserved in original order
+    preserved = [c for c in df.columns if c not in mapped_cols]
+    new_df = df[preserved].copy()
+
+    # for each canonical group, coalesce values across original columns (in order)
+    for canonical, src_cols in groups.items():
+        # keep only those source cols that exist in df
+        existing = [c for c in src_cols if c in df.columns]
+        if not existing:
+            # no source present -> create a NaN column
+            new_df[canonical] = pd.NA
+            continue
+        # initialize with first column
+        col_series = df[existing[0]].copy()
+        # combine subsequent columns using combine_first (first non-null)
+        for c in existing[1:]:
+            col_series = col_series.combine_first(df[c])
+        new_df[canonical] = col_series
+
+    # If any canonical name collides with preserved column names, make unique
+    if new_df.columns.duplicated().any():
+        new_df.columns = make_unique_columns(new_df.columns)
+
+    return new_df
 
 
 # -------------------- Sidebar / Controls --------------------
@@ -127,12 +164,10 @@ pd_stream.write("---")
 
 # -------------------- Auto-refresh logic --------------------
 if live_updates:
-    # try to use streamlit_autorefresh if installed for better behavior
     try:
         from streamlit_autorefresh import st_autorefresh  # type: ignore
         st_autorefresh(interval=refresh_interval * 1000, limit=None, key="autorefresh")
     except Exception:
-        # fallback: manual cheap rerun scheduling
         now = time.time()
         last_run = pd_stream.session_state.get("_live_last_run", 0)
         if now - last_run >= max(1.0, refresh_interval):
@@ -161,7 +196,6 @@ def render_enterprise_matrix():
         if "ticker" in lc or "score" in lc:
             rename_map[col] = "Score Ticker"
         if "tony" in lc:
-            # map both "tony" and "tonybet" variants to a canonical key
             rename_map[col] = "TonyBet Ontario"
         if "mgm" in lc or "betmgm" in lc:
             rename_map[col] = "BetMGM Ontario"
@@ -174,40 +208,27 @@ def render_enterprise_matrix():
         if "layer" in lc:
             rename_map[col] = "Engine Layer"
 
-    # perform rename
-    df = df.rename(columns=rename_map)
-
-    # --- FIX: avoid duplicate column names which crash pyarrow/streamlit dataframe renderer
-    if df.columns.duplicated().any():
-        dup_list = [c for i, c in enumerate(df.columns) if df.columns.duplicated()[i]]
-        # warn in UI (helpful during debugging)
-        pd_stream.warning(f"Duplicate columns detected in source CSV and renamed internally: {dup_list}")
-        # make columns unique preserving first occurrence
-        df.columns = make_unique_columns(df.columns)
+    # Build canonical df which coalesces groups (prevents duplicate canonical names)
+    df = build_canonical_dataframe(df, rename_map)
 
     # copy for blueprint / member view
     blueprint_df = df.copy()
 
-    # --- Sidebar filters (re-evaluate available sports after normalization)
+    # Determine sport options AFTER canonicalization
     sport_options = ["ALL"]
     if "Sport" in df.columns:
-        sport_options = ["ALL"] + list(df["Sport"].dropna().unique())
+        try:
+            sport_options = ["ALL"] + list(df["Sport"].dropna().unique())
+        except Exception:
+            sport_options = ["ALL"]
 
-    # We re-show the sport selector if needed (keeps earlier selection if present)
-    global selected_sport
-    try:
-        selected_sport = pd_stream.session_state.get("selected_sport", "ALL")
-    except Exception:
-        selected_sport = "ALL"
-
-    # Ensure the UI shows the sport selector (non-blocking)
+    # Show sport selector - preserve selection across reruns
     selected_sport = pd_stream.selectbox("Filter Market Sport", sport_options, index=0, key="selected_sport")
 
-    strictness_trigger = pd_stream.session_state.get("strictness_trigger", None)
-    if strictness_trigger is None:
-        strictness_trigger = 0.0
-    # small UI slider for strictness
-    strictness_trigger = pd_stream.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=50.0, value=float(strictness_trigger), step=0.5, key="strictness_trigger")
+    # Edge strictness slider (persist in session_state)
+    if "strictness_trigger" not in pd_stream.session_state:
+        pd_stream.session_state["strictness_trigger"] = 0.0
+    strictness_trigger = pd_stream.slider("AI Minimum Value Edge Cutoff (%)", min_value=0.0, max_value=50.0, value=float(pd_stream.session_state["strictness_trigger"]), step=0.5, key="strictness_trigger")
 
     # apply sport filter
     if "Sport" in df.columns and selected_sport != "ALL":
@@ -219,7 +240,6 @@ def render_enterprise_matrix():
         try:
             df = df[pd.to_numeric(df["Edge Margin %"], errors="coerce").fillna(0.0) >= float(strictness_trigger)]
         except Exception:
-            # in case of weird types, ignore filter to avoid crash
             pass
 
     # partition layers safely
@@ -230,7 +250,6 @@ def render_enterprise_matrix():
             live_df = df[df["Engine Layer"].str.contains("LIVE|LAYER 2", case=False, na=False)]
             upcoming_df = df[df["Engine Layer"].str.contains("UPCOMING|LAYER 1", case=False, na=False)]
         except Exception:
-            # string operation failed due to types - coerce to str and retry
             try:
                 tmp_layer = df["Engine Layer"].astype(str)
                 live_df = df[tmp_layer.str.contains("LIVE|LAYER 2", case=False, na=False)]
@@ -257,13 +276,11 @@ def render_enterprise_matrix():
     if live_df.empty:
         pd_stream.info("No active live matches match your sidebar filter settings.")
     else:
-        # choose columns that exist and are safe to display
         preferred_cols = ["Sport", "Matchup", "Time Metric", "Score Ticker", "TonyBet Ontario", "BetMGM Ontario", "Edge Margin %", "AI Action Directive"]
         available_cols = [c for c in preferred_cols if c in live_df.columns]
         try:
             pd_stream.dataframe(live_df[available_cols], use_container_width=True, hide_index=True)
-        except Exception as e:
-            # fallback: stream raw head if pyarrow conversion still fails
+        except Exception:
             pd_stream.error("Unable to render live table due to internal column type issue. Showing a compact preview.")
             pd_stream.write(live_df[available_cols].head(25))
 
@@ -287,7 +304,6 @@ def render_enterprise_matrix():
     pd_stream.subheader("📋 Automated Execution Order Blueprint (Scaled Cash Risks)")
     if pd_stream.session_state.get("authenticated"):
         pd_stream.success("🌟 AI PREMIUM MEMBER POSITIONS UNLOCKED")
-        # determine active orders from blueprint (unfiltered copy)
         if "Edge Margin %" in blueprint_df.columns:
             try:
                 active_orders = blueprint_df[pd.to_numeric(blueprint_df["Edge Margin %"], errors="coerce").fillna(0.0) >= float(strictness_trigger)]
@@ -297,7 +313,10 @@ def render_enterprise_matrix():
             active_orders = blueprint_df.copy()
 
         if "AI Action Directive" in active_orders.columns:
-            active_orders = active_orders[~active_orders["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT", "PASS", "❌ PASS LINE"])]
+            try:
+                active_orders = active_orders[~active_orders["AI Action Directive"].isin(["❌ NO VALUE", "🛑 PULL OUT DEPOSIT", "PASS", "❌ PASS LINE"])]
+            except Exception:
+                pass
 
         if active_orders.empty:
             pd_stream.info("No high-value selections match your minimum value edge cutoff.")
@@ -340,7 +359,6 @@ def render_enterprise_matrix():
                                     append_prediction_to_csv(MASTER_CSV, summary)
                                     appended += 1
                                 except Exception:
-                                    # fallback csv append via pandas (atomic best-effort)
                                     try:
                                         pd.DataFrame([summary]).to_csv(MASTER_CSV, mode="a", header=not os.path.exists(MASTER_CSV), index=False)
                                         appended += 1
@@ -378,7 +396,6 @@ def render_enterprise_matrix():
                 try:
                     pd_stream.line_chart(ledger_df["Running Bankroll"])
                 except Exception:
-                    # fallback to showing the raw dataframe
                     pd_stream.write(ledger_df[["Timestamp", "Running Bankroll"]].head(200))
                 pd_stream.write("#### 📋 Detailed Settlement Audit Log Statements")
                 pd_stream.dataframe(ledger_df, use_container_width=True, hide_index=True)
@@ -391,7 +408,6 @@ def render_enterprise_matrix():
 
 
 # -------------------- Execute render --------------------
-# Use pd_stream.fragment if available in your environment; otherwise render once.
 try:
     fragment = getattr(pd_stream, "fragment", None)
     if fragment:
@@ -401,9 +417,8 @@ try:
         _run_matrix()
     else:
         render_enterprise_matrix()
-except Exception:
-    # last-resort: try a single render and show error inline
+except Exception as e:
     try:
         render_enterprise_matrix()
-    except Exception as e:
-        pd_stream.error(f"Dashboard rendering failed: {e}")
+    except Exception as ee:
+        pd_stream.error(f"Dashboard rendering failed: {ee}")
